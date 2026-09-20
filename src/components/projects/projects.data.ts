@@ -60,7 +60,7 @@ export const PROJECTS: Project[] = [
     role: 'Architecture & Développement Full-Stack',
     stack: ['Next.js 16', 'React 19', 'TypeScript', 'Turbopack', 'TailwindCSS'],
     pitch:
-      "Application web haute performance conçue pour le suivi d'entraînement et la préparation physique en boxe. Intègre un journal de séances interactif, un cockpit d'analyse du poids et de la récupération, un timer de rounds personnalisable et des coachs IA interactifs.",
+      "Outil personnel développé sur-mesure pour mes propres besoins. Véritable compagnon de vie centralisant le suivi d'objectifs sportifs, la gestion d'habitudes et une To-Do List. Intègre des statistiques dynamiques, un chronomètre et un coach IA.",
     metrics: [
       { value: '42+', label: 'Séances suivies' },
       { value: 'Coach IA', label: 'Accompagnement vocal' },
