@@ -1,0 +1,254 @@
+/**
+ * Ecran experience : Terminal Hacker Cyber
+ */
+.experience {
+  min-height: 100%;
+  width: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  padding: var(--chrome-top) clamp(24px, 6vw, 96px) var(--chrome-bottom);
+  position: relative;
+  overflow: hidden;
+}
+
+.experience::before {
+  content: '';
+  position: absolute;
+  left: 30%;
+  top: 15%;
+  width: 70%;
+  height: 70%;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.05), transparent 62%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 64px);
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.intro {
+  position: sticky;
+  top: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 54px);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--ink), var(--ink-muted));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text {
+  margin: 18px 0 22px;
+  max-width: 36ch;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+/* --- Terminal UI --- */
+
+.terminal {
+  background: var(--dark-bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+.terminalHeader {
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+}
+
+.terminalButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.tBtnRed,
+.tBtnYellow,
+.tBtnGreen {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.tBtnRed {
+  background: #ff5f56;
+}
+.tBtnYellow {
+  background: #ffbd2e;
+}
+.tBtnGreen {
+  background: #27c93f;
+}
+
+.terminalTitle {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-muted);
+  opacity: 0.7;
+}
+
+.terminalBody {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-height: 400px;
+}
+
+.systemAlert {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  margin-bottom: 12px;
+  animation: blink 1s step-start infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.error {
+  color: #e11d48;
+  margin: 0 0 8px;
+}
+
+.hint {
+  color: #d97706;
+  margin: 0;
+}
+
+.hintBtn {
+  background: rgba(217, 119, 6, 0.1);
+  border: 1px dashed #d97706;
+  color: #d97706;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+.hintBtn:hover {
+  background: rgba(217, 119, 6, 0.2);
+}
+
+.terminalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+}
+
+/* Scrambled Text Effect */
+:global(.scrambled-text) {
+  opacity: 0.6;
+  color: var(--violet);
+  font-family: var(--font-mono);
+}
+
+.card {
+  margin: 0;
+  border-left: 2px solid var(--surface-border);
+  padding-left: 16px;
+}
+
+.card h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.period {
+  margin: 4px 0 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--violet);
+}
+
+.line {
+  margin: 0 0 6px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+.line:last-child {
+  margin-bottom: 0;
+}
+
+/* Prompt */
+.terminalPromptWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line);
+}
+
+.promptArrow {
+  color: #27c93f;
+}
+.promptPath {
+  color: var(--violet);
+}
+.promptSign {
+  color: var(--ink-muted);
+}
+
+.terminalInput {
+  background: transparent;
+  border: none;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  flex: 1;
+  outline: none;
+  caret-color: var(--neon);
+}
+.terminalInput:disabled {
+  color: var(--ink-faint);
+}
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .intro {
+    position: static;
+  }
+}

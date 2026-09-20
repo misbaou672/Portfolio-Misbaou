@@ -1,0 +1,45 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # Les mineures et correctifs partent ensemble, les majeures arrivent
+      # chacune dans sa PR. Regrouper les deux avait produit une PR de onze
+      # paquets ou une majeure de TypeScript, incompatible avec le linter,
+      # rendait irrecevables dix montees sans risque.
+      dev-dependencies:
+        dependency-type: development
+        update-types:
+          - minor
+          - patch
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
+          - '@types/react*'
+      animation:
+        patterns:
+          - 'gsap'
+          - '@gsap/react'
+    ignore:
+      # typescript-eslint declare `typescript <6.1.0` et refuse de se charger
+      # au-dela : sous TypeScript 7, `npm run lint` s'arrete avant d'avoir lu
+      # une ligne et la CI echoue. Leur suivi du support :
+      # https://github.com/typescript-eslint/typescript-eslint/issues/10940
+      # A retirer des qu'il est clos.
+      - dependency-name: typescript
+        update-types:
+          - 'version-update:semver-major'
+    commit-message:
+      prefix: chore
+      include: scope
+
+  - package-ecosystem: github-actions
+    directory: '/'
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: ci

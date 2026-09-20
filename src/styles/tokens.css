@@ -1,0 +1,65 @@
+/**
+ * Jetons de design, extraits de la maquette (docs/design).
+ * Palette blanc + violet neon. Ne pas ajouter de couleur hors de cette liste
+ * sans passer par une decision (docs/adr).
+ */
+:root {
+  /* fonds et encre (Thème Clean & Light Professional) */
+  --bg: #fafafa;
+  --bg-2: #f3f4f6;
+  --surface: rgba(255, 255, 255, 0.85); /* Glassmorphism très subtil */
+  --surface-border: rgba(0, 0, 0, 0.08); /* Bordure discrète */
+  --line: #e5e7eb;
+  --ink: #111827;
+  --ink-muted: #4b5563;
+  --ink-faint: #9ca3af;
+
+  /* Accents (Bleu Professionnel / Navy) */
+  --violet: #2563eb; /* Bleu Royal */
+  --violet-bright: #3b82f6; /* Bleu plus clair */
+  --violet-pale: rgba(37, 99, 235, 0.1);
+  --violet-sub: #1d4ed8;
+  --neon: #2563eb; /* Remplacement du cyan par le bleu */
+  --pill-bord: rgba(37, 99, 235, 0.2);
+
+  /* Unification des fonds clairs (remplacement du dark) */
+  --dark-bg: #ffffff;
+  --dark-ink: #111827;
+  --dark-line: #e5e7eb;
+
+  /* Typographie */
+  --font-display: 'Outfit Variable', 'Outfit', system-ui, sans-serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+
+  /* echelle */
+  --space: 8px;
+  --radius: 12px;
+
+  /* Bandes du chrome fixe : l'en-tete en haut, l'index des ecrans en bas.
+     Les ecrans reservent cette place pour ne pas passer dessous. La reserve
+     basse a maigri avec le retrait du pied de page, l'index mesurant 65 px
+     la ou le pied en faisait 108. */
+  --chrome-top: 104px;
+  --chrome-bottom: 88px;
+  /* Empilement, du fond vers l'avant. */
+  --z-content: 1;
+  --z-takeover: 50;
+  --z-chrome: 90;
+  --z-cursor: 100;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 0.6s;
+}
+
+/* Au telephone, l'index se resserre et n'affiche que les numeros. */
+@media (max-width: 767px) {
+  :root {
+    /* L'en-tete a perdu son bandeau et son logotype a fondu : la reserve
+       peut suivre, ce qui rend une bande de 20 px au contenu. */
+    --chrome-top: 56px;
+    --chrome-bottom: 58px;
+  }
+}

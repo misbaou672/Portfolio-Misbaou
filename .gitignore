@@ -1,0 +1,35 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# build
+dist/
+dist-ssr/
+*.local
+*.tsbuildinfo
+
+# env
+.env
+.env.*
+!.env.example
+
+# editor / os
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+npm-debug.log*
+
+# design: sources Claude Design gardees en local uniquement.
+# La reference versionnee est docs/design/screens/*.jpg (rendus).
+design-mockup/
+.playwright-mcp/
+
+# misc
+coverage/
+.lighthouseci/

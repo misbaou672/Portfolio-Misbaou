@@ -1,0 +1,70 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Le site est un diaporama : aucune page ne defile, donc pas de barre de
+   defilement. Le deplacement se fait d'une diapo a l'autre (voir app/Deck). */
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--violet);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--ink);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/**
+ * Anneau de focus unique pour tout le site. Seule la pellicule des projets
+ * definissait le sien, les 26 autres cibles n'en avaient aucun : au clavier,
+ * on ne savait pas ou on se trouvait. `:focus-visible` laisse la souris
+ * tranquille.
+ */
+:focus-visible {
+  /* --violet-bright plutot que --violet : le chrome et les panneaux
+     alternent fonds clairs et sombres, et lui tient les 3:1 sur les deux
+     (3,6:1 sur le fond clair, 4,8:1 sur le fond sombre). */
+  outline: 2px solid var(--violet-bright);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,231 @@
+.contact {
+  /* `min-height` et non `height` : une diapo dont le contenu ne tient pas
+     dans la hauteur disponible doit grandir et laisser le panneau
+     defiler, sinon le centrage flex la fait deborder par le haut. */
+  min-height: 100%;
+  width: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  padding: var(--chrome-top) clamp(24px, 6vw, 72px) var(--chrome-bottom);
+  position: relative;
+  overflow: hidden;
+}
+
+/**
+ * Deux colonnes : le titre a gauche, tout le contact a droite.
+ *
+ * Le mail et le telephone etaient sous le titre, dans la colonne de gauche.
+ * L'ecran se lisait donc en L, avec un grand vide en bas a droite et les deux
+ * profils isoles au-dessus. Reunir les quatre a droite donne un seul point de
+ * contact, et le titre recupere la hauteur que le mail occupait : le bloc
+ * entier etant centre verticalement, il redescend d'environ 70 px sans qu'on
+ * ait a le decaler a la main.
+ *
+ * `align-items: end` cale le bas du bloc de contact sur le bas du titre,
+ * l'oeil suit alors une ligne d'horizon commune.
+ */
+.inner {
+  position: relative;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  column-gap: clamp(32px, 6vw, 80px);
+}
+.status {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+.title {
+  grid-column: 1;
+}
+.grid {
+  grid-column: 2;
+}
+
+.status {
+  margin: 0;
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--violet);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  padding: 9px 18px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.sep {
+  margin: 0 0.75em;
+  opacity: 0.42;
+}
+
+.title {
+  /* Le titre descend : le mail et le telephone ne sont plus sous lui, et sans
+     cette respiration il restait colle a la pastille d'etat, tout en haut
+     d'une colonne devenue vide. */
+  margin: clamp(32px, 9vh, 110px) 0 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  /* La taille est réduite car "TRAVAILLONS" (11 lettres) est beaucoup plus
+     long que "ON EN" et débordait sur la colonne de droite. */
+  font-size: clamp(48px, min(10vw, 15vh), 120px);
+  line-height: 0.85;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  word-wrap: break-word;
+}
+.accent {
+  background: linear-gradient(135deg, var(--violet-bright), var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  gap: 10px;
+  /* Meme raison : la gouttiere se cale sur la hauteur disponible. */
+  margin-top: clamp(32px, 8vh, 96px);
+}
+
+.email {
+  font-family: var(--font-display);
+  /* Plus petit qu'avant : le mail partageait la largeur de l'ecran avec le
+     vide, il partage maintenant une ligne avec le titre geant. */
+  font-size: clamp(20px, 2.6vw, 34px);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink);
+  word-break: break-word;
+  transition:
+    color 0.3s ease,
+    text-shadow 0.3s ease;
+}
+.email:hover {
+  color: var(--violet);
+}
+/* Les liens de contact doivent faire 24 px de haut au minimum : ce sont les
+   cibles les plus importantes du site, et elles etaient les plus petites. */
+.phone {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  color: var(--ink-faint);
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  /* Un filet separe ce qui joint Misbaou de ce qui le montre. */
+  margin-top: 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 4px;
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+.links a:hover {
+  color: var(--violet);
+  border-color: var(--violet);
+}
+
+@media (max-width: 767px) {
+  .contact {
+    padding: var(--chrome-top) 24px var(--chrome-bottom);
+  }
+  /* Une colonne : a 390 px il n'y a pas deux colonnes a tenir, et un bloc
+     aligne a droite sous un titre aligne a gauche se lit de travers. */
+  .inner {
+    display: block;
+  }
+  .grid {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .links {
+    align-items: flex-start;
+    align-self: stretch;
+  }
+
+  /**
+   * Plus de gelule. A 390 px la phrase tient sur trois lignes, et le contour
+   * arrondi qui l'entoure devient un gros bloc en travers de l'ecran, pour une
+   * information qui n'a pas besoin d'etre encadree pour se voir. Elle devient
+   * une ligne d'etat, precedee d'un point, comme la disponibilite du hub.
+   *
+   * Les 40 px ainsi rendus comptent : sur un ecran de 650 px, le bouton de
+   * telechargement du CV finissait 46 px sous la barre d'index.
+   */
+  .status {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    line-height: 1.65;
+  }
+  .status::before {
+    content: '';
+    flex: none;
+    width: 7px;
+    height: 7px;
+    margin-top: 6px;
+    border-radius: 50%;
+    background: var(--violet);
+    box-shadow: 0 0 0 4px var(--violet-pale);
+  }
+}
+
+/**
+ * Ecran court. Le titre "On en parle ?" tient deja compte de la hauteur, mais
+ * le calibrage visait 720 px : a 650, le bouton de telechargement du CV
+ * repassait 27 px sous la barre d'index, et cet ecran ne defile pas. On
+ * resserre le titre et les gouttieres plutot que les cibles tactiles, qui
+ * doivent garder leur taille au doigt.
+ */
+@media (max-height: 720px) and (min-width: 768px) {
+  .title {
+    font-size: clamp(40px, min(9vw, 13vh), 100px);
+  }
+  .grid {
+    margin-top: clamp(24px, 5vh, 96px);
+    gap: 28px;
+  }
+  .links {
+    gap: 12px;
+  }
+  .status {
+    padding: 7px 14px;
+  }
+}

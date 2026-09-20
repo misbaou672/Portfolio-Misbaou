@@ -1,0 +1,280 @@
+/**
+ * Hub : le nom en grand a gauche, la stack rangee a droite.
+ * Le panneau isometrique "mon poste de travail" a disparu : il occupait la
+ * moitie de l'ecran sans rien apprendre a personne.
+ */
+.hub {
+  position: relative;
+  /* `min-height` et non `height` : une diapo dont le contenu ne tient pas
+     dans la hauteur disponible doit grandir et laisser le panneau
+     defiler, sinon le centrage flex la fait deborder par le haut. */
+  min-height: 100%;
+  width: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+  align-items: center;
+  gap: clamp(32px, 6vw, 96px);
+  padding: var(--chrome-top) clamp(24px, 6vw, 96px) calc(var(--chrome-bottom) + 40px);
+}
+
+.glow {
+  position: absolute;
+  left: 6%;
+  top: 12%;
+  width: 640px;
+  height: 640px;
+  max-width: 70%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.06), transparent 60%);
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.kicker {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-weight: 400;
+  /* Le nom peut respirer davantage depuis que la droite n'est plus occupee
+     par un panneau. */
+  font-size: clamp(56px, 8.6vw, 132px);
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.title span:last-child {
+  padding-left: clamp(24px, 7vw, 118px);
+}
+.accent {
+  background: linear-gradient(135deg, var(--violet-bright), var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lede {
+  margin: 0;
+  max-width: 46ch;
+  font-size: clamp(16px, 1.4vw, 19px);
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+.lede em {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.socials a {
+  color: var(--ink);
+  display: inline-flex;
+  /* 24 px de cible tactile minimum autour d'une icone de 18. */
+  padding: 3px;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+.socials a:hover {
+  color: var(--neon);
+  transform: translateY(-2px);
+}
+.socials svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* Colonne de droite : la stack, transformée en Bento-box. */
+.stack {
+  position: relative;
+  min-width: 0;
+  background: var(--dark-bg);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  padding: clamp(24px, 3vw, 40px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+.stackTag {
+  margin: 0 0 22px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.stackList {
+  margin: 0;
+}
+.stackGroup {
+  margin-bottom: 14px;
+}
+.stackGroup dt {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 7px;
+}
+.stackGroup dd {
+  margin: 0;
+}
+.stackGroup ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+/**
+ * Pastilles reprises du CV : meme forme, memes trois tons. Les couleurs
+ * viennent des jetons du site plutot que des valeurs du CV, pour n'avoir
+ * qu'une palette a maintenir, mais le rendu est le meme.
+ */
+.stackGroup li {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--pill-bord);
+  border-radius: 4px;
+  padding: 5px 9px;
+  white-space: nowrap;
+}
+.ton1 {
+  background: var(--bg-2);
+  color: var(--ink);
+}
+.ton2 {
+  background: var(--violet-pale);
+  color: var(--ink);
+}
+.ton3 {
+  background: var(--violet-sub);
+  color: #ffffff;
+  border-color: var(--violet-sub);
+}
+
+/* La disponibilite ferme la colonne : c'est l'information que cherche un
+   recruteur, elle merite de terminer le regard. */
+.avail {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 20px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  /* Assez large pour que « 1 an, a partir de sept. 2026 » tienne d'un bloc :
+     la coupure doit venir du sens, pas de la place. Les capitales et
+     l'interlettrage rendent le `ch` optimiste, d'ou la marge. */
+  max-width: 38ch;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.availTexte {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+/* La disponibilite elle-meme porte, la date la precise : deux niveaux de
+   lecture plutot qu'une enfilade de virgules de meme poids. */
+.availTexte strong {
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.availDot {
+  width: 7px;
+  height: 7px;
+  margin-top: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--violet);
+  box-shadow: 0 0 0 4px var(--violet-pale);
+}
+
+@media (max-width: 900px) {
+  .hub {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 36px;
+  }
+  .stack {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding-left: 0;
+    padding-top: 24px;
+  }
+  .title {
+    font-size: clamp(48px, 15vw, 96px);
+  }
+  .title span:last-child {
+    padding-left: clamp(16px, 8vw, 48px);
+  }
+}
+
+/**
+ * Ecran court, typiquement un portable 1366 x 768 une fois la barre du
+ * navigateur deduite. La colonne de droite compte cinq familles et
+ * trente-six pastilles : elle depassait, et la ligne de disponibilite,
+ * l'information qu'un recruteur vient chercher, finissait 24 px sous la barre
+ * d'index, donc derriere son flou.
+ *
+ * On resserre le rythme vertical de cette colonne plutot que de reduire le
+ * corps du texte : les pastilles restent lisibles, c'est l'air entre elles qui
+ * cede. Au-dessus de 720 px de haut, rien ne change.
+ */
+@media (max-height: 720px) and (min-width: 901px) {
+  .stackTag {
+    margin-bottom: 12px;
+  }
+  .stackGroup {
+    margin-bottom: 8px;
+  }
+  .stackGroup dt {
+    margin-bottom: 5px;
+  }
+  .stackGroup ul {
+    gap: 5px;
+  }
+  .stackGroup li {
+    padding: 3px 8px;
+  }
+  .avail {
+    margin-top: 12px;
+    padding-top: 10px;
+  }
+}

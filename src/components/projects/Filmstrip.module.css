@@ -1,0 +1,274 @@
+.wrap {
+  /* Etiree par le flex du parent plutot que par un pourcentage : voir
+     Projects.module.css. */
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--chrome-top) clamp(24px, 6vw, 60px) var(--chrome-bottom);
+  position: relative;
+  /**
+   * `clip` et non `hidden`. Les deux masquent les tuiles qui sortent du cadre,
+   * mais `hidden` laisse un conteneur defilable : quand une tuile lointaine
+   * recevait le focus, le navigateur faisait defiler la pellicule pour
+   * l'amener a l'ecran, de 64 px au telephone, et tout le panneau partait de
+   * travers, titre compris. `clip` ne cree pas de zone defilable du tout.
+   */
+  overflow: clip;
+}
+.wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 80% at 50% 52%, rgba(37, 99, 235, 0.05), transparent 60%);
+  pointer-events: none;
+}
+
+.kicker {
+  position: relative;
+  margin: 0 0 32px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--violet);
+}
+
+.strip {
+  position: relative;
+  height: 320px;
+}
+
+/* Le focus vit sur la tuile, plus sur la pellicule : c'est la tuile qui le
+   recoit maintenant que les fleches deplacent le focus. */
+/**
+ * `outline-offset` de 3 px et non 6 : avec 2 px d'epaisseur, le contour
+ * portait a 8 px du bord, soit exactement l'ecart entre deux tuiles. Il
+ * arrivait donc pile sur le bord de la tuile voisine, qu'il semblait
+ * chevaucher. A 3 px il reste 3 px d'air de chaque cote.
+ */
+.tile:focus-visible {
+  outline: 2px solid var(--violet);
+  outline-offset: 3px;
+  border-radius: 4px;
+  z-index: 20;
+}
+
+/* Complement lu par les lecteurs d'ecran, invisible a l'oeil. */
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/**
+ * Toutes les tuiles font la meme largeur ; c'est l'echelle qui distingue
+ * l'active. Auparavant la largeur elle-meme s'animait, de 82 a 120 px : une
+ * propriete de mise en page, donc une disposition recalculee a chaque image
+ * pour six tuiles, d'ou les a-coups au telephone.
+ *
+ * Elle produisait aussi le chevauchement. Les positions sont calculees en
+ * JavaScript a partir des largeurs finales et appliquees d'un coup, tandis que
+ * la largeur, elle, mettait 350 ms a suivre, et le `translateX(-50%)` se
+ * recalculait a partir de la largeur courante : position et largeur n'etaient
+ * jamais d'accord pendant la transition. Avec une largeur fixe, ce decalage
+ * n'existe plus, et il ne reste qu'une propriete animee, composee par le GPU.
+ */
+.tile {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120px;
+  height: 300px;
+  border: 0;
+  border-radius: 2px;
+  padding: 0;
+  cursor: pointer;
+  opacity: calc(1 - var(--dim, 0) * 0.14);
+  transform: translate(calc(-50% + var(--pos, 0) * 1px), -50%) scaleX(var(--ech, 0.6833));
+  transition:
+    transform 0.45s var(--ease-out),
+    opacity 0.45s var(--ease-out);
+  will-change: transform;
+}
+.tile.current {
+  --ech: 1;
+  opacity: 1;
+  /* Les tuiles sont positionnees sans z-index : sans ca, celles qui suivent
+     dans le DOM, donc celles de droite, recouvrent l'anneau et le halo de la
+     tuile active. */
+  z-index: 10;
+  box-shadow:
+    0 0 0 1px var(--surface-border),
+    0 24px 60px -12px rgba(0, 0, 0, 0.15);
+}
+
+/**
+ * Le nom se lit droit, en pied de tuile.
+ *
+ * Il etait vertical et occupait toute la hauteur : imposant, mais il fallait
+ * pencher la tete pour le lire, et c'est la premiere chose qu'on demande a un
+ * visiteur sur l'ecran qui presente les projets. Il garde la couleur d'accent
+ * du projet, qui reste sa signature.
+ *
+ * Contre-echelle : la tuile est reduite horizontalement, le nom doit garder
+ * ses proportions, sinon les capitales d'Anton, deja etroites, se tassent.
+ *
+ * La boite, elle, suit la largeur *visible* de la tuile : 120 px multiplies
+ * par l'echelle. Sans ca elle mesurerait toujours 120 px et un nom long
+ * comme « Neural Network » debordait de chaque cote d'une tuile qui n'en fait
+ * que 82. Avec la bonne largeur, le nom se coupe tout seul et s'empile sur
+ * deux lignes, qui montent depuis le pied puisque le bloc y est ancre.
+ *
+ * L'echelle nette du nom vaut donc 1 : la boite est reduite par la tuile puis
+ * rendue par la contre-echelle, le texte se coupe et se dessine a la meme
+ * largeur que la tuile.
+ */
+.name {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  width: calc(120px * var(--ech, 0.6833));
+  padding: 0 5px;
+  text-align: center;
+  transform: translateX(-50%) scaleX(calc(1 / var(--ech, 0.6833)));
+  transition:
+    transform 0.45s var(--ease-out),
+    opacity 0.3s var(--ease-out);
+  font-family: var(--font-display);
+  font-size: 14px;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink, #ffffff);
+  /* Coupure entre les mots, et sur le mot lui-meme s'il ne tient pas seul. */
+  overflow-wrap: anywhere;
+}
+
+/**
+ * La tuile choisie n'affiche plus son nom : il est parti en bas de la
+ * pellicule, en grand. C'est la meme etiquette qui se deplace, pas une
+ * seconde qui apparait, et l'animation de la legende part d'ici.
+ *
+ * Disparition immediate et non fondue. La boite du nom suit la largeur de la
+ * tuile : en devenant active elle passe de 82 a 120 px, et un nom empile sur
+ * deux lignes se recollait alors en une seule, a 65 % d'opacite, soit en plein
+ * dans le fondu. En coupant la transition, le changement de largeur et
+ * l'effacement tombent sur la meme image et le recollement ne se voit pas. Le
+ * fondu reste a l'aller, quand la tuile cesse d'etre choisie et que son nom
+ * revient.
+ */
+.tile.current .name {
+  opacity: 0;
+  transition: transform 0.45s var(--ease-out);
+}
+
+/**
+ * Le nom du projet choisi, sous la pellicule, dans sa couleur d'accent.
+ * Il est annonce par la pellicule elle-meme (`aria-live` serait redondant
+ * avec `aria-current` sur la tuile), il n'est donc la que pour l'oeil.
+ */
+.legende {
+  position: relative;
+  margin: 22px 0 0;
+  text-align: center;
+  /* Le point de depart de l'animation est le pied de la tuile, au-dessus :
+     l'echelle part de la, donc l'origine doit y etre aussi. */
+  transform-origin: 50% 0;
+}
+.legendeNom {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(34px, 4.6vw, 56px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ink-actif, #111827);
+}
+/* Le rang, la nature et l'annee : de quoi situer le projet avant de
+   l'ouvrir. En chasse fixe et en gris, pour ne pas disputer le nom. */
+.legendeMeta {
+  display: block;
+  margin-top: 9px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.legendeMeta i {
+  font-style: normal;
+  margin: 0 0.85em;
+  opacity: 0.55;
+}
+
+.idx {
+  position: absolute;
+  top: 9px;
+  right: 8px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--ink, #111827);
+  opacity: 0.75;
+}
+
+.hint {
+  position: relative;
+  margin: 26px 0 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/**
+ * Ecran court. La legende ajoute 78 px sous la pellicule, et le rappel, une
+ * seule ligne centree de pres de 840 px, passait deja sous la fleche
+ * « l'experience » posee en bas a droite : a 1280 x 700, les deux se
+ * recouvraient de 21 px avant meme cet ecran. On coupe le rappel clavier,
+ * qui ramene la ligne a 500 px, largement en deca du bouton, et on resserre
+ * la legende.
+ */
+@media (max-height: 760px) {
+  .legende {
+    margin-top: 14px;
+  }
+  .legendeNom {
+    font-size: clamp(30px, 4.4vh, 44px);
+  }
+  .legendeMeta {
+    margin-top: 7px;
+  }
+  .hint {
+    margin-top: 18px;
+  }
+  .hintKeys {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile,
+  .name {
+    transition: none;
+  }
+}
+
+/* Le rappel clavier n'a pas de sens sur un ecran tactile sans clavier. */
+@media (hover: none) and (pointer: coarse) {
+  .hintKeys {
+    display: none;
+  }
+}

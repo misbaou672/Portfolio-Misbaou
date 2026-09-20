@@ -1,0 +1,446 @@
+/**
+ * La fiche adopte la direction artistique du projet et non celle du site :
+ * fond, accent et texte viennent des jetons `--p-*` poses par le composant a
+ * partir de la palette. Rien ici ne code une couleur de projet en dur.
+ *
+ * Deux colonnes : le visuel a gauche, la lecture a droite. En une seule
+ * colonne, la fiche depassait la hauteur du panneau et ses derniers blocs
+ * (stack, lien "visiter le site") finissaient sous le SiteFooter fixe, hors
+ * d'atteinte puisque le scroll de la page pilote la piste horizontale.
+ */
+.root {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-takeover);
+  background: linear-gradient(155deg, var(--p-ground), var(--p-ground-2));
+  color: var(--p-ink);
+  padding: var(--chrome-top) clamp(24px, 6vw, 72px) var(--chrome-bottom);
+  visibility: hidden;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  /* Trois rangees : le bouton de retour, le nom du projet seul, puis le
+     visuel et la lecture cote a cote. Le nom occupe sa propre rangee pour
+     que la colonne de droite demarre au niveau de l'apercu : le nom passe
+     ainsi en tete de la hierarchie au lieu de partager sa ligne. */
+  grid-template-rows: auto auto minmax(0, 1fr);
+  column-gap: clamp(28px, 4vw, 72px);
+  align-content: start;
+}
+
+.close {
+  grid-column: 1 / -1;
+  justify-self: start;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--p-muted);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.close:hover {
+  color: var(--p-accent);
+}
+
+.visual {
+  grid-row: 3;
+  grid-column: 1;
+  min-width: 0;
+}
+
+.title {
+  grid-row: 2;
+  grid-column: 1;
+  /* La colonne de gauche se termine bien avant le bas du panneau. La
+     descendre d'un cran repartit le vide au lieu de le laisser s'accumuler
+     sous la derniere ligne. En vh, pour que l'ecart suive la hauteur reelle. */
+  margin: clamp(28px, 6vh, 64px) 0 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(44px, 6.5vw, 104px);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--p-accent);
+  pointer-events: none;
+}
+
+.hero {
+  position: relative;
+  margin-top: -0.1em;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background-color: var(--p-ground);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.heroImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero:hover .heroImage {
+  transform: scale(1.03);
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(2px);
+}
+
+.hero:hover .heroOverlay {
+  opacity: 1;
+}
+
+.heroOverlayBtn {
+  background-color: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--p-ink);
+  padding: 12px 24px;
+  border-radius: 99px;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 14px;
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lightboxClose {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: #111827;
+  font-size: 32px;
+  cursor: pointer;
+  z-index: 1010;
+  padding: 8px;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.lightboxClose:hover {
+  opacity: 1;
+}
+
+.lightboxContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 80px 32px;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100vh - 120px);
+  scroll-behavior: smooth;
+}
+
+.lightboxImg {
+  max-width: 90%;
+  width: auto;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15);
+  margin: 0 auto;
+}
+
+.lightboxCaption {
+  color: #111827;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 16px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+.lightboxNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #111827;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 24px;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s;
+}
+
+.lightboxNav:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.lightboxPrev {
+  left: 24px;
+}
+
+.lightboxNext {
+  right: 24px;
+}
+
+.lightboxThumbnails {
+  height: 100px;
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  overflow-x: auto;
+}
+
+.lightboxThumb {
+  height: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.4;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+
+.lightboxThumb:hover {
+  opacity: 0.8;
+}
+
+.lightboxThumbActive {
+  opacity: 1;
+  border: 2px solid var(--violet);
+  transform: scale(1.05);
+}
+
+/**
+ * Une marque, pas une capture : contenue et centree, jamais recadree.
+ * Le fichier est detoure, le fond vient de la feuille (voir ProjectView.tsx).
+ */
+.heroLogo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: clamp(28px, 9%, 88px);
+}
+
+.mediaNote {
+  margin: 12px 0 0;
+  max-width: 56ch;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--p-muted);
+}
+
+.heroLabel {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  opacity: 0.75;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin-top: 22px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--p-muted);
+}
+
+/* Colonne de lecture : elle defile pour elle-meme si la fiche est longue,
+   sans jamais pousser le panneau ni passer sous le footer. */
+.bento {
+  grid-row: 3;
+  grid-column: 2;
+  min-width: 0;
+  min-height: 0;
+  align-self: stretch;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-right: 4px;
+}
+
+/* Bornees en largeur : un projet a une seule metrique ne doit pas etaler
+   sa carte sur toute la colonne. */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 210px));
+  gap: 12px;
+}
+
+.label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--p-muted);
+  margin-bottom: 10px;
+}
+
+.pitch {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--p-ink);
+}
+
+.stack ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.stack li {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--p-ink);
+  border: 1px solid color-mix(in srgb, var(--p-ink) 15%, transparent);
+  border-radius: 6px;
+  padding: 4px 8px;
+  background: color-mix(in srgb, var(--p-ink) 5%, transparent);
+}
+
+.metric {
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--p-accent) 38%, transparent);
+  background: color-mix(in srgb, var(--p-accent) 10%, transparent);
+  padding: 16px;
+}
+.metric strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--p-accent);
+}
+.metric span {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--p-muted);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 4px;
+}
+.links a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--p-accent);
+  border-bottom: 1px solid color-mix(in srgb, var(--p-accent) 45%, transparent);
+  padding-bottom: 3px;
+}
+
+/* Sous 900 px, la colonne de droite passe dessous et c'est la fiche entiere
+   qui defile : deux zones de scroll cote a cote n'ont pas de sens au doigt. */
+@media (max-width: 900px) {
+  .root {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    row-gap: 24px;
+    overflow-y: auto;
+  }
+  /* En une colonne, la lecture se place simplement sous le visuel. */
+  .title,
+  .visual {
+    grid-column: 1;
+  }
+  /**
+   * `min-height: auto` annule le `min-height: 0` du montage deux colonnes.
+   * Sans lui, la rangee restait calee sur la hauteur disponible, ici 296 px
+   * pour 344 px de contenu : les metriques debordaient hors du cadre sans
+   * agrandir la zone defilable, donc elles etaient inatteignables, sur les
+   * six fiches. La fiche entiere defile a nouveau.
+   */
+  /**
+   * A droite, et non a gauche comme sur grand ecran : la fiche defile au
+   * telephone, donc le bouton remonte sous l'en-tete fixe, et il venait
+   * heurter le logotype. Le cote droit est libre.
+   */
+  .close {
+    justify-self: end;
+  }
+  .bento {
+    grid-row: 4;
+    grid-column: 1;
+    overflow-y: visible;
+    align-self: auto;
+    min-height: auto;
+  }
+  /* Le dernier bloc arrivait pile sur la barre d'index. */
+  .root {
+    padding-bottom: calc(var(--chrome-bottom) + 24px);
+  }
+}
