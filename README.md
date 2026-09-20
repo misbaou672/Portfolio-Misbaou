@@ -4,6 +4,14 @@ Portfolio personnel de **Misbaou Diallo**, Développeur Full-Stack & Automatisat
 
 L'interface arbore un thème **Clean & Light Professional**, combinant élégance corporative et éléments geek/tech interactifs (GSAP, ScrambleText, Terminal).
 
+## 📸 Aperçu de l'interface
+
+Voici quelques exemples de l'interface :
+
+| Accueil (Hub) | Vue d'un projet |
+| :---: | :---: |
+| <img src="docs/design/screens/01-hub.jpg" width="400" alt="Accueil du portfolio"> | <img src="docs/design/screens/08-projet-fiche.jpg" width="400" alt="Fiche Projet"> |
+
 ## 🚀 Stack & Technologies
 
 | Domaine     | Choix                                                          |
