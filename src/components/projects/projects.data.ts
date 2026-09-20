@@ -175,7 +175,7 @@ export const PROJECTS: Project[] = [
       { value: 'Abonnements', label: 'Suivi récurrent & SLA' },
       { value: 'PDF Pro', label: 'Génération à la volée' },
     ],
-    links: [],
+    links: [{ label: 'Repo GitHub', href: 'https://github.com/misbaou672/Devis-Pro' }],
     palette: { from: '#f0fdf4', to: '#dcfce7', ink: '#166534' },
     medias: [
       { src: devisMedia, alt: 'Interface de création de devis (Formulaire & Calculs)' },
