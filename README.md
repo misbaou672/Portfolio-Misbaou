@@ -8,8 +8,8 @@ L'interface arbore un thème **Clean & Light Professional**, combinant éléganc
 
 Voici quelques exemples de l'interface :
 
-| Accueil (Hub) | Vue d'un projet |
-| :---: | :---: |
+|                                   Accueil (Hub)                                   |                                  Vue d'un projet                                   |
+| :-------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
 | <img src="docs/design/screens/01-hub.jpg" width="400" alt="Accueil du portfolio"> | <img src="docs/design/screens/08-projet-fiche.jpg" width="400" alt="Fiche Projet"> |
 
 ## 🚀 Stack & Technologies
@@ -67,15 +67,16 @@ npm run build
 
 Voici quelques-uns de mes principaux projets publics et leurs dépôts GitHub :
 
-- **Devis Pro** : [github.com/misbaou672/Devis-Pro](https://github.com/misbaou672/Devis-Pro) — *Créateur de devis métier et génération PDF.*
-- **CodeRouge** : [github.com/misbaou672/CodeRouge](https://github.com/misbaou672/CodeRouge) — *Application d'accompagnement vocal et sportif.*
-- **Velib-Optim** : [github.com/misbaou672/Velib-Optim](https://github.com/misbaou672/Velib-Optim) — *Optimisation algorithmique des stations Vélib.*
-- **GestiStock** : [github.com/misbaou672/GestiStock](https://github.com/misbaou672/GestiStock) — *Mini logiciel de gestion des stocks logistiques.*
-- **SAE3_Real01 (EchOcean)** : [github.com/misbaou672/SAE3_Real01](https://github.com/misbaou672/SAE3_Real01) — *Modèle orienté objet strict (MVC) et cartographie interactive.*
+- **Devis Pro** : [github.com/misbaou672/Devis-Pro](https://github.com/misbaou672/Devis-Pro) — _Créateur de devis métier et génération PDF._
+- **CodeRouge** : [github.com/misbaou672/CodeRouge](https://github.com/misbaou672/CodeRouge) — _Application d'accompagnement vocal et sportif._
+- **Velib-Optim** : [github.com/misbaou672/Velib-Optim](https://github.com/misbaou672/Velib-Optim) — _Optimisation algorithmique des stations Vélib._
+- **GestiStock** : [github.com/misbaou672/GestiStock](https://github.com/misbaou672/GestiStock) — _Mini logiciel de gestion des stocks logistiques._
+- **SAE3_Real01 (EchOcean)** : [github.com/misbaou672/SAE3_Real01](https://github.com/misbaou672/SAE3_Real01) — _Modèle orienté objet strict (MVC) et cartographie interactive._
 
 **Et aussi :**
+
 - **Auriance** : [github.com/misbaou672/Auriance](https://github.com/misbaou672/Auriance)
-- **HAM_projet_jeu** : [github.com/misbaou672/HAM_projet_jeu](https://github.com/misbaou672/HAM_projet_jeu) — *Programmation d'un jeu vidéo.*
+- **HAM_projet_jeu** : [github.com/misbaou672/HAM_projet_jeu](https://github.com/misbaou672/HAM_projet_jeu) — _Programmation d'un jeu vidéo._
 - **Diplomaat** : [github.com/misbaou672/Diplomaat](https://github.com/misbaou672/Diplomaat)
 - **dashboard_alternance** : [github.com/misbaou672/dashboard_alternance](https://github.com/misbaou672/dashboard_alternance)
 - **jeu** : [github.com/misbaou672/jeu](https://github.com/misbaou672/jeu)

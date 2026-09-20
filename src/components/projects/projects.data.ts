@@ -65,7 +65,10 @@ export const PROJECTS: Project[] = [
       { value: '42+', label: 'Séances suivies' },
       { value: 'Coach IA', label: 'Accompagnement vocal' },
     ],
-    links: [{ label: 'Repo GitHub', href: 'https://github.com/misbaou672/CodeRouge' }],
+    links: [
+      { label: 'Site Live', href: 'https://coderouge2mika.vercel.app' },
+      { label: 'Repo GitHub', href: 'https://github.com/misbaou672/CodeRouge' },
+    ],
     palette: { from: '#fef2f2', to: '#fee2e2', ink: '#991b1b' },
     medias: [
       { src: cr1Media, alt: 'Tableau de bord : Accueil & Objectif du jour' },
