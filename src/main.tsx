@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import { Providers } from '@/app/Providers';
-import { Deck } from '@/app/Deck';
+import { Layout } from '@/app/Layout';
 
 import '@/styles/fonts.css';
 import '@/styles/tokens.css';
@@ -12,7 +12,7 @@ import '@/styles/global.css';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Deck />,
+    element: <Layout />,
   },
 ]);
 

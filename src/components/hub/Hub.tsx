@@ -3,6 +3,9 @@ import { useRef } from 'react';
 import { gsap, useGSAP } from '@/lib/gsap';
 import { STACK } from './stack.data';
 import styles from './Hub.module.css';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const SOCIALS = [
   {
@@ -41,6 +44,10 @@ export function Hub() {
           duration: 0.7,
           ease: 'power3.out',
           stagger: 0.08,
+          scrollTrigger: {
+            trigger: rootRef.current,
+            start: 'top 80%',
+          }
         });
       });
       return () => mm.revert();
