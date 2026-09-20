@@ -66,7 +66,7 @@ export const PROJECTS: Project[] = [
       { value: 'Coach IA', label: 'Accompagnement vocal' },
     ],
     links: [
-      { label: 'Site Live', href: 'https://code-rouge-mocha.vercel.app' },
+      { label: 'Site Live', href: 'https://coderouge2mika.vercel.app' },
       { label: 'Repo GitHub', href: 'https://github.com/misbaou672/CodeRouge' },
     ],
     palette: { from: '#fef2f2', to: '#fee2e2', ink: '#991b1b' },
