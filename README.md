@@ -55,6 +55,16 @@ npm run build
 | `npm run preview` | Lance un serveur local pour tester le build |
 | `npm run lint`    | Vérification ESLint                         |
 
+## 📂 Mes Autres Projets Publics
+
+Voici quelques-uns de mes principaux projets publics et leurs dépôts GitHub :
+
+- **Devis Pro** : [github.com/misbaou672/Devis-Pro](https://github.com/misbaou672/Devis-Pro) — *Créateur de devis métier et génération PDF.*
+- **CodeRouge** : [github.com/misbaou672/CodeRouge](https://github.com/misbaou672/CodeRouge) — *Application d'accompagnement vocal et sportif.*
+- **Velib-Optim** : [github.com/misbaou672/Velib-Optim](https://github.com/misbaou672/Velib-Optim) — *Optimisation algorithmique des stations Vélib.*
+- **GestiStock** : [github.com/misbaou672/GestiStock](https://github.com/misbaou672/GestiStock) — *Mini logiciel de gestion des stocks logistiques.*
+- **SAE3_Real01 (EchOcean)** : [github.com/misbaou672/SAE3_Real01](https://github.com/misbaou672/SAE3_Real01) — *Modèle orienté objet strict (MVC) et cartographie interactive.*
+
 ## 🔗 Liens Sociaux
 
 - **LinkedIn** : [misbaou-diallo14082005](https://www.linkedin.com/in/misbaou-diallo14082005/)
