@@ -4,11 +4,11 @@
 .experience {
   min-height: 100%;
   width: 100%;
-  background: var(--bg);
+  background: transparent;
   color: var(--ink);
   display: flex;
   align-items: center;
-  padding: var(--chrome-top) clamp(24px, 6vw, 96px) var(--chrome-bottom);
+  padding: 40px clamp(24px, 4vw, 64px);
   position: relative;
   overflow: hidden;
 }
@@ -65,7 +65,7 @@
 /* --- Terminal UI --- */
 
 .terminal {
-  background: var(--dark-bg);
+  background: var(--bg-2);
   border: 1px solid var(--line);
   border-radius: 12px;
   overflow: hidden;

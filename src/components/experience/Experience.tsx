@@ -2,6 +2,10 @@ import { useState, useRef, useEffect } from 'react';
 import { useMediaQuery } from '@/lib/useMediaQuery';
 import { ScrambleText } from './ScrambleText';
 import styles from './Experience.module.css';
+import { gsap, useGSAP } from '@/lib/gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 type Step = {
   title: string;
@@ -39,6 +43,8 @@ export function Experience() {
   const [isDecrypted, setIsDecrypted] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const termRef = useRef<HTMLDivElement>(null);
 
   // Auto-focus input on mount
   useEffect(() => {
@@ -46,6 +52,23 @@ export function Experience() {
       inputRef.current?.focus();
     }
   }, [compact]);
+  
+  useGSAP(() => {
+    const mm = gsap.matchMedia();
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      gsap.from(termRef.current, {
+        y: 40,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 75%',
+        }
+      });
+    });
+    return () => mm.revert();
+  }, { scope: sectionRef });
 
   const handleCommand = (cmd: string) => {
     if (cmd.trim() === './decrypt.sh') {
@@ -63,7 +86,7 @@ export function Experience() {
   };
 
   return (
-    <section className={styles.experience} id="experience" aria-label="Expérience">
+    <section ref={sectionRef} className={styles.experience} id="experience" aria-label="Expérience">
       <div className={styles.inner}>
         <header className={styles.intro}>
           {compact ? (
@@ -88,7 +111,7 @@ export function Experience() {
           )}
         </header>
 
-        <div className={styles.terminal}>
+        <div ref={termRef} className={styles.terminal}>
           <div className={styles.terminalHeader}>
             <div className={styles.terminalButtons}>
               <span className={styles.tBtnRed}></span>

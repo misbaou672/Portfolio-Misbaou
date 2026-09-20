@@ -41,7 +41,7 @@ export function Hub() {
         gsap.from(rootRef.current!.querySelectorAll('[data-rise]'), {
           y: 26,
           autoAlpha: 0,
-          duration: 0.7,
+          duration: 0.6,
           ease: 'power3.out',
           stagger: 0.08,
           scrollTrigger: {

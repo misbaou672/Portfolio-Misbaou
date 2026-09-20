@@ -166,11 +166,34 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
       choisir(Math.min(Math.max(courant + Math.sign(dx), 0), PROJECTS.length - 1));
     };
 
+    // Pour éviter de bloquer la page entière (scroll trap), on ne preventDefault
+    // que si on change effectivement de tuile (si on n'est pas en butée).
+    let lastWheelTime = 0;
+    const onWheel = (e: globalThis.WheelEvent) => {
+      const now = performance.now();
+      if (now - lastWheelTime < 400) {
+        e.preventDefault();
+        return;
+      }
+      
+      const { active: courant, onActivate: choisir } = etat.current;
+      const sens = Math.sign(e.deltaY);
+      const cible = courant + sens;
+      
+      if (cible >= 0 && cible <= PROJECTS.length - 1) {
+        e.preventDefault();
+        lastWheelTime = now;
+        choisir(cible);
+      }
+    };
+
     zone.addEventListener('touchstart', onStart, { passive: true });
     zone.addEventListener('touchend', onEnd, { passive: true });
+    zone.addEventListener('wheel', onWheel, { passive: false });
     return () => {
       zone.removeEventListener('touchstart', onStart);
       zone.removeEventListener('touchend', onEnd);
+      zone.removeEventListener('wheel', onWheel);
     };
   }, []);
 

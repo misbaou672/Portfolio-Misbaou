@@ -1,9 +1,34 @@
+import { useRef } from 'react';
 import styles from './Contact.module.css';
+import { gsap, useGSAP } from '@/lib/gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 /** Ecran 05, Contact. Coordonnees, liens, telechargement du CV. */
 export function Contact() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    const mm = gsap.matchMedia();
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      gsap.from(sectionRef.current!.querySelectorAll(`.${styles.status}, .${styles.title}, .${styles.email}, .${styles.phone}, .${styles.links} > a`), {
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power3.out',
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+        }
+      });
+    });
+    return () => mm.revert();
+  }, { scope: sectionRef });
+
   return (
-    <section className={styles.contact} id="contact" aria-label="Contact">
+    <section ref={sectionRef} className={styles.contact} id="contact" aria-label="Contact">
       <div className={styles.inner}>
         {/* Quatre informations separees par des barres et non par des
             virgules : la ligne contient deja « 1 sem. / 1 sem. », dont la

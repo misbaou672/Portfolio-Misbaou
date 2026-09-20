@@ -10,13 +10,13 @@
      defiler, sinon le centrage flex la fait deborder par le haut. */
   min-height: 100%;
   width: 100%;
-  background: var(--bg);
+  background: transparent;
   color: var(--ink);
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
   align-items: center;
-  gap: clamp(32px, 6vw, 96px);
-  padding: var(--chrome-top) clamp(24px, 6vw, 96px) calc(var(--chrome-bottom) + 40px);
+  gap: clamp(32px, 6vw, 64px);
+  padding: 40px clamp(24px, 4vw, 64px);
 }
 
 .glow {

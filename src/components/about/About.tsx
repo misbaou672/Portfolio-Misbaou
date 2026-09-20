@@ -1,4 +1,9 @@
+import { useRef } from 'react';
 import styles from './About.module.css';
+import { gsap, useGSAP } from '@/lib/gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Centres d'interet et langues repris du CV, qui fait foi : le site et le CV
@@ -11,8 +16,28 @@ const LANGUES = ['Français', 'Anglais professionnel'];
 
 /** Ecran 04, A propos. Photo, recit, formation, centres d'interet. */
 export function About() {
+  const sectionRef = useRef<HTMLElement>(null);
+  
+  useGSAP(() => {
+    const mm = gsap.matchMedia();
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      gsap.from(sectionRef.current!.querySelectorAll(`.${styles.side}, .${styles.story} > *`), {
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power3.out',
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 75%',
+        }
+      });
+    });
+    return () => mm.revert();
+  }, { scope: sectionRef });
+
   return (
-    <section className={styles.about} id="a-propos" aria-label="À propos">
+    <section ref={sectionRef} className={styles.about} id="a-propos" aria-label="À propos">
       <div className={styles.grid}>
         <aside className={styles.side}>
           <div className={styles.photo}>

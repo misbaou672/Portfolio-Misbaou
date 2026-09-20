@@ -4,11 +4,12 @@
      defiler, sinon le centrage flex la fait deborder par le haut. */
   min-height: 100%;
   width: 100%;
-  background: var(--bg);
+  background: transparent;
   color: var(--ink);
   display: flex;
   align-items: center;
-  padding: var(--chrome-top) clamp(24px, 6vw, 96px) var(--chrome-bottom);
+  padding: 40px clamp(24px, 4vw, 64px);
+  position: relative;
   overflow-y: auto;
 }
 

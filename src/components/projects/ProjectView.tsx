@@ -105,6 +105,78 @@ export function ProjectView({ project, originRect, onClose }: Props) {
     return () => retour?.focus();
   }, [tuile]);
 
+  /**
+   * Amélioration UX : Fermer la fiche avec la molette de la souris.
+   * Si on est sur le texte (.bento) qui peut scroller, on le laisse scroller.
+   * Si on arrive en butée ou qu'on scroll sur l'image, on ferme la fiche en douceur.
+   * NOUVEAU : On fait d'abord défiler les images de la galerie avant de fermer !
+   */
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    let wheelDebounce = false;
+    let scrollAccumulator = 0;
+
+    const onWheel = (e: WheelEvent) => {
+      if (wheelDebounce) return;
+
+      const target = e.target as HTMLElement;
+      const bento = root.querySelector(`.${styles.bento}`);
+      
+      // Si la souris est sur la zone de texte (bento)
+      if (bento && bento.contains(target)) {
+        const isAtTop = bento.scrollTop === 0;
+        const isAtBottom = Math.abs(bento.scrollHeight - bento.clientHeight - bento.scrollTop) < 2;
+
+        if (e.deltaY > 0 && !isAtBottom) {
+          scrollAccumulator = 0;
+          return; // Peut encore scroller vers le bas
+        }
+        if (e.deltaY < 0 && !isAtTop) {
+          scrollAccumulator = 0;
+          return; // Peut encore scroller vers le haut
+        }
+      }
+
+      // On accumule le scroll pour éviter que ça change/ferme au moindre petit effleurement
+      scrollAccumulator += Math.abs(e.deltaY);
+
+      if (scrollAccumulator > 100) { // Seuil (100px virtuels)
+        wheelDebounce = true;
+        
+        const isScrollingDown = e.deltaY > 0;
+        const hasMultipleImages = project.medias && project.medias.length > 1;
+
+        if (hasMultipleImages) {
+          setCurrentImageIndex((prevIndex) => {
+            if (isScrollingDown && prevIndex < project.medias!.length - 1) {
+              // On descend et il reste des images -> image suivante
+              scrollAccumulator = 0;
+              setTimeout(() => { wheelDebounce = false; }, 400); // debounce pour pas zapper 3 images d'un coup
+              return prevIndex + 1;
+            } else if (!isScrollingDown && prevIndex > 0) {
+              // On monte et on n'est pas a la premiere image -> image precedente
+              scrollAccumulator = 0;
+              setTimeout(() => { wheelDebounce = false; }, 400);
+              return prevIndex - 1;
+            } else {
+              // Aux extremités des images -> on ferme
+              fermer();
+              return prevIndex;
+            }
+          });
+        } else {
+          // Une seule image -> on ferme direct
+          fermer();
+        }
+      }
+    };
+
+    root.addEventListener('wheel', onWheel, { passive: true });
+    return () => root.removeEventListener('wheel', onWheel);
+  }, [fermer, project.medias]);
+
   useGSAP(
     () => {
       const root = rootRef.current;
@@ -208,9 +280,10 @@ export function ProjectView({ project, originRect, onClose }: Props) {
           {project.medias && project.medias.length > 0 ? (
             <>
               <img
+                key={currentImageIndex} // Pour forcer la transition CSS s'il y en a une
                 className={isLogo ? styles.heroLogo : styles.heroImage}
-                src={project.medias[0].src}
-                alt={project.medias[0].alt}
+                src={project.medias[currentImageIndex].src}
+                alt={project.medias[currentImageIndex].alt}
                 loading="eager"
                 decoding="async"
               />
@@ -221,6 +294,18 @@ export function ProjectView({ project, originRect, onClose }: Props) {
                     : '🔍 Agrandir & Défiler en plein écran'}
                 </span>
               </div>
+              
+              {/* Indicateurs de pagination visuelle sur le hero */}
+              {project.medias.length > 1 && (
+                <div className={styles.heroPagination}>
+                  {project.medias.map((_, idx) => (
+                    <span 
+                      key={idx} 
+                      className={`${styles.heroDot} ${idx === currentImageIndex ? styles.heroDotActive : ''}`} 
+                    />
+                  ))}
+                </div>
+              )}
             </>
           ) : (
             /* Pas d'etiquette "a venir" quand une note explique qu'il n'y en

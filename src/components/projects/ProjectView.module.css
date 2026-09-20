@@ -122,6 +122,37 @@
   pointer-events: none;
 }
 
+.heroPagination {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 6px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+}
+
+.heroDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--p-muted);
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.heroDotActive {
+  opacity: 1;
+  background: var(--p-accent);
+  transform: scale(1.2);
+}
+
 /* Lightbox */
 .lightbox {
   position: fixed;

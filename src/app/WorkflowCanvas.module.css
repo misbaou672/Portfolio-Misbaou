@@ -1,56 +1,78 @@
-.layout {
+.nodeWrapper {
+  width: 1200px;
+  min-height: 800px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--surface-border);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  overflow: hidden;
+  /* Prevent pointer events on the wrapper so dragging the canvas works, 
+     but allow interactions inside */
+  cursor: default;
 }
 
-/* Le flux de base */
-.main {
+.nodeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid var(--surface-border);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+}
+
+.status {
+  color: var(--violet);
+  background: var(--violet-pale);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.nodeContent {
   flex: 1;
+  position: relative;
+  /* Un peu de padding interne pour éviter que les enfants touchent les bords */
   display: flex;
   flex-direction: column;
-  position: relative;
-  z-index: 1;
-  /* Laisse de la place sous le header */
-  padding-top: var(--chrome-top);
-  padding-bottom: 4rem;
+}
+
+.handle {
+  width: 16px !important;
+  height: 16px !important;
+  background: var(--bg-2) !important;
+  border: 3px solid var(--violet) !important;
+  box-shadow: 0 0 10px var(--violet-pale) !important;
 }
 
 /* ==============================================================
-   LE FOND "COMBO ULTIME" : Grille + Halos + Typographie + Scanline + Bruit
+   LE FOND "COMBO ULTIME" (sans la grille car Background ReactFlow)
    ============================================================== */
 
 .ultimateBg {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 0; /* Derrière le canvas ReactFlow */
   overflow: hidden;
   pointer-events: none;
-  background-color: var(--bg);
 }
 
-/* 1. Le Bruit (Noise) - Grain de pellicule très léger */
 .noise {
   position: absolute;
   inset: 0;
   opacity: 0.25;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  z-index: 5; /* Au-dessus pour texturer l'ensemble */
+  z-index: 5;
   mix-blend-mode: multiply;
 }
 
-/* 2. La Grille de points / Blueprint */
-.grid {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    radial-gradient(circle, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
-  background-size: 24px 24px;
-  opacity: 0.8;
-  z-index: 1;
-}
-
-/* 3. Les Halos Radiaux (Aurora effect) */
 .halos {
   position: absolute;
   inset: 0;
@@ -82,7 +104,6 @@
   animation-duration: 30s;
 }
 
-/* 4. La Typographie Géante Parallaxe */
 .typography {
   position: absolute;
   top: 50%;
@@ -95,32 +116,11 @@
   white-space: nowrap;
   color: rgba(0, 0, 0, 0.02);
   z-index: 0;
-  pointer-events: none;
-  user-select: none;
 }
 
-/* 5. Le Laser (Scanline) */
-.scanline {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 8px;
-  background: linear-gradient(to bottom, transparent, rgba(168, 85, 247, 0.2), rgba(6, 182, 212, 0.4), transparent);
-  z-index: 4;
-  animation: scan 8s linear infinite;
-  opacity: 0.6;
-}
-
-/* Animations */
 @keyframes float {
   0% { transform: translate(0, 0) scale(1); }
   33% { transform: translate(8%, 10%) scale(1.1); }
   66% { transform: translate(-10%, 15%) scale(0.9); }
   100% { transform: translate(-12%, -8%) scale(1.05); }
-}
-
-@keyframes scan {
-  0% { transform: translateY(-10vh); }
-  100% { transform: translateY(110vh); }
 }
