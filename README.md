@@ -66,7 +66,6 @@ Voici quelques-uns de mes principaux projets publics et leurs dépôts GitHub :
 - **SAE3_Real01 (EchOcean)** : [github.com/misbaou672/SAE3_Real01](https://github.com/misbaou672/SAE3_Real01) — *Modèle orienté objet strict (MVC) et cartographie interactive.*
 
 **Et aussi :**
-- **MOI** : [github.com/misbaou672/MOI](https://github.com/misbaou672/MOI)
 - **Auriance** : [github.com/misbaou672/Auriance](https://github.com/misbaou672/Auriance)
 - **HAM_projet_jeu** : [github.com/misbaou672/HAM_projet_jeu](https://github.com/misbaou672/HAM_projet_jeu) — *Programmation d'un jeu vidéo.*
 - **Diplomaat** : [github.com/misbaou672/Diplomaat](https://github.com/misbaou672/Diplomaat)
