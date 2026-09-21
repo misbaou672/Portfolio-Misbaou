@@ -10,9 +10,9 @@ type Props = {
   onOpen: (index: number) => void;
 };
 
-const TILE = 82;
-const ACTIVE = 120;
-const GAP = 8;
+const TILE = 224; // 280px * 0.8 scale
+const ACTIVE = 280;
+const GAP = 16;
 /** Distance de doigt avant de changer de tuile. */
 const SEUIL_TACTILE = 40;
 

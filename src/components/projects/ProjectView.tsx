@@ -10,419 +10,558 @@ type Props = {
   project: Project;
   originRect: DOMRect | null;
   onClose: () => void;
+  onNext?: () => void;
+  onPrev?: () => void;
 };
 
-/** Prise de vue plein panneau d'un projet : titre geant, media, meta, bento. */
-export function ProjectView({ project, originRect, onClose }: Props) {
+const Icons = {
+  Maximize: () => (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+      <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+    </svg>
+  ),
+  Info: () => (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+      <circle cx="12" cy="12" r="10" />
+      <line x1="12" y1="16" x2="12" y2="12" />
+      <line x1="12" y1="8" x2="12.01" y2="8" />
+    </svg>
+  ),
+  Terminal: () => (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+      <polyline points="4 17 10 11 4 5" />
+      <line x1="12" y1="19" x2="20" y2="19" />
+    </svg>
+  ),
+  CheckCircle: () => (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+      <polyline points="22 4 12 14.01 9 11.01" />
+    </svg>
+  ),
+  Compass: () => (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+      <circle cx="12" cy="12" r="10" />
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+    </svg>
+  ),
+  ExternalLink: () => (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      <polyline points="15 3 21 3 21 9" />
+      <line x1="10" y1="14" x2="21" y2="3" />
+    </svg>
+  ),
+  Cpu: () => (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+      <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
+      <rect x="9" y="9" width="6" height="6" />
+      <line x1="9" y1="1" x2="9" y2="4" />
+      <line x1="15" y1="1" x2="15" y2="4" />
+      <line x1="9" y1="20" x2="9" y2="23" />
+      <line x1="15" y1="20" x2="15" y2="23" />
+      <line x1="20" y1="9" x2="23" y2="9" />
+      <line x1="20" y1="15" x2="23" y2="15" />
+      <line x1="1" y1="9" x2="4" y2="9" />
+      <line x1="1" y1="15" x2="4" y2="15" />
+    </svg>
+  ),
+  Layers: () => (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+      <polygon points="12 2 2 7 12 12 22 7 12 2" />
+      <polyline points="2 17 12 22 22 17" />
+      <polyline points="2 12 12 17 22 12" />
+    </svg>
+  ),
+  CheckItem: () => (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  ),
+  Clock: () => (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '4px', verticalAlign: '-1px' }}>
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
+    </svg>
+  ),
+  Target: () => (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '4px', verticalAlign: '-1px' }}>
+      <circle cx="12" cy="12" r="10" />
+      <circle cx="12" cy="12" r="6" />
+      <circle cx="12" cy="12" r="2" />
+    </svg>
+  ),
+  CodeTag: () => (
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '5px', opacity: 0.85 }}>
+      <polyline points="16 18 22 12 16 6" />
+      <polyline points="8 6 2 12 8 18" />
+    </svg>
+  ),
+  Sparkle: () => (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px', opacity: 0.9 }}>
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    </svg>
+  ),
+  Award: () => (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px', opacity: 0.9 }}>
+      <circle cx="12" cy="8" r="7" />
+      <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+    </svg>
+  )
+};
+
+export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const lightboxRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
-
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isAtBottom, setIsAtBottom] = useState(false);
+  const lastWheelTime = useRef<number>(0);
 
-  /** Retrouve la tuile d'ou la fiche est sortie, pour y revenir. */
-  const tuile = useCallback(
-    () => document.querySelector<HTMLElement>(`[data-tile-id="${project.id}"]`),
-    [project.id],
-  );
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [project.id]);
 
-  /**
-   * Fermeture animee : l'inverse de l'ouverture. Sans elle la fiche
-   * disparaissait d'un coup alors qu'elle etait entree en fondu depuis sa
-   * tuile, ce qui donnait une experience bancale d'un cote seulement.
-   *
-   * Le rectangle de destination est relu au moment de fermer, et non repris
-   * de l'ouverture : la pellicule a pu bouger entre-temps.
-   */
+  useEffect(() => {
+    const heroEl = heroRef.current;
+    if (!heroEl) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      // Lock/freeze page scrolling while cursor is over the hero section
+      e.preventDefault();
+      e.stopPropagation();
+
+      const medias = project.medias;
+      if (!medias || medias.length <= 1) return;
+
+      const total = medias.length;
+      const now = Date.now();
+      if (now - lastWheelTime.current < 160) return;
+      lastWheelTime.current = now;
+
+      if (e.deltaY > 0) {
+        setCurrentImageIndex((prev) => (prev + 1) % total);
+      } else if (e.deltaY < 0) {
+        setCurrentImageIndex((prev) => (prev - 1 + total) % total);
+      }
+    };
+
+    heroEl.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      heroEl.removeEventListener('wheel', handleWheel);
+    };
+  }, [project.medias]);
+
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+    const lightboxEl = lightboxRef.current;
+    if (!lightboxEl) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const medias = project.medias;
+      if (!medias || medias.length <= 1) return;
+
+      const total = medias.length;
+      const now = Date.now();
+      if (now - lastWheelTime.current < 160) return;
+      lastWheelTime.current = now;
+
+      if (e.deltaY > 0) {
+        setCurrentImageIndex((prev) => (prev + 1) % total);
+      } else if (e.deltaY < 0) {
+        setCurrentImageIndex((prev) => (prev - 1 + total) % total);
+      }
+    };
+
+    lightboxEl.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      lightboxEl.removeEventListener('wheel', handleWheel);
+    };
+  }, [isLightboxOpen, project.medias]);
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
+    if (scrollTop + clientHeight >= scrollHeight - 50) {
+      setIsAtBottom(true);
+    } else {
+      setIsAtBottom(false);
+    }
+  };
+
   const fermeture = useRef(false);
   const fermer = useCallback(() => {
     if (fermeture.current) return;
     fermeture.current = true;
 
     const root = rootRef.current;
-    const hero = heroRef.current;
-    const cible = tuile();
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (!root || !hero || !cible || reduced) {
+    if (!root) {
       onClose();
       return;
     }
 
-    const depart = hero.getBoundingClientRect();
-    const arrivee = cible.getBoundingClientRect();
-
-    const tl = gsap.timeline({ defaults: { ease: 'power3.inOut' }, onComplete: onClose });
-    tl.to(root.querySelectorAll(`.${styles.reveal}`), {
+    gsap.to(root, {
       autoAlpha: 0,
-      y: 14,
-      duration: 0.22,
-      stagger: { each: 0.03, from: 'end' },
+      scale: 0.98,
+      duration: 0.3,
+      ease: 'power3.inOut',
+      onComplete: onClose
     });
-    tl.to(
-      hero,
-      {
-        x: arrivee.left + arrivee.width / 2 - (depart.left + depart.width / 2),
-        y: arrivee.top + arrivee.height / 2 - (depart.top + depart.height / 2),
-        scaleX: arrivee.width / depart.width,
-        scaleY: arrivee.height / depart.height,
-        duration: 0.45,
-      },
-      '-=0.1',
-    );
-    tl.to(root, { autoAlpha: 0, duration: 0.25 }, '-=0.3');
-  }, [onClose, tuile]);
+  }, [onClose]);
 
-  /** Echap ferme la fiche, comme toute couche qui recouvre la page. */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape') return;
-      e.preventDefault();
-      fermer();
+      if (e.key === 'Escape') fermer();
+      if (e.key === 'ArrowRight' && onNext && !isLightboxOpen) onNext();
+      if (e.key === 'ArrowLeft' && onPrev && !isLightboxOpen) onPrev();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [fermer]);
+  }, [fermer, onNext, onPrev, isLightboxOpen]);
 
-  /**
-   * Le logotype du chrome ramene au hub. La fiche recouvre le diaporama sans
-   * en faire partie : sans ca, elle resterait par-dessus une fois arrive.
-   */
   useEffect(() => {
     window.addEventListener(RETOUR_ACCUEIL, fermer);
     return () => window.removeEventListener(RETOUR_ACCUEIL, fermer);
   }, [fermer]);
 
-  /**
-   * Le focus entre dans la fiche a l'ouverture et retourne sur la tuile a la
-   * fermeture : sinon il restait sur une tuile devenue invisible, puis se
-   * retrouvait en tete de document au retour.
-   */
   useEffect(() => {
-    const retour = tuile();
-    closeRef.current?.focus();
-    return () => retour?.focus();
-  }, [tuile]);
-
-  /**
-   * Amélioration UX : Fermer la fiche avec la molette de la souris.
-   * Si on est sur le texte (.bento) qui peut scroller, on le laisse scroller.
-   * Si on arrive en butée ou qu'on scroll sur l'image, on ferme la fiche en douceur.
-   * NOUVEAU : On fait d'abord défiler les images de la galerie avant de fermer !
-   */
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-
-    let wheelDebounce = false;
-    let scrollAccumulator = 0;
-
-    const onWheel = (e: WheelEvent) => {
-      if (wheelDebounce) return;
-
-      const target = e.target as HTMLElement;
-      const bento = root.querySelector(`.${styles.bento}`);
-      
-      // Si la souris est sur la zone de texte (bento)
-      if (bento && bento.contains(target)) {
-        const isAtTop = bento.scrollTop === 0;
-        const isAtBottom = Math.abs(bento.scrollHeight - bento.clientHeight - bento.scrollTop) < 2;
-
-        if (e.deltaY > 0 && !isAtBottom) {
-          scrollAccumulator = 0;
-          return; // Peut encore scroller vers le bas
-        }
-        if (e.deltaY < 0 && !isAtTop) {
-          scrollAccumulator = 0;
-          return; // Peut encore scroller vers le haut
-        }
-      }
-
-      // On accumule le scroll pour éviter que ça change/ferme au moindre petit effleurement
-      scrollAccumulator += Math.abs(e.deltaY);
-
-      if (scrollAccumulator > 100) { // Seuil (100px virtuels)
-        wheelDebounce = true;
-        
-        const isScrollingDown = e.deltaY > 0;
-        const hasMultipleImages = project.medias && project.medias.length > 1;
-
-        if (hasMultipleImages) {
-          setCurrentImageIndex((prevIndex) => {
-            if (isScrollingDown && prevIndex < project.medias!.length - 1) {
-              // On descend et il reste des images -> image suivante
-              scrollAccumulator = 0;
-              setTimeout(() => { wheelDebounce = false; }, 400); // debounce pour pas zapper 3 images d'un coup
-              return prevIndex + 1;
-            } else if (!isScrollingDown && prevIndex > 0) {
-              // On monte et on n'est pas a la premiere image -> image precedente
-              scrollAccumulator = 0;
-              setTimeout(() => { wheelDebounce = false; }, 400);
-              return prevIndex - 1;
-            } else {
-              // Aux extremités des images -> on ferme
-              fermer();
-              return prevIndex;
-            }
-          });
-        } else {
-          // Une seule image -> on ferme direct
-          fermer();
-        }
-      }
-    };
-
-    root.addEventListener('wheel', onWheel, { passive: true });
-    return () => root.removeEventListener('wheel', onWheel);
-  }, [fermer, project.medias]);
-
-  useGSAP(
-    () => {
-      const root = rootRef.current;
-      const hero = heroRef.current;
-      if (!root || !hero) return;
-
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced || !originRect) {
-        gsap.set(root, { autoAlpha: 1 });
-        return;
-      }
-
-      // FLIP maison : le media part de la tuile d'origine et rejoint sa place.
-      const dest = hero.getBoundingClientRect();
-      const dx = originRect.left + originRect.width / 2 - (dest.left + dest.width / 2);
-      const dy = originRect.top + originRect.height / 2 - (dest.top + dest.height / 2);
-
-      gsap.set(root, { autoAlpha: 1 });
-      gsap.set(root.querySelectorAll(`.${styles.reveal}`), { autoAlpha: 0, y: 24 });
-      gsap.set(hero, {
-        x: dx,
-        y: dy,
-        scaleX: originRect.width / dest.width,
-        scaleY: originRect.height / dest.height,
-        transformOrigin: 'center center',
-      });
-
-      const tl = gsap.timeline({ defaults: { ease: 'power3.inOut' } });
-      tl.to(hero, { x: 0, y: 0, scaleX: 1, scaleY: 1, duration: 0.55 });
-      tl.to(
-        root.querySelectorAll(`.${styles.reveal}`),
-        { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.06 },
-        '-=0.25',
-      );
-    },
-    { scope: rootRef, dependencies: [project.id] },
-  );
-
-  /**
-   * Le chrome est fixe au-dessus de la fiche et garde les couleurs du site.
-   * Sur un fond de projet sature, son violet tombe a 1,5:1. On le previent que
-   * la couche est ouverte, il repasse en neutre clair le temps de la visite.
-   */
-  useEffect(() => {
-    document.documentElement.dataset.takeover = 'on';
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     return () => {
-      delete document.documentElement.dataset.takeover;
+      document.body.style.overflow = prevOverflow;
     };
   }, []);
 
-  const isLogo = project.medias?.[0]?.kind === 'logo';
+  useEffect(() => {
+    closeRef.current?.focus();
+  }, [project.id]); // Re-focus quand le projet change
 
-  /**
-   * La fiche prend la direction artistique du projet, pas celle du site.
-   * Les quatre jetons se deduisent de la palette, ce qui evite d'avoir a
-   * declarer un theme complet par projet :
-   *
-   * - `ground` : la couleur du projet assombrie vers le noir, pour porter du
-   *   texte clair. Elle marche pour une palette deja sombre (Papyrus) comme
-   *   pour une palette vive (ASSURFAST, dont le bleu seul serait trop clair).
-   * - `accent` : la couleur d'accent du projet, celle du nom sur la tuile.
-   * - `ink` / `muted` : texte principal et secondaire, tires de l'accent pour
-   *   qu'ils restent dans la meme famille chromatique.
-   */
+  useGSAP(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    gsap.fromTo(root, { autoAlpha: 0, scale: 0.95 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power3.out' });
+    gsap.fromTo(root.querySelectorAll(`.${styles.reveal}`), 
+      { autoAlpha: 0, y: 20 },
+      { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' }
+    );
+  }, { scope: rootRef, dependencies: [project.id] });
+
   const theme = {
-    '--p-ground': `color-mix(in srgb, ${project.palette.from} 70%, #0a0a14)`,
-    '--p-ground-2': `color-mix(in srgb, ${project.palette.to} 42%, #0a0a14)`,
     '--p-accent': project.palette.ink,
     '--p-ink': `color-mix(in srgb, ${project.palette.ink} 16%, #ffffff)`,
-    '--p-muted': `color-mix(in srgb, ${project.palette.ink} 22%, #ccd3e2)`,
+    '--p-muted': `color-mix(in srgb, ${project.palette.ink} 22%, #94a3b8)`,
+    '--p-border': `color-mix(in srgb, ${project.palette.ink} 30%, rgba(255, 255, 255, 0.1))`,
   } as CSSProperties;
 
   return (
-    <div ref={rootRef} className={styles.root} style={theme}>
-      <button ref={closeRef} type="button" className={styles.close} onClick={fermer}>
-        Retour aux projets
-      </button>
+    <div ref={rootRef} className={styles.root} style={theme} onScroll={handleScroll}>
+      <header className={styles.topNav}>
+        <button ref={closeRef} type="button" className={styles.close} onClick={fermer}>
+          &larr; Retour
+        </button>
+        <div className={styles.projectNav}>
+          {onPrev && <button className={styles.navBtn} onClick={onPrev}>&larr; Projet Précédent</button>}
+          {onNext && <button className={styles.navBtn} onClick={onNext}>Projet Suivant &rarr;</button>}
+        </div>
+      </header>
 
-      {/* Le titre est un enfant direct de la grille, et non de la colonne du
-          visuel : c'est ce qui permet a la colonne de lecture de commencer au
-          niveau de l'apercu et non du nom. */}
-      <h2 className={`${styles.title} ${styles.reveal}`}>{project.name}</h2>
+      <div className={styles.container}>
+        {/* HEADER AREA */}
+        <div className={`${styles.headerArea} ${styles.reveal}`}>
+          <h1 className={styles.bgTitle}>{project.name}</h1>
+          <div className={styles.headerMeta}>
+            <span className={styles.metaBadge}>{project.year}</span>
+            <span className={styles.metaDivider}>•</span>
+            <span className={styles.metaText}>{project.kind}</span>
+            <span className={styles.metaDivider}>•</span>
+            <span className={styles.metaText}>{project.role}</span>
+          </div>
+        </div>
 
-      <div className={styles.visual}>
-        <div
-          ref={heroRef}
-          className={styles.hero}
-          style={{
-            /**
-             * Un logo garde ses propres couleurs. Celui d'ASSURFAST est bleu
-             * marine : pose sur le bleu vif de sa palette il deviendrait
-             * illisible. Le fond passe donc en lavis de cette meme couleur,
-             * assez pale pour que la marque ressorte, assez teinte pour que le
-             * projet reste reconnaissable.
-             */
-            background: isLogo
-              ? `linear-gradient(150deg, color-mix(in srgb, ${project.palette.from} 12%, #fff), color-mix(in srgb, ${project.palette.to} 22%, #fff))`
-              : `linear-gradient(150deg, ${project.palette.from}, ${project.palette.to})`,
-          }}
-        >
-          {project.medias && project.medias.length > 0 ? (
-            <>
-              <img
-                key={currentImageIndex} // Pour forcer la transition CSS s'il y en a une
-                className={isLogo ? styles.heroLogo : styles.heroImage}
-                src={project.medias[currentImageIndex].src}
-                alt={project.medias[currentImageIndex].alt}
-                loading="eager"
-                decoding="async"
-              />
-              <div className={styles.heroOverlay} onClick={() => setIsLightboxOpen(true)}>
-                <span className={styles.heroOverlayBtn}>
-                  {project.medias.length > 1
-                    ? `🔍 Agrandir & Défiler (${project.medias.length} captures)`
-                    : '🔍 Agrandir & Défiler en plein écran'}
-                </span>
-              </div>
-              
-              {/* Indicateurs de pagination visuelle sur le hero */}
-              {project.medias.length > 1 && (
-                <div className={styles.heroPagination}>
-                  {project.medias.map((_, idx) => (
-                    <span 
-                      key={idx} 
-                      className={`${styles.heroDot} ${idx === currentImageIndex ? styles.heroDotActive : ''}`} 
+        {/* 2-COLUMN BALANCED LAYOUT */}
+        <div className={styles.grid}>
+          {/* MAIN COLUMN (LEFT - 65%) */}
+          <div className={styles.mainCol}>
+            {/* HERO MEDIA */}
+            <div className={`${styles.mediaCol} ${styles.reveal}`}>
+              <div ref={heroRef} className={styles.hero} onClick={() => setIsLightboxOpen(true)}>
+                {project.medias && project.medias.length > 0 ? (
+                  <>
+                    <img
+                      className={styles.heroImage}
+                      src={project.medias[currentImageIndex].src}
+                      alt={project.medias[currentImageIndex].alt}
                     />
-                  ))}
+                    <div className={styles.heroOverlay}>
+                      <span className={styles.heroOverlayBtn}>
+                        <Icons.Maximize />
+                        {project.medias.length > 1
+                          ? `Molette : image ${currentImageIndex + 1}/${project.medias.length} • Clic pour agrandir`
+                          : 'Clic pour agrandir l\'image'}
+                      </span>
+                    </div>
+                    {project.medias.length > 1 && (
+                      <div className={styles.heroPagination} onClick={(e) => e.stopPropagation()}>
+                        {project.medias.map((_, idx) => (
+                          <button 
+                            key={idx}
+                            type="button"
+                            aria-label={`Image ${idx + 1}`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setCurrentImageIndex(idx);
+                            }}
+                            className={`${styles.heroDot} ${idx === currentImageIndex ? styles.heroDotActive : ''}`} 
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <span className={styles.heroLabel}>Aperçu non disponible</span>
+                )}
+              </div>
+              {project.mediaNote && <p className={styles.mediaNote}>{project.mediaNote}</p>}
+            </div>
+
+            {/* PITCH & CAS D'USAGE */}
+            <div className={`${styles.sectionBlock} ${styles.reveal}`}>
+              <span className={styles.label}>À propos du projet</span>
+              <p className={styles.pitch}>{project.pitch}</p>
+              {project.useCase && (
+                <div className={styles.useCaseCard}>
+                  <span className={styles.useCaseBadge}>
+                    <Icons.Info />
+                    Contexte et utilité
+                  </span>
+                  <p>{project.useCase}</p>
                 </div>
               )}
-            </>
-          ) : (
-            /* Pas d'etiquette "a venir" quand une note explique qu'il n'y en
-               aura pas : les deux se contrediraient. */
-            !project.mediaNote && (
-              <span className={styles.heroLabel} style={{ color: project.palette.ink }}>
-                aperçu, média à venir
-              </span>
-            )
-          )}
-        </div>
-
-        {project.mediaNote && (
-          <p className={`${styles.mediaNote} ${styles.reveal}`}>{project.mediaNote}</p>
-        )}
-
-        <div className={`${styles.meta} ${styles.reveal}`}>
-          <span>{project.year}</span>
-          <span>{project.kind}</span>
-          <span>{project.role}</span>
-        </div>
-      </div>
-
-      <div className={styles.bento}>
-        <p className={`${styles.pitch} ${styles.reveal}`}>{project.pitch}</p>
-
-        <div className={`${styles.stack} ${styles.reveal}`}>
-          <span className={styles.label}>Stack</span>
-          <ul>
-            {project.stack.map((tech) => (
-              <li key={tech}>{tech}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div className={styles.metrics}>
-          {project.metrics.map((metric) => (
-            <div key={metric.label} className={`${styles.metric} ${styles.reveal}`}>
-              <strong>{metric.value}</strong>
-              <span>{metric.label}</span>
             </div>
-          ))}
-        </div>
 
-        {project.links.length > 0 && (
-          <nav className={`${styles.links} ${styles.reveal}`} aria-label="Liens du projet">
-            {project.links.map((link) => (
-              <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
-                {link.label} &#8599;
-              </a>
-            ))}
-          </nav>
-        )}
-      </div>
-
-      {/* Lightbox Portal */}
-      {isLightboxOpen &&
-        project.medias &&
-        typeof document !== 'undefined' &&
-        createPortal(
-          <div className={styles.lightbox} onClick={() => setIsLightboxOpen(false)}>
-            <button className={styles.lightboxClose} onClick={() => setIsLightboxOpen(false)}>
-              &times;
-            </button>
-
-            <div className={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
-              <img
-                src={project.medias[currentImageIndex].src}
-                alt={project.medias[currentImageIndex].alt}
-                className={styles.lightboxImg}
-              />
-
-              <div className={styles.lightboxCaption}>
-                {project.medias[currentImageIndex].alt} ({currentImageIndex + 1} /{' '}
-                {project.medias.length})
+            {/* DÉFIS TECHNIQUES & SOLUTIONS */}
+            {project.challenges && project.challenges.length > 0 && (
+              <div className={`${styles.sectionBlock} ${styles.reveal}`}>
+                <span className={styles.label}>
+                  <Icons.Terminal />
+                  Défis techniques et solutions
+                </span>
+                <div className={styles.challengesGrid}>
+                  {project.challenges.map((item, idx) => (
+                    <div key={idx} className={styles.challengeCard}>
+                      <div className={styles.challengePart}>
+                        <span className={styles.challengeLabel}>Problème</span>
+                        <p>{item.challenge}</p>
+                      </div>
+                      <div className={styles.solutionPart}>
+                        <span className={styles.solutionLabel}>Solution</span>
+                        <p>{item.solution}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-
-            {project.medias.length > 1 && (
-              <>
-                <button
-                  className={`${styles.lightboxNav} ${styles.lightboxPrev}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrentImageIndex((i) => (i === 0 ? project.medias!.length - 1 : i - 1));
-                  }}
-                >
-                  &#8249;
-                </button>
-                <button
-                  className={`${styles.lightboxNav} ${styles.lightboxNext}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrentImageIndex((i) => (i === project.medias!.length - 1 ? 0 : i + 1));
-                  }}
-                >
-                  &#8250;
-                </button>
-              </>
             )}
 
-            {project.medias.length > 1 && (
-              <div className={styles.lightboxThumbnails} onClick={(e) => e.stopPropagation()}>
-                {project.medias.map((m, i) => (
-                  <img
-                    key={i}
-                    src={m.src}
-                    alt={m.alt}
-                    className={`${styles.lightboxThumb} ${i === currentImageIndex ? styles.lightboxThumbActive : ''}`}
-                    onClick={() => setCurrentImageIndex(i)}
+            {/* FONCTIONNALITÉS IMPLÉMENTÉES */}
+            {project.featuresDone && project.featuresDone.length > 0 && (
+              <div className={`${styles.sectionBlock} ${styles.reveal}`}>
+                <span className={styles.label}>
+                  <Icons.CheckCircle />
+                  Fonctionnalités développées
+                </span>
+                <div className={styles.doneGrid}>
+                  {project.featuresDone.map((item, idx) => (
+                    <div key={idx} className={styles.doneCard}>
+                      <span className={styles.checkIcon}><Icons.CheckItem /></span>
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ROADMAP / À VENIR */}
+            {project.roadmap && project.roadmap.length > 0 && (
+              <div className={`${styles.sectionBlock} ${styles.reveal}`}>
+                <span className={styles.label}>
+                  <Icons.Compass />
+                  Perspectives et évolutions
+                </span>
+                <div className={styles.roadmapList}>
+                  {project.roadmap.map((item, idx) => (
+                    <div key={idx} className={styles.roadmapCard}>
+                      <span className={`${styles.badge} ${item.status === 'in_progress' ? styles.badgeProgress : styles.badgePlanned}`}>
+                        {item.status === 'in_progress' ? (
+                          <>
+                            <Icons.Clock />
+                            En développement
+                          </>
+                        ) : (
+                          <>
+                            <Icons.Target />
+                            À venir
+                          </>
+                        )}
+                      </span>
+                      <span>{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* SIDEBAR COLUMN (RIGHT - 35%) */}
+          <aside className={styles.sidebarCol}>
+            <div className={styles.stickySidebar}>
+              {/* LIENS & ACTIONS */}
+              {project.links.length > 0 && (
+                <div className={`${styles.sidebarSection} ${styles.reveal}`}>
+                  <span className={styles.label}>Liens utiles</span>
+                  <nav className={styles.actionButtons} aria-label="Liens du projet">
+                    {project.links.map((link) => (
+                      <a key={link.href} href={link.href} target="_blank" rel="noreferrer" className={styles.actionBtn}>
+                        <span>{link.label}</span>
+                        <Icons.ExternalLink />
+                      </a>
+                    ))}
+                  </nav>
+                </div>
+              )}
+
+              {/* STACK TECHNIQUE */}
+              <div className={`${styles.sidebarSection} ${styles.reveal}`}>
+                <span className={styles.label}>
+                  <Icons.Cpu />
+                  Technologies
+                </span>
+                <ul className={styles.stackTags}>
+                  {project.stack.map((tech) => (
+                    <li key={tech} className={styles.techTag}>
+                      <Icons.CodeTag />
+                      {tech}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* COMPÉTENCES & ACQUIS */}
+              {project.learnings && project.learnings.length > 0 && (
+                <div className={`${styles.sidebarSection} ${styles.reveal}`}>
+                  <span className={styles.label}>
+                    <Icons.Layers />
+                    Compétences appliquées
+                  </span>
+                  <ul className={styles.learningsList}>
+                    {project.learnings.map((item, idx) => (
+                      <li key={idx}>
+                        <span className={styles.learningBullet}><Icons.Award /></span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* POINTS FORTS (FEATURES) */}
+              <div className={`${styles.sidebarSection} ${styles.reveal}`}>
+                <span className={styles.label}>Spécificités</span>
+                <div className={styles.metrics}>
+                  {project.features.map((feature) => (
+                    <div key={feature.title} className={styles.metric}>
+                      <strong>
+                        <Icons.Sparkle />
+                        {feature.title}
+                      </strong>
+                      <span>{feature.detail}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      {/* BOTTOM PINNED FOOTER BAR */}
+      <div className={`${styles.bottomBar} ${isAtBottom ? styles.bottomBarActive : ''}`}>
+        <span className={styles.bottomBarText}>Découvrir la suite</span>
+        <div className={styles.bottomNavButtons}>
+          {onNext && <button onClick={onNext} className={styles.bottomNavBtn}>Projet Suivant &rarr;</button>}
+          <button onClick={fermer} className={styles.bottomCloseBtn}>Fermer</button>
+        </div>
+      </div>
+
+      {/* LIGHTBOX MODE */}
+      {isLightboxOpen && project.medias && typeof document !== 'undefined' && createPortal(
+        <div ref={lightboxRef} className={styles.lightbox} onClick={() => setIsLightboxOpen(false)}>
+          <button className={styles.lightboxClose} onClick={() => setIsLightboxOpen(false)} aria-label="Fermer la vue agrandie">&times;</button>
+          
+          <div className={styles.lightboxContent} onClick={(e) => {
+            if (project.medias && project.medias.length > 1) {
+              e.stopPropagation();
+              setCurrentImageIndex((i) => (i + 1) % project.medias!.length);
+            }
+          }}>
+            <img 
+              src={project.medias[currentImageIndex].src} 
+              alt={project.medias[currentImageIndex].alt} 
+              className={styles.lightboxImg} 
+            />
+            <div className={styles.lightboxHint}>
+              {project.medias.length > 1
+                ? `Image ${currentImageIndex + 1} / ${project.medias.length} • Molette ou clic pour faire défiler`
+                : project.medias[currentImageIndex].alt}
+            </div>
+          </div>
+
+          {project.medias.length > 1 && (
+            <>
+              <button 
+                className={`${styles.lightboxNav} ${styles.lightboxPrev}`} 
+                onClick={(e) => { 
+                  e.stopPropagation(); 
+                  setCurrentImageIndex((i) => (i === 0 ? project.medias!.length - 1 : i - 1)); 
+                }}
+                aria-label="Image précédente"
+              >
+                &#8249;
+              </button>
+              <button 
+                className={`${styles.lightboxNav} ${styles.lightboxNext}`} 
+                onClick={(e) => { 
+                  e.stopPropagation(); 
+                  setCurrentImageIndex((i) => (i === project.medias!.length - 1 ? 0 : i + 1)); 
+                }}
+                aria-label="Image suivante"
+              >
+                &#8250;
+              </button>
+              <div className={styles.heroPagination} style={{ bottom: '28px' }} onClick={(e) => e.stopPropagation()}>
+                {project.medias.map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    aria-label={`Image ${idx + 1}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentImageIndex(idx);
+                    }}
+                    className={`${styles.heroDot} ${idx === currentImageIndex ? styles.heroDotActive : ''}`}
                   />
                 ))}
               </div>
-            )}
-          </div>,
-          document.body,
-        )}
+            </>
+          )}
+        </div>,
+        document.body
+      )}
     </div>
   );
 }

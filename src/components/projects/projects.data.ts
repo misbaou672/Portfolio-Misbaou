@@ -35,7 +35,12 @@ export type Project = {
   role: string;
   stack: string[];
   pitch: string;
-  metrics: { value: string; label: string }[];
+  useCase?: string;
+  challenges?: { challenge: string; solution: string }[];
+  learnings?: string[];
+  features: { title: string; detail: string }[];
+  featuresDone?: string[];
+  roadmap?: { label: string; status: 'in_progress' | 'planned' }[];
   links: { label: string; href: string }[];
   medias?: {
     src: string;
@@ -60,10 +65,42 @@ export const PROJECTS: Project[] = [
     role: 'Architecture & Développement Full-Stack',
     stack: ['Next.js 16', 'React 19', 'TypeScript', 'Turbopack', 'TailwindCSS'],
     pitch:
-      "Outil personnel développé sur-mesure pour mes propres besoins. Véritable compagnon de vie centralisant le suivi d'objectifs sportifs, la gestion d'habitudes et une To-Do List. Intègre des statistiques dynamiques, un chronomètre et un coach IA.",
-    metrics: [
-      { value: '42+', label: 'Séances suivies' },
-      { value: 'Coach IA', label: 'Accompagnement vocal' },
+      "Projet personnel conçu pour répondre à mes besoins d'organisation. Il centralise le suivi d'objectifs sportifs, la gestion d'habitudes et une To-Do List avec des statistiques simples, un chronomètre et un assistant vocal.",
+    useCase:
+      "Conçu pour offrir une alternative épurée et sans publicité aux applications de suivi sportif existantes. Il réunit au même endroit l'entraînement physique, la gestion d'habitudes et l'assistant vocal IA.",
+    challenges: [
+      {
+        challenge: "Maintenir des performances instantanées lors des changements de rounds en arrière-plan.",
+        solution: "Utilisation d'API Web Audio synchronisées avec des Web Workers pour éviter toute désynchronisation du chrono."
+      },
+      {
+        challenge: "Intégrer un coach IA réactif sans ralentir le rendu du composant React.",
+        solution: "Mise en place de Server Actions Next.js streaming les réponses textuelles et audio à la volée."
+      }
+    ],
+    learnings: [
+      "Maîtrise de Next.js 16 (App Router) et React 19",
+      "Gestion d'états complexes et Web Audio API",
+      "Intégration d'APIs IA en streaming de données"
+    ],
+    features: [
+      { title: 'Coach IA Intégré', detail: 'Accompagnement vocal personnalisé et suivi dynamique du profil.' },
+      { title: 'Architecture Moderne', detail: 'Développé avec la dernière stack React 19 et Next.js 16 (App Router).' },
+      { title: 'Chrono Interactif', detail: 'Gestionnaire de rondes de boxe configurables avec signaux sonores.' },
+    ],
+    featuresDone: [
+      "Système complet de suivi d'objectifs sportifs et cycles d'entraînement hebdomadaires",
+      "Timer interactif avec rondes personnalisables et signaux vocaux pour la boxe",
+      "Coach IA vocal (Deonte Walter) avec synthèse vocale et réponses adaptatives",
+      "Calculateur de dépenses caloriques et graphiques interactifs d'évolution du poids",
+      "Journal d'entraînement quotidien avec catégorisation des séances",
+      "Mode PWA (Progressive Web App) avec stockage local des préférences"
+    ],
+    roadmap: [
+      { label: "Synchronisation multi-appareils en temps réel via Supabase & PostgreSQL", status: 'in_progress' },
+      { label: "Système de notifications Push PWA pour les rappels d'entraînement", status: 'in_progress' },
+      { label: "Intégration d'objets connectés (capteurs de fréquence cardiaque Bluetooth)", status: 'planned' },
+      { label: "Génération de bilans mensuels de performance au format PDF", status: 'planned' }
     ],
     links: [
       { label: 'Site Live', href: 'https://coderouge2mika.vercel.app' },
@@ -100,9 +137,41 @@ export const PROJECTS: Project[] = [
     ],
     pitch:
       "Outil d'analyse et d'optimisation spatiale du réseau Vélib en Île-de-France (1500+ stations). Implémentation d'algorithmes de triangulation de Delaunay et d'arbres couvrants minimaux (MST) pour optimiser le maillage du réseau et minimiser les distances d'interconnexion.",
-    metrics: [
-      { value: '1 518', label: 'Stations synchronisées' },
-      { value: '10.3 ms', label: 'Exécution Kruskal' },
+    useCase:
+      "Permet de modéliser le réseau de transport doux parisien pour identifier les zones sous-équipées et optimiser les trajets de régulation de la flotte de vélos.",
+    challenges: [
+      {
+        challenge: "Traiter et restituer visuellement plus de 1500 stations sans faire ramer la carte.",
+        solution: "Application d'une simplification géométrique par triangulation de Delaunay réduisant la complexité de calcul d'interconnexion de O(N²) à O(N log N)."
+      },
+      {
+        challenge: "Déterminer le réseau d'interconnexion le plus économique entre toutes les stations.",
+        solution: "Implémentation de l'algorithme de Kruskal couplé à une structure Union-Find optimisée."
+      }
+    ],
+    learnings: [
+      "Algorithmique spatiale avancée (Delaunay, Kruskal, Dijkstra)",
+      "Optimisation de structures de données en Python",
+      "Visualisation cartographique interactive (Folium / Leaflet)"
+    ],
+    features: [
+      { title: 'Algorithmique Avancée', detail: "Implémentation de Kruskal et Delaunay pour l'optimisation spatiale." },
+      { title: 'Data Science', detail: 'Traitement et synchronisation en temps réel de 1500+ stations Métropole.' },
+      { title: 'Calcul d\'Itinéraires', detail: 'Algorithme de Dijkstra réadapté pour la disponibilité des vélos.' },
+    ],
+    featuresDone: [
+      "Triangulation de Delaunay et calcul de l'Arbre Couvrant Minimal (MST) du réseau",
+      "Carte interactive Folium avec plus de 1500 stations actualisées en direct",
+      "Module de calcul d'itinéraire optimal basé sur l'algorithme de Dijkstra",
+      "Cartographie thermique (Heatmap) de la disponibilité des vélos électriques",
+      "Filtrage géographique par arrondissements et communes de la petite couronne",
+      "Tableau d'analyse comparative de la densité des stations par zone"
+    ],
+    roadmap: [
+      { label: "Modèle prédictif du taux de remplissage par Machine Learning (Scikit-Learn)", status: 'in_progress' },
+      { label: "API REST FastAPI pour exposer les matrices d'optimisation du réseau", status: 'in_progress' },
+      { label: "Exportation des graphes d'optimisation au format GeoJSON & SVG", status: 'planned' },
+      { label: "Simulation dynamique de la régulation de flotte par camion d'avitaillement", status: 'planned' }
     ],
     links: [{ label: 'Repo GitHub', href: 'https://github.com/misbaou672/Velib-Optim' }],
     palette: { from: '#eff6ff', to: '#dbeafe', ink: '#1e40af' },
@@ -126,9 +195,41 @@ export const PROJECTS: Project[] = [
     stack: ['PHP 8.4', 'Architecture MVC', 'API Copernicus', 'Leaflet.js', 'Chart.js', 'MySQL'],
     pitch:
       "Plateforme scientifique complète dédiée à l'analyse et à la visualisation de données océanographiques globales. Synchronisation directe avec l'API Copernicus Marine (température, salinité, hauteur de mer), cartographie interactive et graphiques d'agrégation temporelle.",
-    metrics: [
-      { value: 'Copernicus', label: 'Flux API temps réel' },
-      { value: 'MVC Stricte', label: 'Modèle orienté objet' },
+    useCase:
+      "Offre aux chercheurs et étudiants un outil centralisé pour observer le réchauffement des océans, suivre l'évolution des températures de surface et extraire des jeux de données fiables.",
+    challenges: [
+      {
+        challenge: "Gérer le volume massif de relevés satellites issus de l'API Copernicus Marine.",
+        solution: "Mise en cache SQL des requêtes fréquentes et pré-agrégation des moyennes mensuelles."
+      },
+      {
+        challenge: "Garantir un code maintenable pour une équipe de plusieurs développeurs.",
+        solution: "Respect strict du design pattern MVC en PHP 8.4 typé avec gestion d'exceptions centralisée."
+      }
+    ],
+    learnings: [
+      "Architecture logicielle MVC orientée objet en PHP 8.4",
+      "Consommation et traitement de données scientifiques (API Copernicus)",
+      "Visualisation cartographique et représentations statistiques"
+    ],
+    features: [
+      { title: 'Data Océanographique', detail: 'Flux API Copernicus Marine synchronisé en temps réel.' },
+      { title: 'Architecture Solide', detail: 'Modèle orienté objet strict (MVC) développé sous PHP 8.4.' },
+      { title: 'Cartographie Leaflet', detail: 'Superposition interactive des couches thermiques et données satellite.' },
+    ],
+    featuresDone: [
+      "Synchronisation automatique avec l'API Copernicus Marine",
+      "Cartographie dynamique des océans avec superposition de couches thermiques",
+      "Graphiques interactifs Chart.js d'évolution temporelle et historique des températures",
+      "Espace administrateur complet pour la modération et gestion des accès",
+      "Agrégation statistique spatiale par coordonnées bathymétriques",
+      "Moteur de recherche multicritère par zone géographique et date"
+    ],
+    roadmap: [
+      { label: "Alertes automatiques par e-mail en cas d'anomalie thermique extrême", status: 'in_progress' },
+      { label: "Exportation des rapports d'analyse sous format PDF et CSV", status: 'in_progress' },
+      { label: "Module de prédiction des courants marins par modèles stochastiques", status: 'planned' },
+      { label: "Widgets cartographiques intégrables pour sites d'écologie marine", status: 'planned' }
     ],
     links: [{ label: 'Repo GitHub', href: 'https://github.com/misbaou672/SAE3_Real01' }],
     palette: { from: '#f8fafc', to: '#e2e8f0', ink: '#0f172a' },
@@ -151,9 +252,41 @@ export const PROJECTS: Project[] = [
     stack: ['Python 3', 'Tkinter / TTK', 'Stockage JSON', 'OpenPyXL', 'Export CSV & Excel'],
     pitch:
       "Application desktop professionnelle de gestion d'inventaire et de stock. Comprend un système d'alertes configurables sur les ruptures de stock, un annuaire interactif de gestion des fournisseurs et des fonctions d'importation/exportation multi-formats (CSV, XLSX).",
-    metrics: [
-      { value: 'Stock Faible', label: 'Alertes en temps réel' },
-      { value: 'Excel / CSV', label: 'Export multi-formats' },
+    useCase:
+      "Destiné aux PME et commerçants souhaitant piloter leurs produits, surveiller le niveau des stocks critiques et exporter leurs bilans d'inventaire en un clic.",
+    challenges: [
+      {
+        challenge: "Créer une interface de bureau moderne et fluide avec le framework Tkinter natif.",
+        solution: "Développement d'un thème TTK personnalisé avec gestion des événements système et mise en page réactive."
+      },
+      {
+        challenge: "Prévenir la perte de données lors des coupures brutales de l'application.",
+        solution: "Système de sauvegarde atomique avec écriture temporaire et validation par hachage avant écriture JSON/DB."
+      }
+    ],
+    learnings: [
+      "Développement d'applications Desktop orientées objet en Python",
+      "Manipulation de fichiers Excel complexes via OpenPyXL",
+      "Conception d'ergonomie et interfaces graphiques (GUI)"
+    ],
+    features: [
+      { title: 'Gestion Proactive', detail: "Système d'alertes en temps réel sur les niveaux de stocks faibles." },
+      { title: 'Interopérabilité', detail: 'Génération et export multi-formats de rapports (Excel, CSV).' },
+      { title: 'Interface Ergonomique', detail: 'Thème sombre personnalisé avec composants TTK réactifs.' },
+    ],
+    featuresDone: [
+      "Gestion dynamique du catalogue produit et seuils de réapprovisionnement",
+      "Module d'alerte visuel et notifications de stock critique en temps réel",
+      "Exportateur universel vers fichiers Excel (.xlsx) et CSV avec formattage auto",
+      "Annuaire interactif des fournisseurs et historique d'achats",
+      "Journal d'audit complet traçant chaque mouvement de stock avec horodatage",
+      "Système de recherche instantanée par SKU, catégorie ou fournisseur"
+    ],
+    roadmap: [
+      { label: "Lecteur de code-barres & QR Code via caméra ou scanner USB", status: 'in_progress' },
+      { label: "Migration vers une base de données distante PostgreSQL pour accès réseau", status: 'in_progress' },
+      { label: "Impression directe d'étiquettes de stock au format étiqueteuse thermique", status: 'planned' },
+      { label: "Module multi-entrepôts avec suivi des transferts d'inventaire", status: 'planned' }
     ],
     links: [{ label: 'Repo GitHub', href: 'https://github.com/misbaou672/GestiStock' }],
     palette: { from: '#f5f3ff', to: '#ede9fe', ink: '#5b21b6' },
@@ -174,9 +307,41 @@ export const PROJECTS: Project[] = [
     stack: ['PHP 8 OOP', 'JavaScript ES6+', 'HTML5 / CSS3', 'Génération PDF', 'MySQL'],
     pitch:
       "Application web métier de création et d'édition de devis professionnels. Prise en charge des prestations ponctuelles et des abonnements récurrents à long terme (maintenance SLA), calculs dynamiques instantanés en JavaScript et moteur de rendu PDF personnalisé.",
-    metrics: [
-      { value: 'Abonnements', label: 'Suivi récurrent & SLA' },
-      { value: 'PDF Pro', label: 'Génération à la volée' },
+    useCase:
+      "Offre aux indépendants et prestataires de services une solution rapide pour créer des devis sans erreur de calcul, avec gestion de prestations récurrentes (SLA) et édition de PDF officiels.",
+    challenges: [
+      {
+        challenge: "Gérer dynamiquement les ajouts et lignes de prestations avec calcul automatique de la TVA sans rechargement de page.",
+        solution: "Développement d'un moteur de calcul côté client en JavaScript ES6 modulable avec validation PHP stricte côté serveur."
+      },
+      {
+        challenge: "Garantir un rendu PDF pixel-perfect identique sur toutes les plateformes.",
+        solution: "Conception d'un moteur de templates HTML2PDF personnalisé contrôlant la mise en page et les sauts de page."
+      }
+    ],
+    learnings: [
+      "Calculs financiers et règles juridiques de facturation",
+      "Génération avancée de documents PDF dynamiques",
+      "Développement dynamique ES6 sans dépendances de framework heavy"
+    ],
+    features: [
+      { title: 'Business Logic', detail: 'Calculs dynamiques intégrant le suivi des abonnements récurrents (SLA).' },
+      { title: 'Génération PDF', detail: 'Création de documents officiels formatés et générés à la volée.' },
+      { title: 'Conformité Légale', detail: 'Numérotation séquentielle et mentions légales obligatoires.' },
+    ],
+    featuresDone: [
+      "Génération à la volée de PDF officiels conformes aux normes légales",
+      "Moteur de calcul instantané des taxes (TVA), remises et totaux TTC",
+      "Gestion des abonnements récurrents et prestations de maintenance SLA",
+      "Numérotation séquentielle automatique des devis et factures",
+      "Catalogue d'articles pré-enregistrés avec injection rapide dans le devis",
+      "Historique des devis émis avec filtres de recherche par client"
+    ],
+    roadmap: [
+      { label: "Signature électronique sécurisée intégrée directement dans le PDF", status: 'in_progress' },
+      { label: "Relances automatiques des devis non signés après expiration", status: 'in_progress' },
+      { label: "Intégration du paiement en ligne Stripe via lien sécurisé sur le devis", status: 'planned' },
+      { label: "Export comptable au format FEC (Fichier des Écritures Comptables)", status: 'planned' }
     ],
     links: [{ label: 'Repo GitHub', href: 'https://github.com/misbaou672/Devis-Pro' }],
     palette: { from: '#f0fdf4', to: '#dcfce7', ink: '#166534' },

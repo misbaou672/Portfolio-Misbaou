@@ -57,6 +57,8 @@ export function Projects() {
           project={PROJECTS[open]}
           originRect={originRect}
           onClose={() => setOpen(null)}
+          onNext={open < PROJECTS.length - 1 ? () => handleOpen(open + 1) : undefined}
+          onPrev={open > 0 ? () => handleOpen(open - 1) : undefined}
         />
       )}
     </section>

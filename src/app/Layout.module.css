@@ -1,126 +1,32 @@
 .layout {
-  display: flex;
-  flex-direction: column;
+  position: relative;
   min-height: 100vh;
 }
 
-/* Le flux de base */
+/* ===================== MAIN ===================== */
 .main {
-  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===================== SECTIONS ===================== */
+.section {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
-  z-index: 1;
-  /* Laisse de la place sous le header */
-  padding-top: var(--chrome-top);
-  padding-bottom: 4rem;
+  scroll-snap-align: start;
 }
 
-/* ==============================================================
-   LE FOND "COMBO ULTIME" : Grille + Halos + Typographie + Scanline + Bruit
-   ============================================================== */
-
-.ultimateBg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-  background-color: var(--bg);
+.sectionDark {
+  background: var(--dark-section);
+  color: var(--bg-2);
 }
 
-/* 1. Le Bruit (Noise) - Grain de pellicule très léger */
-.noise {
-  position: absolute;
-  inset: 0;
-  opacity: 0.25;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  z-index: 5; /* Au-dessus pour texturer l'ensemble */
-  mix-blend-mode: multiply;
+.sectionLight {
+  background: var(--bg-2);
 }
 
-/* 2. La Grille de points / Blueprint */
-.grid {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    radial-gradient(circle, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
-  background-size: 24px 24px;
-  opacity: 0.8;
-  z-index: 1;
-}
-
-/* 3. Les Halos Radiaux (Aurora effect) */
-.halos {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  filter: blur(80px);
-  opacity: 0.35;
-}
-.halos::before,
-.halos::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  animation: float 25s infinite alternate ease-in-out;
-}
-.halos::before {
-  top: 10%;
-  left: 20%;
-  width: 50vw;
-  height: 50vw;
-  background: var(--violet-pale);
-  animation-delay: -5s;
-}
-.halos::after {
-  bottom: 10%;
-  right: 10%;
-  width: 60vw;
-  height: 60vw;
-  background: rgba(6, 182, 212, 0.2);
-  animation-duration: 30s;
-}
-
-/* 4. La Typographie Géante Parallaxe */
-.typography {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-10deg);
-  font-family: var(--font-display);
-  font-size: clamp(8rem, 25vw, 30rem);
-  font-weight: 400;
-  line-height: 0.8;
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.02);
-  z-index: 0;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* 5. Le Laser (Scanline) */
-.scanline {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 8px;
-  background: linear-gradient(to bottom, transparent, rgba(168, 85, 247, 0.2), rgba(6, 182, 212, 0.4), transparent);
-  z-index: 4;
-  animation: scan 8s linear infinite;
-  opacity: 0.6;
-}
-
-/* Animations */
-@keyframes float {
-  0% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(8%, 10%) scale(1.1); }
-  66% { transform: translate(-10%, 15%) scale(0.9); }
-  100% { transform: translate(-12%, -8%) scale(1.05); }
-}
-
-@keyframes scan {
-  0% { transform: translateY(-10vh); }
-  100% { transform: translateY(110vh); }
+.sectionAlt {
+  background: var(--bg-alt);
 }

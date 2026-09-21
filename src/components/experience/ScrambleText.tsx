@@ -14,21 +14,15 @@ export function ScrambleText({ text, isDecrypted, delay = 0 }: ScrambleTextProps
 
   useEffect(() => {
     if (!isDecrypted) {
-      // Scrambled state
       const randomText = text
         .split('')
-        .map((char) =>
-          char === ' ' ? ' ' : CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)],
-        )
+        .map((char) => (char === ' ' ? ' ' : CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)]))
         .join('');
-      // eslint-disable-next-line
       setDisplayText(randomText);
-
       setScrambling(true);
       return;
     }
 
-    // Start decrypting after delay
     const timeoutId = setTimeout(() => {
       let iteration = 0;
       const interval = setInterval(() => {
@@ -50,8 +44,8 @@ export function ScrambleText({ text, isDecrypted, delay = 0 }: ScrambleTextProps
           setScrambling(false);
         }
 
-        iteration += 1 / 3; // Adjust speed here
-      }, 30);
+        iteration += 1 / 3;
+      }, 25);
 
       return () => clearInterval(interval);
     }, delay);
