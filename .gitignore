@@ -33,3 +33,17 @@ design-mockup/
 # misc
 coverage/
 .lighthouseci/
+
+# UI/UX Pro Max (uipro-cli) — local uniquement, ne pas versionner
+.claude/
+.cursor/
+.windsurf/
+.agent/
+.kiro/
+.opencode/
+.roo/
+.codex/
+.qoder/
+.trae/
+.continue/
+.codebuddy/
