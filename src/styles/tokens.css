@@ -1,41 +1,36 @@
 :root {
-  /* Fonds clairs et lumineux */
-  --bg: #f8fafc;
-  --bg-2: #ffffff;
-  --bg-alt: #f1f5f9;
+  /* Cyberpunk Tech Noir Palette */
+  --bg: #0b0f19;
+  --bg-2: #111827;
+  --bg-alt: #1e293b;
   
-  --surface: rgba(255, 255, 255, 0.7); 
-  --surface-border: rgba(0, 0, 0, 0.05); 
+  --surface: rgba(17, 24, 39, 0.85); 
+  --surface-border: rgba(255, 255, 255, 0.1); 
   
-  --ink: #0f172a;
-  --ink-muted: #475569;
-  --ink-faint: #94a3b8;
-  --line: rgba(0, 0, 0, 0.08);
+  --ink: #f8fafc;
+  --ink-muted: #94a3b8;
+  --ink-faint: #64748b;
+  --line: rgba(255, 255, 255, 0.08);
 
-  /* Accents Cyan */
-  --violet: #06b6d4;
-  --violet-bright: #22d3ee;
-  --violet-pale: rgba(6, 182, 212, 0.1);
-  --violet-sub: #0891b2;
-  --neon: #06b6d4;
-  --pill-bord: rgba(6, 182, 212, 0.25);
+  /* Accents */
+  --cyan: #38bdf8;
+  --cyan-bright: #38bdf8;
+  --cyan-dark: #0284c7;
+  --cyan-pale: rgba(56, 189, 248, 0.12);
+  --cyan-glow: rgba(56, 189, 248, 0.35);
 
-  --cyan: #06b6d4;
-  --cyan-bright: #22d3ee;
-  --cyan-dark: #0891b2;
-  --cyan-pale: rgba(6, 182, 212, 0.1);
-  --cyan-glow: rgba(6, 182, 212, 0.3);
+  --accent-green: #22c55e;
+  --accent-green-glow: rgba(34, 197, 94, 0.4);
 
   /* Section sombre */
-  --dark-section: #0f172a;
+  --dark-section: #0b0f19;
 
-  --font-display: 'Outfit Variable', 'Outfit', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Outfit Variable', system-ui, sans-serif;
   --font-body: 'Inter Variable', 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, Menlo, monospace;
-  --font-serif: 'Instrument Serif', Georgia, serif;
 
   --space: 8px;
-  --radius: 12px;
+  --radius: 14px;
   --chrome-top: 0px;
   --chrome-bottom: 0px;
 

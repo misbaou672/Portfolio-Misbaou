@@ -1,0 +1,108 @@
+.bgWrapper {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  background-color: #080c14;
+}
+
+.mainBgImage {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease, transform 0.4s ease;
+  will-change: opacity, filter, transform;
+}
+
+.mainBgActive {
+  z-index: 1;
+}
+
+.vignetteOverlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(8, 12, 20, 0.4) 0%, rgba(8, 12, 20, 0.88) 85%);
+  z-index: 2;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.22;
+  will-change: transform;
+  animation: orbFloat 18s ease-in-out infinite alternate;
+}
+
+.orbCyan {
+  top: -10%;
+  left: 20%;
+  width: 50vw;
+  height: 50vw;
+  max-width: 600px;
+  max-height: 600px;
+  background: radial-gradient(circle, #38bdf8 0%, rgba(2, 132, 199, 0.4) 60%, transparent 100%);
+}
+
+.orbEmerald {
+  bottom: 10%;
+  right: -5%;
+  width: 45vw;
+  height: 45vw;
+  max-width: 550px;
+  max-height: 550px;
+  background: radial-gradient(circle, #22c55e 0%, rgba(16, 185, 129, 0.3) 60%, transparent 100%);
+  animation-duration: 22s;
+  animation-delay: -5s;
+}
+
+.orbPurple {
+  top: 45%;
+  left: -10%;
+  width: 40vw;
+  height: 40vw;
+  max-width: 500px;
+  max-height: 500px;
+  background: radial-gradient(circle, #a855f7 0%, rgba(168, 85, 247, 0.25) 60%, transparent 100%);
+  animation-duration: 26s;
+  animation-delay: -10s;
+}
+
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 90%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 90%);
+}
+
+.scanline {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 0, 0, 0.25) 51%
+  );
+  background-size: 100% 4px;
+  opacity: 0.6;
+}
+
+@keyframes orbFloat {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(40px, -50px) scale(1.1);
+  }
+  100% {
+    transform: translate(-30px, 30px) scale(0.95);
+  }
+}

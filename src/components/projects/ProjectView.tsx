@@ -184,8 +184,13 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
     };
   }, [isLightboxOpen, project.medias]);
 
+  const [scrollProgress, setScrollProgress] = useState(0);
+
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
+    const progress = Math.min(1, Math.max(0, scrollTop / 500));
+    setScrollProgress(progress);
+
     if (scrollTop + clientHeight >= scrollHeight - 50) {
       setIsAtBottom(true);
     } else {
@@ -256,10 +261,67 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
     '--p-ink': `color-mix(in srgb, ${project.palette.ink} 16%, #ffffff)`,
     '--p-muted': `color-mix(in srgb, ${project.palette.ink} 22%, #94a3b8)`,
     '--p-border': `color-mix(in srgb, ${project.palette.ink} 30%, rgba(255, 255, 255, 0.1))`,
+    '--p-from': project.palette.from,
+    '--p-to': project.palette.to,
+    '--p-glow': project.palette.glow || 'rgba(56, 189, 248, 0.4)',
   } as CSSProperties;
+
+  const THEMATIC_GALLERIES: Record<string, string[]> = {
+    coderouge: [
+      'https://placehold.co/1600x900/1e1b4b/ffffff?text=Image+Thematique+1',
+      'https://placehold.co/1600x900/1e1b4b/ffffff?text=Image+Thematique+2',
+      'https://placehold.co/1600x900/1e1b4b/ffffff?text=Image+Thematique+3',
+    ],
+    'velib-optim': [
+      'https://placehold.co/1600x900/082f49/ffffff?text=Image+Thematique+1',
+      'https://placehold.co/1600x900/082f49/ffffff?text=Image+Thematique+2',
+      'https://placehold.co/1600x900/082f49/ffffff?text=Image+Thematique+3',
+    ],
+    'sae3-real01': [
+      'https://placehold.co/1600x900/064e3b/ffffff?text=Image+Thematique+1',
+      'https://placehold.co/1600x900/064e3b/ffffff?text=Image+Thematique+2',
+      'https://placehold.co/1600x900/064e3b/ffffff?text=Image+Thematique+3',
+    ],
+    gestistock: [
+      'https://placehold.co/1600x900/4c1d95/ffffff?text=Image+Thematique+1',
+      'https://placehold.co/1600x900/4c1d95/ffffff?text=Image+Thematique+2',
+      'https://placehold.co/1600x900/4c1d95/ffffff?text=Image+Thematique+3',
+    ],
+    'createur-devis': [
+      'https://placehold.co/1600x900/065f46/ffffff?text=Image+Thematique+1',
+      'https://placehold.co/1600x900/065f46/ffffff?text=Image+Thematique+2',
+      'https://placehold.co/1600x900/065f46/ffffff?text=Image+Thematique+3',
+    ],
+  };
+
+  const bgImages = THEMATIC_GALLERIES[project.id] || (project.bgThemeImage ? [project.bgThemeImage] : []);
 
   return (
     <div ref={rootRef} className={styles.root} style={theme} onScroll={handleScroll}>
+      <div className={styles.bgWrapper} aria-hidden="true">
+        {bgImages.map((imgSrc, idx) => {
+          // Calculate vertical position down the document height for each background image
+          const topPercent = (idx / bgImages.length) * 100;
+          
+          // Each image gradually loses blur as scroll reaches its zone and goes down the page
+          const progressiveUnblur = Math.max(0, 24 - (scrollProgress * 24) - (idx * 3));
+          const opacity = Math.max(0.25, 0.45 + (scrollProgress * 0.35));
+
+          return (
+            <div
+              key={idx}
+              className={styles.themedBgLayerSection}
+              style={{
+                top: `${topPercent}%`,
+                backgroundImage: `url(${imgSrc})`,
+                filter: `blur(${progressiveUnblur}px) brightness(${0.42 + scrollProgress * 0.3}) saturate(1.35)`,
+                opacity: opacity,
+              }}
+            />
+          );
+        })}
+        <div className={styles.bgVignette} />
+      </div>
       <header className={styles.topNav}>
         <button ref={closeRef} type="button" className={styles.close} onClick={fermer}>
           &larr; Retour
@@ -484,6 +546,104 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
                   ))}
                 </div>
               </div>
+
+              {/* CARTES VISUELLES EN COLONNE DE DROITE (ZONE "ICI") AVEC UNBLUR AU SCROLL */}
+              {(() => {
+                const DETAILED_SIDEBAR_ITEMS: Record<string, { src: string; label: string }[]> = {
+                  'velib-optim': [
+                    {
+                      src: 'https://placehold.co/800x450/082f49/ffffff?text=Image+Thematique+1',
+                      label: 'Station Vélib Métropole',
+                    },
+                    {
+                      src: 'https://placehold.co/800x450/082f49/ffffff?text=Image+Thematique+2',
+                      label: 'Réseau de Neurones & IA',
+                    },
+                    {
+                      src: 'https://placehold.co/800x450/082f49/ffffff?text=Image+Thematique+3',
+                      label: 'Graphe Algorithmique',
+                    },
+                  ],
+                  coderouge: [
+                    {
+                      src: 'https://placehold.co/800x450/1e1b4b/ffffff?text=Image+Thematique+1',
+                      label: 'Style de vie & Entraînement',
+                    },
+                    {
+                      src: 'https://placehold.co/800x450/1e1b4b/ffffff?text=Image+Thematique+2',
+                      label: 'Sac de Frappe',
+                    },
+                    {
+                      src: 'https://placehold.co/800x450/1e1b4b/ffffff?text=Image+Thematique+3',
+                      label: 'Chronomètre & Équipement',
+                    },
+                  ],
+                  'sae3-real01': [
+                    {
+                      src: 'https://placehold.co/800x450/064e3b/ffffff?text=Image+Thematique+1',
+                      label: 'Océan & Environnement Marin',
+                    },
+                    {
+                      src: 'https://placehold.co/800x450/064e3b/ffffff?text=Image+Thematique+2',
+                      label: 'Données Satellites',
+                    },
+                    {
+                      src: 'https://placehold.co/800x450/064e3b/ffffff?text=Image+Thematique+3',
+                      label: 'Analyse & Data Science',
+                    },
+                  ],
+                  gestistock: [
+                    {
+                      src: 'https://placehold.co/800x450/4c1d95/ffffff?text=Image+Thematique+1',
+                      label: 'Entrepôt Logistique',
+                    },
+                    {
+                      src: 'https://placehold.co/800x450/4c1d95/ffffff?text=Image+Thematique+2',
+                      label: 'Gestion des Stocks',
+                    },
+                    {
+                      src: 'https://placehold.co/800x450/4c1d95/ffffff?text=Image+Thematique+3',
+                      label: 'Manutention & Palettes',
+                    },
+                  ],
+                  'createur-devis': [
+                    {
+                      src: 'https://placehold.co/800x450/065f46/ffffff?text=Image+Thematique+1',
+                      label: 'Signature de Contrat',
+                    },
+                    {
+                      src: 'https://placehold.co/800x450/065f46/ffffff?text=Image+Thematique+2',
+                      label: 'Calculs & Devis',
+                    },
+                    {
+                      src: 'https://placehold.co/800x450/065f46/ffffff?text=Image+Thematique+3',
+                      label: 'Tableaux Financiers',
+                    },
+                  ],
+                };
+
+                const items = DETAILED_SIDEBAR_ITEMS[project.id] || [];
+
+                return items.map((item, idx) => {
+                  const blurValue = Math.max(0, 18 - scrollProgress * 22 - idx * 4);
+                  return (
+                    <div key={idx} className={`${styles.sidebarImageCard} ${styles.reveal}`}>
+                      <img
+                        src={item.src}
+                        alt={item.label}
+                        className={styles.sidebarImage}
+                        style={{
+                          filter: `blur(${blurValue}px) brightness(0.9) saturate(1.2)`,
+                          transform: `scale(${1 + scrollProgress * 0.05})`,
+                        }}
+                      />
+                      <div className={styles.sidebarImageTag}>
+                        <span>{item.label}</span>
+                      </div>
+                    </div>
+                  );
+                });
+              })()}
             </div>
           </aside>
         </div>

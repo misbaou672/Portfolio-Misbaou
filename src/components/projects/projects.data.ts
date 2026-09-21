@@ -48,10 +48,12 @@ export type Project = {
     kind?: 'capture' | 'logo';
   }[];
   mediaNote?: string;
+  bgThemeImage?: string;
   palette: {
     from: string;
     to: string;
     ink: string;
+    glow?: string;
   };
 };
 
@@ -106,7 +108,8 @@ export const PROJECTS: Project[] = [
       { label: 'Site Live', href: 'https://coderouge2mika.vercel.app' },
       { label: 'Repo GitHub', href: 'https://github.com/misbaou672/CodeRouge' },
     ],
-    palette: { from: '#fef2f2', to: '#fee2e2', ink: '#991b1b' },
+    palette: { from: 'rgba(225, 29, 72, 0.25)', to: 'rgba(159, 18, 57, 0.4)', ink: '#f43f5e', glow: 'rgba(244, 63, 94, 0.45)' },
+    bgThemeImage: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=1600&auto=format&fit=crop',
     medias: [
       { src: cr1Media, alt: 'Tableau de bord : Accueil & Objectif du jour' },
       { src: cr2Media, alt: "Planning d'entraînement & Cycles hebdomadaires" },
@@ -174,7 +177,8 @@ export const PROJECTS: Project[] = [
       { label: "Simulation dynamique de la régulation de flotte par camion d'avitaillement", status: 'planned' }
     ],
     links: [{ label: 'Repo GitHub', href: 'https://github.com/misbaou672/Velib-Optim' }],
-    palette: { from: '#eff6ff', to: '#dbeafe', ink: '#1e40af' },
+    palette: { from: 'rgba(3, 105, 161, 0.25)', to: 'rgba(12, 74, 110, 0.4)', ink: '#38bdf8', glow: 'rgba(56, 189, 248, 0.45)' },
+    bgThemeImage: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1600&auto=format&fit=crop',
     medias: [
       {
         src: velib1Media,
@@ -232,7 +236,8 @@ export const PROJECTS: Project[] = [
       { label: "Widgets cartographiques intégrables pour sites d'écologie marine", status: 'planned' }
     ],
     links: [{ label: 'Repo GitHub', href: 'https://github.com/misbaou672/SAE3_Real01' }],
-    palette: { from: '#f8fafc', to: '#e2e8f0', ink: '#0f172a' },
+    palette: { from: 'rgba(5, 150, 105, 0.25)', to: 'rgba(6, 78, 59, 0.4)', ink: '#34d399', glow: 'rgba(52, 211, 153, 0.45)' },
+    bgThemeImage: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=1600&auto=format&fit=crop',
     medias: [
       { src: echoceanMedia, alt: 'Dashboard principal & Synthèse oceanographique' },
       { src: echoceanMapMedia, alt: 'Cartographie interactive des flux marins' },
@@ -289,7 +294,8 @@ export const PROJECTS: Project[] = [
       { label: "Module multi-entrepôts avec suivi des transferts d'inventaire", status: 'planned' }
     ],
     links: [{ label: 'Repo GitHub', href: 'https://github.com/misbaou672/GestiStock' }],
-    palette: { from: '#f5f3ff', to: '#ede9fe', ink: '#5b21b6' },
+    palette: { from: 'rgba(124, 58, 237, 0.25)', to: 'rgba(76, 29, 149, 0.4)', ink: '#c084fc', glow: 'rgba(192, 132, 252, 0.45)' },
+    bgThemeImage: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1600&auto=format&fit=crop',
     medias: [
       { src: gs1Media, alt: 'Tableau de bord : Gestion du catalogue produits' },
       { src: gs2Media, alt: 'Tableau de bord : Historique des ventes' },
@@ -344,7 +350,8 @@ export const PROJECTS: Project[] = [
       { label: "Export comptable au format FEC (Fichier des Écritures Comptables)", status: 'planned' }
     ],
     links: [{ label: 'Repo GitHub', href: 'https://github.com/misbaou672/Devis-Pro' }],
-    palette: { from: '#f0fdf4', to: '#dcfce7', ink: '#166534' },
+    palette: { from: 'rgba(16, 185, 129, 0.25)', to: 'rgba(6, 95, 70, 0.4)', ink: '#4ade80', glow: 'rgba(74, 222, 128, 0.45)' },
+    bgThemeImage: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?q=80&w=1600&auto=format&fit=crop',
     medias: [
       { src: devisMedia, alt: 'Interface de création de devis (Formulaire & Calculs)' },
       { src: devis2Media, alt: 'Synthèse du devis & Modalités de règlement' },

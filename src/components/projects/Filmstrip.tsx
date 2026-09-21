@@ -237,6 +237,7 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
         {PROJECTS.map((project, i) => {
           const offset = i - active;
           const current = i === active;
+          const previewImage = project.medias && project.medias.length > 0 ? project.medias[0].src : null;
           return (
             <button
               key={project.id}
@@ -251,7 +252,10 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
                 ['--pos' as string]: posFor(offset),
                 ['--dim' as string]: Math.min(Math.abs(offset), 6),
                 ['--ink' as string]: project.palette.ink,
-                background: `linear-gradient(165deg, ${project.palette.from}, ${project.palette.to})`,
+                ['--glow' as string]: project.palette.glow || 'rgba(56, 189, 248, 0.35)',
+                background: previewImage
+                  ? `linear-gradient(180deg, rgba(13, 19, 34, 0.5) 0%, rgba(13, 19, 34, 0.9) 100%), url(${previewImage}) center/cover no-repeat`
+                  : `linear-gradient(165deg, ${project.palette.from}, ${project.palette.to})`,
               }}
               onClick={() => (current ? onOpen(i) : moveTo(i))}
             >
