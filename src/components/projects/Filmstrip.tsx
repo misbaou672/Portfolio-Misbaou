@@ -222,77 +222,47 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
 
   return (
     <div ref={wrapRef} className={styles.wrap}>
-      <header className={styles.header}>
-        <h2 className={styles.kicker}>Projets Réalisés</h2>
-        <p className={styles.headerSub}>
-          Applications web, outils d'automatisation et projets académiques.
-        </p>
-      </header>
+      {/* Plus de compteur ici : il est sous le nom du projet, la ou l'oeil se
+          pose. L'afficher aux deux bouts de l'ecran ne l'apprenait pas mieux. */}
+      <p className={styles.kicker}>02 · MES PROJETS</p>
 
-      <div className={styles.stageContainer}>
-        {/* NAV ARROW PREV */}
-        <button
-          type="button"
-          className={`${styles.navArrow} ${styles.navPrev}`}
-          onClick={() => moveTo(active - 1)}
-          disabled={active === 0}
-          aria-label="Projet précédent"
-        >
-          ‹
-        </button>
-
-        <div
-          ref={stripRef}
-          className={styles.strip}
-          role="toolbar"
-          aria-label="Projets"
-          aria-orientation="horizontal"
-          onKeyDown={onKeyDown}
-        >
-          {PROJECTS.map((project, i) => {
-            const offset = i - active;
-            const current = i === active;
-            const previewImage = project.medias && project.medias.length > 0 ? project.medias[0].src : null;
-            return (
-              <button
-                key={project.id}
-                id={`tile-${project.id}`}
-                data-tile-id={project.id}
-                type="button"
-                tabIndex={current ? 0 : -1}
-                aria-current={current ? 'true' : undefined}
-                className={`${styles.tile} ${current ? styles.current : ''}`}
-                style={{
-                  ['--pos' as string]: posFor(offset),
-                  ['--dim' as string]: Math.min(Math.abs(offset), 6),
-                  ['--ink' as string]: project.palette.ink,
-                  background: previewImage
-                    ? `linear-gradient(180deg, rgba(13, 19, 34, 0.4) 0%, rgba(13, 19, 34, 0.85) 100%), url(${previewImage}) center/cover no-repeat`
-                    : `linear-gradient(165deg, ${project.palette.from}, ${project.palette.to})`,
-                }}
-                onClick={() => (current ? onOpen(i) : moveTo(i))}
-              >
-                <span className={styles.tileKindTag}>{project.kind}</span>
-                <span className={styles.name}>{project.name}</span>
-                <span className={styles.idx}>{project.index}</span>
-                <span className={styles.sr}>
-                  {current ? 'Ouvrir la fiche du projet' : 'Sélectionner ce projet'}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* NAV ARROW NEXT */}
-        <button
-          type="button"
-          className={`${styles.navArrow} ${styles.navNext}`}
-          onClick={() => moveTo(active + 1)}
-          disabled={active === PROJECTS.length - 1}
-          aria-label="Projet suivant"
-        >
-          ›
-        </button>
+      <div
+        ref={stripRef}
+        className={styles.strip}
+        role="toolbar"
+        aria-label="Projets"
+        aria-orientation="horizontal"
+        onKeyDown={onKeyDown}
+      >
+        {PROJECTS.map((project, i) => {
+          const offset = i - active;
+          const current = i === active;
+          return (
+            <button
+              key={project.id}
+              id={`tile-${project.id}`}
+              data-tile-id={project.id}
+              type="button"
+              /* Un seul arret de tabulation pour toute la pellicule. */
+              tabIndex={current ? 0 : -1}
+              aria-current={current ? 'true' : undefined}
+              className={`${styles.tile} ${current ? styles.current : ''}`}
+              style={{
+                ['--pos' as string]: posFor(offset),
+                ['--dim' as string]: Math.min(Math.abs(offset), 6),
+                ['--ink' as string]: project.palette.ink,
+                background: `linear-gradient(165deg, ${project.palette.from}, ${project.palette.to})`,
+              }}
+              onClick={() => (current ? onOpen(i) : moveTo(i))}
+            >
+              <span className={styles.name}>{project.name}</span>
+              <span className={styles.idx}>{project.index}</span>
+              <span className={styles.sr}>
+                {current ? 'Ouvrir la fiche du projet' : 'Selectionner ce projet'}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Le nom du projet choisi, puis ce qu'il faut savoir avant d'ouvrir :
