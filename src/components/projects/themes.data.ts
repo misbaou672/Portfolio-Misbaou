@@ -16,6 +16,9 @@ import devisTableaux from './media/themes/devis-tableaux.jpg';
 
 export type ThemeImage = { src: string; label: string };
 
+/** Motif en filigrane derriere une fiche projet, colore par l'accent du projet. */
+export type ThemeMotif = 'ring' | 'network' | 'contours' | 'isometric' | 'ledger';
+
 /**
  * Illustrations thematiques par projet : cartes de la colonne de droite et
  * calques flous de l'arriere-plan de la fiche projet.
@@ -46,4 +49,12 @@ export const THEME_IMAGES: Record<string, ThemeImage[]> = {
     { src: devisCalculs, label: 'Calculs & Devis' },
     { src: devisTableaux, label: 'Tableaux Financiers' },
   ],
+};
+
+export const THEME_MOTIFS: Record<string, ThemeMotif> = {
+  coderouge: 'ring',
+  'velib-optim': 'network',
+  'sae3-real01': 'contours',
+  gestistock: 'isometric',
+  'createur-devis': 'ledger',
 };

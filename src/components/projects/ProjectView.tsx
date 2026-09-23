@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import { RETOUR_ACCUEIL } from '@/lib/deck';
 import { gsap, useGSAP } from '@/lib/gsap';
 import type { Project } from './projects.data';
-import { THEME_IMAGES } from './themes.data';
+import { THEME_IMAGES, THEME_MOTIFS } from './themes.data';
 import styles from './ProjectView.module.css';
 
 type Props = {
@@ -186,11 +186,13 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
   }, [isLightboxOpen, project.medias]);
 
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [pageProgress, setPageProgress] = useState(0);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
     const progress = Math.min(1, Math.max(0, scrollTop / 500));
     setScrollProgress(progress);
+    setPageProgress(scrollHeight > clientHeight ? scrollTop / (scrollHeight - clientHeight) : 0);
 
     if (scrollTop + clientHeight >= scrollHeight - 50) {
       setIsAtBottom(true);
@@ -250,7 +252,8 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
     const root = rootRef.current;
     if (!root) return;
 
-    gsap.fromTo(root, { autoAlpha: 0, scale: 0.95 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power3.out' });
+    // clearProps : un transform residuel ferait defiler le fond fixe avec le contenu.
+    gsap.fromTo(root, { autoAlpha: 0, scale: 0.95 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power3.out', clearProps: 'transform' });
     gsap.fromTo(root.querySelectorAll(`.${styles.reveal}`), 
       { autoAlpha: 0, y: 20 },
       { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' }
@@ -273,31 +276,31 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
     : project.bgThemeImage
       ? [project.bgThemeImage]
       : [];
+  const motif = THEME_MOTIFS[project.id];
 
   return (
     <div ref={rootRef} className={styles.root} style={theme} onScroll={handleScroll}>
       <div className={styles.bgWrapper} aria-hidden="true">
         {bgImages.map((imgSrc, idx) => {
-          // Calculate vertical position down the document height for each background image
-          const topPercent = (idx / bgImages.length) * 100;
-          
-          // Each image gradually loses blur as scroll reaches its zone and goes down the page
-          const progressiveUnblur = Math.max(0, 24 - (scrollProgress * 24) - (idx * 3));
-          const opacity = Math.max(0.25, 0.45 + (scrollProgress * 0.35));
-
+          // Fondu enchaine : chaque illustration domine a son tiers de la page.
+          const position = pageProgress * Math.max(0, bgImages.length - 1);
+          const weight = Math.max(0, 1 - Math.abs(position - idx));
           return (
             <div
-              key={idx}
-              className={styles.themedBgLayerSection}
-              style={{
-                top: `${topPercent}%`,
-                backgroundImage: `url(${imgSrc})`,
-                filter: `blur(${progressiveUnblur}px) brightness(${0.42 + scrollProgress * 0.3}) saturate(1.35)`,
-                opacity: opacity,
-              }}
+              key={imgSrc}
+              className={styles.bgImage}
+              style={{ backgroundImage: `url(${imgSrc})`, opacity: weight }}
             />
           );
         })}
+        {motif && (
+          <div className={styles.bgMotifFade}>
+            <div
+              className={`${styles.bgMotif} ${styles[`motif-${motif}`]}`}
+              style={{ transform: `translate3d(0, ${-pageProgress * 120}px, 0)` }}
+            />
+          </div>
+        )}
         <div className={styles.bgVignette} />
       </div>
       <header className={styles.topNav}>
