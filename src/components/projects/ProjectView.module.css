@@ -19,45 +19,82 @@
 }
 
 .bgWrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  min-height: 100%;
+  position: fixed;
+  inset: 0;
   overflow: hidden;
   pointer-events: none;
   z-index: -1;
 }
 
-.themedBgLayerSection {
+/* Illustrations du projet, en fondu enchaine selon l'avancement de la lecture. */
+.bgImage {
   position: absolute;
-  left: -5%;
-  width: 110%;
-  height: 80vh;
+  inset: -3%;
   background-size: cover;
   background-position: center;
-  transition: filter 0.25s ease, opacity 0.4s ease;
-  will-change: filter, opacity;
-  pointer-events: none;
-  z-index: -1;
+  filter: blur(3px) brightness(0.55) saturate(1.1);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 92%);
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 92%);
+  transition: opacity 0.6s ease;
 }
 
-.themedBgLayer {
+/* Motif en filigrane, teinte par l'accent du projet, plus present en haut et sur les bords. */
+.bgMotifFade {
   position: absolute;
-  inset: -8%;
-  width: 116%;
-  height: 116%;
-  background-size: cover;
-  background-position: center;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease, transform 0.3s ease;
-  will-change: opacity, filter, transform;
+  inset: 0;
+  -webkit-mask-image: radial-gradient(130% 95% at 50% 0%, #000 0%, rgba(0, 0, 0, 0.45) 55%, transparent 100%);
+  mask-image: radial-gradient(130% 95% at 50% 0%, #000 0%, rgba(0, 0, 0, 0.45) 55%, transparent 100%);
 }
 
-.themedBgActive {
-  z-index: 1;
+.bgMotif {
+  position: absolute;
+  inset: -160px 0;
+  background-color: var(--p-accent);
+  opacity: 0.13;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  will-change: transform;
+}
+
+.motif-ring {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='96' viewBox='0 0 400 96' fill='none' stroke='%23000'%3E%3Cpath d='M0 22H400M0 48H400M0 74H400' stroke-width='2.5'/%3E%3Cpath d='M96 14v16M96 40v16M96 66v16M296 14v16M296 40v16M296 66v16' stroke-width='7'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='96' viewBox='0 0 400 96' fill='none' stroke='%23000'%3E%3Cpath d='M0 22H400M0 48H400M0 74H400' stroke-width='2.5'/%3E%3Cpath d='M96 14v16M96 40v16M96 66v16M296 14v16M296 40v16M296 66v16' stroke-width='7'/%3E%3C/svg%3E");
+  -webkit-mask-size: 400px 96px;
+  mask-size: 400px 96px;
+}
+
+.motif-network {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220' fill='none' stroke='%23000'%3E%3Cpath d='M20 30L90 70L160 20L220 30M90 70L70 150L0 130M90 70L170 120L220 110M170 120L150 200L70 150M160 20L170 120M150 200L220 220M20 30L0 130' stroke-width='1.4'/%3E%3Cg fill='%23000' stroke='none'%3E%3Ccircle cx='20' cy='30' r='4'/%3E%3Ccircle cx='90' cy='70' r='5'/%3E%3Ccircle cx='160' cy='20' r='4'/%3E%3Ccircle cx='70' cy='150' r='4'/%3E%3Ccircle cx='170' cy='120' r='5'/%3E%3Ccircle cx='150' cy='200' r='4'/%3E%3Ccircle cx='0' cy='130' r='4'/%3E%3Ccircle cx='220' cy='130' r='4'/%3E%3C/g%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220' fill='none' stroke='%23000'%3E%3Cpath d='M20 30L90 70L160 20L220 30M90 70L70 150L0 130M90 70L170 120L220 110M170 120L150 200L70 150M160 20L170 120M150 200L220 220M20 30L0 130' stroke-width='1.4'/%3E%3Cg fill='%23000' stroke='none'%3E%3Ccircle cx='20' cy='30' r='4'/%3E%3Ccircle cx='90' cy='70' r='5'/%3E%3Ccircle cx='160' cy='20' r='4'/%3E%3Ccircle cx='70' cy='150' r='4'/%3E%3Ccircle cx='170' cy='120' r='5'/%3E%3Ccircle cx='150' cy='200' r='4'/%3E%3Ccircle cx='0' cy='130' r='4'/%3E%3Ccircle cx='220' cy='130' r='4'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-size: 220px 220px;
+  mask-size: 220px 220px;
+}
+
+.motif-contours {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='160' viewBox='0 0 320 160' fill='none' stroke='%23000'%3E%3Cpath d='M0 20C53 2 107 2 160 20S267 38 320 20' stroke-width='1.5'/%3E%3Cpath d='M0 60C53 42 107 42 160 60S267 78 320 60' stroke-width='1.5'/%3E%3Cpath d='M0 100C53 82 107 82 160 100S267 118 320 100' stroke-width='1.5'/%3E%3Cpath d='M0 140C53 122 107 122 160 140S267 158 320 140' stroke-width='1.5'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='160' viewBox='0 0 320 160' fill='none' stroke='%23000'%3E%3Cpath d='M0 20C53 2 107 2 160 20S267 38 320 20' stroke-width='1.5'/%3E%3Cpath d='M0 60C53 42 107 42 160 60S267 78 320 60' stroke-width='1.5'/%3E%3Cpath d='M0 100C53 82 107 82 160 100S267 118 320 100' stroke-width='1.5'/%3E%3Cpath d='M0 140C53 122 107 122 160 140S267 158 320 140' stroke-width='1.5'/%3E%3C/svg%3E");
+  -webkit-mask-size: 320px 160px;
+  mask-size: 320px 160px;
+}
+
+.motif-isometric {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='32.33' viewBox='0 0 56 32.33' fill='none' stroke='%23000'%3E%3Cpath d='M0 0L56 32.33M0 32.33L56 0' stroke-width='1.1'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='32.33' viewBox='0 0 56 32.33' fill='none' stroke='%23000'%3E%3Cpath d='M0 0L56 32.33M0 32.33L56 0' stroke-width='1.1'/%3E%3C/svg%3E");
+  -webkit-mask-size: 56px 32.33px;
+  mask-size: 56px 32.33px;
+}
+
+.motif-ledger {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120' fill='none' stroke='%23000'%3E%3Cpath d='M0 0.75H120M0.75 0V120' stroke-width='1.5'/%3E%3Cpath d='M0 24H120M0 48H120M0 72H120M0 96H120M24 0V120M48 0V120M72 0V120M96 0V120' stroke-width='.6'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120' fill='none' stroke='%23000'%3E%3Cpath d='M0 0.75H120M0.75 0V120' stroke-width='1.5'/%3E%3Cpath d='M0 24H120M0 48H120M0 72H120M0 96H120M24 0V120M48 0V120M72 0V120M96 0V120' stroke-width='.6'/%3E%3C/svg%3E");
+  -webkit-mask-size: 120px 120px;
+  mask-size: 120px 120px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bgImage {
+    transition: none;
+  }
 }
 
 .bgVignette {
