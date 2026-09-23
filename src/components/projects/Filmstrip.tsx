@@ -224,7 +224,7 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
     <div ref={wrapRef} className={styles.wrap}>
       {/* Plus de compteur ici : il est sous le nom du projet, la ou l'oeil se
           pose. L'afficher aux deux bouts de l'ecran ne l'apprenait pas mieux. */}
-      <p className={styles.kicker}>02 · MES PROJETS</p>
+      <h2 className={styles.kicker}>Mes projets</h2>
 
       <div
         ref={stripRef}
@@ -254,7 +254,7 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
                 ['--ink' as string]: project.palette.ink,
                 ['--glow' as string]: project.palette.glow || 'rgba(56, 189, 248, 0.35)',
                 background: previewImage
-                  ? `linear-gradient(180deg, rgba(13, 19, 34, 0.5) 0%, rgba(13, 19, 34, 0.9) 100%), url(${previewImage}) center/cover no-repeat`
+                  ? `linear-gradient(180deg, rgba(13, 19, 34, 0) 35%, rgba(13, 19, 34, 0.88) 100%), url(${previewImage}) center/cover no-repeat`
                   : `linear-gradient(165deg, ${project.palette.from}, ${project.palette.to})`,
               }}
               onClick={() => (current ? onOpen(i) : moveTo(i))}
@@ -290,8 +290,32 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
         </span>
       </p>
 
-      {/* Le conseil parlait de fleches et d'Entree, ce qui ne veut rien dire
-          au doigt. Il decrit maintenant le geste, le clavier en complement. */}
+      {/* Boutons precedent / suivant : le glissement n'est pas evident au
+          doigt, et la souris n'a pas d'autre moyen de parcourir. */}
+      <div className={styles.controls}>
+        <button
+          type="button"
+          className={styles.navBtn}
+          onClick={() => moveTo(active - 1)}
+          disabled={active === 0}
+          aria-label="Projet précédent"
+        >
+          <span aria-hidden="true">&larr;</span>
+        </button>
+        <button type="button" className={styles.openBtn} onClick={() => onOpen(active)}>
+          Voir le projet
+        </button>
+        <button
+          type="button"
+          className={styles.navBtn}
+          onClick={() => moveTo(active + 1)}
+          disabled={active === PROJECTS.length - 1}
+          aria-label="Projet suivant"
+        >
+          <span aria-hidden="true">&rarr;</span>
+        </button>
+      </div>
+
       <p className={styles.hint}>
         Glisse pour parcourir, touche la tuile centrale pour l’ouvrir.
         <span className={styles.hintKeys}> Au clavier : flèches, puis Entrée.</span>

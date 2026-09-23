@@ -121,9 +121,13 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
   const [isAtBottom, setIsAtBottom] = useState(false);
   const lastWheelTime = useRef<number>(0);
 
-  useEffect(() => {
+  // Changement de projet : on revient a la premiere image, pendant le rendu
+  // plutot que dans un effet (evite un rendu en cascade).
+  const [projetAffiche, setProjetAffiche] = useState(project.id);
+  if (projetAffiche !== project.id) {
+    setProjetAffiche(project.id);
     setCurrentImageIndex(0);
-  }, [project.id]);
+  }
 
   useEffect(() => {
     const heroEl = heroRef.current;
@@ -239,8 +243,11 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    // La fiche a sa propre navigation : celle du site se retire (FloatingNav).
+    document.body.classList.add('fiche-ouverte');
     return () => {
       document.body.style.overflow = prevOverflow;
+      document.body.classList.remove('fiche-ouverte');
     };
   }, []);
 
@@ -262,9 +269,9 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
 
   const theme = {
     '--p-accent': project.palette.ink,
-    '--p-ink': `color-mix(in srgb, ${project.palette.ink} 16%, #ffffff)`,
-    '--p-muted': `color-mix(in srgb, ${project.palette.ink} 22%, #94a3b8)`,
-    '--p-border': `color-mix(in srgb, ${project.palette.ink} 30%, rgba(255, 255, 255, 0.1))`,
+    '--p-ink': `color-mix(in srgb, ${project.palette.ink} 16%, var(--ink))`,
+    '--p-muted': `color-mix(in srgb, ${project.palette.ink} 22%, var(--ink-muted))`,
+    '--p-border': `color-mix(in srgb, ${project.palette.ink} 30%, var(--line))`,
     '--p-from': project.palette.from,
     '--p-to': project.palette.to,
     '--p-glow': project.palette.glow || 'rgba(56, 189, 248, 0.4)',
@@ -293,6 +300,7 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
             />
           );
         })}
+        <div className={styles.bgVignette} />
         {motif && (
           <div className={styles.bgMotifFade}>
             <div
@@ -301,15 +309,22 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
             />
           </div>
         )}
-        <div className={styles.bgVignette} />
       </div>
       <header className={styles.topNav}>
         <button ref={closeRef} type="button" className={styles.close} onClick={fermer}>
           &larr; Retour
         </button>
         <div className={styles.projectNav}>
-          {onPrev && <button className={styles.navBtn} onClick={onPrev}>&larr; Projet Précédent</button>}
-          {onNext && <button className={styles.navBtn} onClick={onNext}>Projet Suivant &rarr;</button>}
+          {onPrev && (
+            <button className={styles.navBtn} onClick={onPrev} aria-label="Projet précédent">
+              &larr;<span className={styles.navLabel}> Projet précédent</span>
+            </button>
+          )}
+          {onNext && (
+            <button className={styles.navBtn} onClick={onNext} aria-label="Projet suivant">
+              <span className={styles.navLabel}>Projet suivant </span>&rarr;
+            </button>
+          )}
         </div>
       </header>
 

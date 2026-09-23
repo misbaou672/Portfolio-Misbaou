@@ -23,23 +23,22 @@
   align-items: center;
   gap: 8px;
   padding: 6px 14px;
-  background: rgba(34, 197, 94, 0.08);
-  border: 1px solid rgba(34, 197, 94, 0.3);
+  background: var(--accent-green-pale);
+  border: 1px solid var(--accent-green-glow);
   border-radius: 64px;
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
-  color: #4ade80;
+  color: var(--accent-green-ink);
   width: fit-content;
-  box-shadow: 0 0 16px rgba(34, 197, 94, 0.15);
 }
 
 .dot {
   width: 8px;
   height: 8px;
-  background: #22c55e;
+  background: var(--accent-green);
   border-radius: 50%;
-  box-shadow: 0 0 10px #22c55e;
+  box-shadow: 0 0 10px var(--accent-green-glow);
   animation: pulse 2s infinite ease-in-out;
 }
 
@@ -69,8 +68,8 @@
 .bio {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.65;
   color: var(--ink-muted);
   max-width: 480px;
 }
@@ -94,23 +93,23 @@
 }
 
 .btnPrimary {
-  background: #38bdf8;
-  color: #0b0f19;
-  box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+  background: var(--cyan);
+  color: var(--on-accent);
+  box-shadow: 0 8px 20px var(--cyan-glow);
 }
 .btnPrimary:hover {
-  background: #7dd3fc;
+  background: var(--cyan-bright);
+  color: var(--on-accent);
   transform: translateY(-2px);
-  box-shadow: 0 0 28px rgba(56, 189, 248, 0.5);
 }
 
 .btnSecondary {
-  background: transparent;
+  background: var(--surface);
   color: var(--ink);
-  border: 1px solid var(--line);
+  border: 1px solid var(--surface-border);
 }
 .btnSecondary:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--surface);
   border-color: var(--cyan);
   color: var(--cyan);
   transform: translateY(-2px);
@@ -141,7 +140,7 @@
 .statItem span {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--ink-faint);
+  color: var(--ink-muted);
 }
 
 .divider {
@@ -160,12 +159,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   background: var(--surface);
   color: var(--ink-muted);
-  border: 1px solid var(--line);
+  border: 1px solid var(--surface-border);
+  box-shadow: var(--shadow-sm);
   transition: all 0.2s ease;
 }
 
@@ -194,7 +194,7 @@
   position: absolute;
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.15), transparent 70%);
+  background: radial-gradient(circle, var(--cyan-glow), transparent 70%);
   filter: blur(40px);
   pointer-events: none;
 }
@@ -202,19 +202,19 @@
 .devCard {
   position: relative;
   width: 340px;
-  background: #0d1322;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--term-bg);
+  border: 1px solid var(--term-border);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-lg);
   backdrop-filter: blur(16px);
   display: flex;
   flex-direction: column;
 }
 
 .devCardHeader {
-  background: rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--term-bar);
+  border-bottom: 1px solid var(--term-border);
   padding: 10px 14px;
   display: flex;
   align-items: center;
@@ -241,7 +241,7 @@
 .winTitle {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: #94a3b8;
+  color: var(--term-muted);
 }
 
 .devCardBody {
@@ -297,12 +297,12 @@
 }
 
 .metaLabel {
-  color: #64748b;
+  color: var(--term-muted);
   font-weight: 600;
 }
 
 .metaVal {
-  color: #e2e8f0;
+  color: var(--term-ink);
 }
 
 .techStackRow {
@@ -316,7 +316,7 @@
   font-family: var(--font-mono);
   font-size: 10px;
   font-weight: 600;
-  color: #38bdf8;
+  color: var(--term-accent);
   background: rgba(34, 211, 238, 0.1);
   border: 1px solid rgba(34, 211, 238, 0.2);
   padding: 3px 8px;
@@ -328,15 +328,15 @@
 .floatingTag {
   position: absolute;
   padding: 7px 14px;
-  background: rgba(13, 19, 34, 0.9);
+  background: var(--surface);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--surface-border);
   border-radius: 10px;
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
-  color: #f8fafc;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+  color: var(--ink);
+  box-shadow: var(--shadow-lg);
   animation: float 5s ease-in-out infinite alternate;
   z-index: 10;
 }
@@ -350,7 +350,19 @@
   .heroContainer {
     flex-direction: column;
     justify-content: center;
-    padding-top: 100px;
+    padding-top: 56px;
+    padding-bottom: 24px;
+  }
+  .actions {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btnPrimary,
+  .btnSecondary {
+    flex: 1 1 150px;
+    text-align: center;
+    padding: 14px 18px;
   }
   .contentLeft {
     align-items: center;

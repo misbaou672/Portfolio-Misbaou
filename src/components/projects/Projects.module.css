@@ -4,6 +4,6 @@
   min-height: 100%;
   width: 100%;
   overflow: hidden;
-  background: var(--dark-section);
-  color: #ffffff;
+  background: transparent;
+  color: var(--ink);
 }
