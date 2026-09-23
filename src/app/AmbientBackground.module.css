@@ -4,7 +4,8 @@
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
-  background-color: #080c14;
+  background-color: var(--bg);
+  transition: background-color 0.3s ease;
 }
 
 .mainBgImage {
@@ -25,7 +26,8 @@
 .vignetteOverlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(8, 12, 20, 0.4) 0%, rgba(8, 12, 20, 0.88) 85%);
+  background: radial-gradient(circle at 50% 50%, transparent 0%, var(--bg) 85%);
+  opacity: 0.6;
   z-index: 2;
 }
 
@@ -33,7 +35,7 @@
   position: absolute;
   border-radius: 50%;
   filter: blur(100px);
-  opacity: 0.22;
+  opacity: var(--orb-opacity);
   will-change: transform;
   animation: orbFloat 18s ease-in-out infinite alternate;
 }
@@ -76,14 +78,15 @@
   position: absolute;
   inset: 0;
   background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
   background-size: 50px 50px;
   mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 90%);
   -webkit-mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 90%);
 }
 
 .scanline {
+  display: none;
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -105,4 +108,10 @@
   100% {
     transform: translate(-30px, 30px) scale(0.95);
   }
+}
+
+/* Les lignes de balayage ne vont qu'au theme sombre : sur fond clair elles
+   griseraient toute la page. */
+:global([data-theme='dark']) .scanline {
+  display: block;
 }

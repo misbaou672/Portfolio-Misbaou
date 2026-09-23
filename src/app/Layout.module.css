@@ -12,6 +12,9 @@
 /* ===================== SECTIONS ===================== */
 .section {
   min-height: 100vh;
+  /* La barre de navigation flottante ne recouvre plus la fin des sections. */
+  padding-bottom: var(--chrome-bottom);
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -20,7 +23,7 @@
 
 .sectionDark {
   background: var(--dark-section);
-  color: var(--bg-2);
+  color: var(--ink);
 }
 
 .sectionLight {
