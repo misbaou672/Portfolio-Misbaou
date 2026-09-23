@@ -75,3 +75,11 @@ il faut parfois descendre a 76.
 
 Les garder, numerotees (`papyrus-2.jpg`, `papyrus-3.jpg`). Elles serviront a
 l'ecran galerie `feat/project-explore`, qui passera alors a un dossier par projet.
+
+## Illustrations thematiques
+
+`themes/` contient une illustration par carte de la colonne de droite d'une fiche
+projet (trois par projet), declarees dans `themes.data.ts`. Les memes images
+servent aux calques flous de l'arriere-plan. JPEG 1280 x 800 (16/10, le cadre
+des cartes), moins de 90 ko chacune. Le libelle de la carte s'affiche en bas a
+gauche : garder cette zone calme.
