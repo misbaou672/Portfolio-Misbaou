@@ -17,30 +17,33 @@ export function Projects() {
   const [open, setOpen] = useState<number | null>(null);
   const [originRect, setOriginRect] = useState<DOMRect | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
-  
+
   // Réf mutable pour bloquer ScrollTrigger quand une fiche est ouverte
   const isFicheOpen = useRef(open !== null);
   useEffect(() => {
     isFicheOpen.current = open !== null;
   }, [open]);
 
-  useGSAP(() => {
-    const mm = gsap.matchMedia();
-    mm.add('(prefers-reduced-motion: no-preference)', () => {
-      // Animation d'entrée
-      gsap.from(sectionRef.current, {
-        opacity: 0,
-        y: 40,
-        duration: 0.6,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 75%',
-        }
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        // Animation d'entrée
+        gsap.from(sectionRef.current, {
+          opacity: 0,
+          y: 40,
+          duration: 0.6,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 75%',
+          },
+        });
       });
-    });
-    return () => mm.revert();
-  }, { scope: sectionRef });
+      return () => mm.revert();
+    },
+    { scope: sectionRef },
+  );
 
   const handleOpen = (index: number) => {
     const tile = document.querySelector(`[data-tile-id="${PROJECTS[index].id}"]`);

@@ -65,17 +65,56 @@ const nodeTypes = {
 
 const initialNodes = [
   { id: 'hub', type: 'hubNode', position: { x: 0, y: 0 }, data: { label: 'Hub' } },
-  { id: 'experience', type: 'experienceNode', position: { x: 1500, y: 0 }, data: { label: 'Experience' } },
-  { id: 'projects', type: 'projectsNode', position: { x: 1500, y: 1000 }, data: { label: 'Projects' } },
+  {
+    id: 'experience',
+    type: 'experienceNode',
+    position: { x: 1500, y: 0 },
+    data: { label: 'Experience' },
+  },
+  {
+    id: 'projects',
+    type: 'projectsNode',
+    position: { x: 1500, y: 1000 },
+    data: { label: 'Projects' },
+  },
   { id: 'about', type: 'aboutNode', position: { x: 3000, y: 0 }, data: { label: 'About' } },
-  { id: 'contact', type: 'contactNode', position: { x: 3000, y: 1000 }, data: { label: 'Contact' } },
+  {
+    id: 'contact',
+    type: 'contactNode',
+    position: { x: 3000, y: 1000 },
+    data: { label: 'Contact' },
+  },
 ];
 
 const initialEdges: Edge[] = [
-  { id: 'e-hub-experience', source: 'hub', target: 'experience', animated: true, style: { stroke: '#a855f7', strokeWidth: 3 } },
-  { id: 'e-experience-projects', source: 'experience', target: 'projects', animated: true, style: { stroke: '#a855f7', strokeWidth: 3 } },
-  { id: 'e-experience-about', source: 'experience', target: 'about', animated: true, style: { stroke: '#ec4899', strokeWidth: 3 } },
-  { id: 'e-about-contact', source: 'about', target: 'contact', animated: true, style: { stroke: '#ec4899', strokeWidth: 3 } },
+  {
+    id: 'e-hub-experience',
+    source: 'hub',
+    target: 'experience',
+    animated: true,
+    style: { stroke: '#a855f7', strokeWidth: 3 },
+  },
+  {
+    id: 'e-experience-projects',
+    source: 'experience',
+    target: 'projects',
+    animated: true,
+    style: { stroke: '#a855f7', strokeWidth: 3 },
+  },
+  {
+    id: 'e-experience-about',
+    source: 'experience',
+    target: 'about',
+    animated: true,
+    style: { stroke: '#ec4899', strokeWidth: 3 },
+  },
+  {
+    id: 'e-about-contact',
+    source: 'about',
+    target: 'contact',
+    animated: true,
+    style: { stroke: '#ec4899', strokeWidth: 3 },
+  },
 ];
 
 export function WorkflowCanvas() {
