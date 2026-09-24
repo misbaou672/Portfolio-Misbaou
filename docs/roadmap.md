@@ -27,7 +27,7 @@ Chaque ligne devient une issue GitHub, prise une par une sur une branche `feat/.
 - [x] `chore/lighthouse-budget` : budget Lighthouse en CI, a11y/SEO/BP a 100
 - [x] `chore/polish` : finitions ecran par ecran
 - [x] `chore/remove-scan-and-sfx` : retrait du mode scan et des sons
-- [ ] `chore/domain` : domaine perso (le site tourne sur rayan-oughlis.vercel.app)
+- [ ] `chore/domain` : domaine perso (le site tourne encore sur le domaine Vercel par defaut)
 - [x] `docs/readme-final` : lien live dans le README
 
 ## Plus tard, eventuel
