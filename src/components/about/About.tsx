@@ -6,9 +6,26 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const HIGHLIGHTS = [
-  { label: 'Formation', title: 'BUT Informatique (3ᵉ année)', detail: 'IUT de Créteil-Vitry · UPEC (2024 – 2027)' },
-  { label: 'Stage', title: 'Développement & Automatisation', detail: 'DSI RATP (Paris / Île-de-France)' },
-  { label: 'Spécialités', title: 'Python, n8n, Backend & Linux', detail: 'Architectures web, SQL & Power BI' },
+  {
+    label: 'Formation',
+    title: 'BUT Informatique (3ᵉ année)',
+    detail: 'Parcours Développement logiciel · IUT de Créteil-Vitry, UPEC (2024 – 2027)',
+  },
+  {
+    label: 'Stage',
+    title: 'Développement & Automatisation',
+    detail: 'DSI RATP (Paris / Île-de-France)',
+  },
+  {
+    label: 'Spécialités',
+    title: 'Python, n8n, Backend & Linux',
+    detail: 'Architectures web, SQL & Power BI',
+  },
+  {
+    label: 'Objectif',
+    title: 'Full-stack à dominante back-end',
+    detail: 'Vers les pratiques DevOps & DevSecOps',
+  },
 ];
 
 const SKILLS = [
@@ -16,36 +33,53 @@ const SKILLS = [
   'Backend & MVC (PHP, SQL)',
   'Administration Linux & Réseaux',
   'Tableaux de bord Power BI',
-  'Gestion de projet Agile'
+  'Gestion de projet Agile',
 ];
 
-const INTERESTS = ['Boxe anglaise', 'Musculation', 'Défis algorithmiques (Root-Me)', 'Veille technologique'];
+const SOFT_SKILLS = [
+  'Travail en équipe',
+  'Autonomie',
+  'Résolution de problèmes',
+  'Rigueur & discipline',
+  'Communication technique',
+  'Adaptabilité',
+];
+
+const INTERESTS = [
+  'Boxe anglaise',
+  'Musculation',
+  'Défis algorithmiques (Root-Me)',
+  'Veille technologique',
+];
 const LANGUAGES = ['Français', 'Anglais (B2+ / Technique)'];
 
 export function About() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  
-  useGSAP(() => {
-    if (!sectionRef.current) return;
-    gsap.from(sectionRef.current.querySelectorAll(`.${styles.fadeUp}`), {
-      y: 30,
-      opacity: 0,
-      duration: 0.7,
-      ease: 'power3.out',
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top 75%',
-      }
-    });
-  }, { scope: sectionRef });
+
+  useGSAP(
+    () => {
+      if (!sectionRef.current) return;
+      gsap.from(sectionRef.current.querySelectorAll(`.${styles.fadeUp}`), {
+        y: 30,
+        opacity: 0,
+        duration: 0.7,
+        ease: 'power3.out',
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 75%',
+        },
+      });
+    },
+    { scope: sectionRef },
+  );
 
   return (
     <div ref={sectionRef} className={styles.container}>
       <header className={`${styles.header} ${styles.fadeUp}`}>
         <h2 className={styles.title}>À propos</h2>
         <p className={styles.subtitle}>
-          Mon parcours académique, mes compétences techniques et mes centres d'intérêt.
+          Mon parcours académique, mes compétences techniques et humaines, et mes centres d'intérêt.
         </p>
       </header>
 
@@ -77,7 +111,19 @@ export function About() {
           </div>
         </div>
 
-        {/* ROW 3: CENTRES D'INTÉRÊT & LANGUES */}
+        {/* ROW 3: SAVOIR-ÊTRE */}
+        <div className={`${styles.sectionBlock} ${styles.fadeUp}`}>
+          <span className={styles.sectionLabel}>Savoir-être</span>
+          <div className={styles.pillsRow}>
+            {SOFT_SKILLS.map((soft) => (
+              <span key={soft} className={styles.softPill}>
+                {soft}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* ROW 4: CENTRES D'INTÉRÊT & LANGUES */}
         <div className={`${styles.bottomSplit} ${styles.fadeUp}`}>
           <div className={styles.splitBlock}>
             <span className={styles.sectionLabel}>Centres d'intérêt</span>
