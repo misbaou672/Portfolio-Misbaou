@@ -11,11 +11,15 @@ import type { Plugin } from 'vite';
  * A regler dans les variables d'environnement de l'hebergeur :
  *   VITE_SITE_URL=https://mon-domaine.fr
  */
-/* Repere neutre, volontairement faux : le site n'a pas encore d'adresse
-   publique. Tant que `VITE_SITE_URL` n'est pas defini chez l'hebergeur, le
-   build previent en console plutot que d'emettre une URL credible mais
-   erronee dans le canonical, l'og:url, le sitemap et le JSON-LD. */
-const FALLBACK_SITE_URL = 'https://example.com';
+/* L'adresse de production, servant de repli quand `VITE_SITE_URL` n'est pas
+   defini chez l'hebergeur. Elle etait volontairement fausse tant que le site
+   n'etait pas deploye ; il l'est desormais, et un repli juste vaut mieux
+   qu'un avertissement ignore : sans lui, le canonical, l'og:url, le sitemap
+   et le JSON-LD designaient un domaine tiers.
+
+   `VITE_SITE_URL` reste prioritaire : c'est par elle qu'on basculera le jour
+   ou un domaine personnel remplacera l'adresse Vercel. */
+const FALLBACK_SITE_URL = 'https://portfolio-misbaou.vercel.app';
 
 /** Sans slash final : on concatene toujours des chemins commencant par `/`. */
 function normalise(url: string): string {
@@ -36,7 +40,7 @@ export function seo(): Plugin {
       if (config.command === 'build' && !config.env.VITE_SITE_URL) {
         config.logger.warn(
           `[seo] VITE_SITE_URL absent, repli sur ${FALLBACK_SITE_URL}. ` +
-            'Les URL canoniques et la carte de partage pointeront la.',
+            "A definir chez l'hebergeur si le site change d'adresse.",
         );
       }
     },
