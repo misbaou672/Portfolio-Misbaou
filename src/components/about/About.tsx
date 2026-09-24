@@ -13,8 +13,8 @@ const HIGHLIGHTS = [
   },
   {
     label: 'Stage',
-    title: 'Développement & Automatisation',
-    detail: 'DSI RATP (Paris / Île-de-France)',
+    title: 'Réseaux & services informatiques',
+    detail: 'RATP — DSP 49 · Lagny / Lilas / Belliard',
   },
   {
     label: 'Spécialités',
@@ -29,10 +29,23 @@ const HIGHLIGHTS = [
 ];
 
 const SKILLS = [
+  // Back-end et donnees
+  'Back-end & architecture MVC (PHP)',
+  'Programmation orientée objet (Java, Python, PHP)',
+  'API REST & design patterns',
+  'Bases de données (MySQL, PostgreSQL, MongoDB)',
+  'React & TypeScript',
+  // Systemes, infra et securite
+  'Administration Linux & réseaux (SSH, DNS, DHCP, FTP)',
+  'Virtualisation (VirtualBox, VM multi-services)',
+  'Docker & conteneurisation',
+  'Git & GitHub (branches, PR, revue)',
+  'CI/CD (GitHub Actions)',
+  'Cybersécurité (Root-Me, TryHackMe)',
+  // Automatisation, data et methode
   'Automatisation (n8n, Python)',
-  'Backend & MVC (PHP, SQL)',
-  'Administration Linux & Réseaux',
   'Tableaux de bord Power BI',
+  'SEO technique (données structurées, sitemap)',
   'Gestion de projet Agile',
 ];
 
@@ -51,7 +64,7 @@ const INTERESTS = [
   'Défis algorithmiques (Root-Me)',
   'Veille technologique',
 ];
-const LANGUAGES = ['Français', 'Anglais (B2+ / Technique)'];
+const LANGUAGES = ['Français (langue maternelle)', 'Peul (bilingue)', 'Anglais (B1/B2)'];
 
 export function About() {
   const sectionRef = useRef<HTMLDivElement>(null);
