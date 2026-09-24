@@ -43,8 +43,15 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.85); }
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
 }
 
 .title {
@@ -80,7 +87,8 @@
   margin-top: 4px;
 }
 
-.btnPrimary, .btnSecondary {
+.btnPrimary,
+.btnSecondary {
   padding: 12px 22px;
   border-radius: 8px;
   font-family: var(--font-mono);
@@ -199,9 +207,15 @@
   pointer-events: none;
 }
 
-.devCard {
+.devCardWrap {
   position: relative;
   width: 340px;
+  flex-shrink: 0;
+}
+
+.devCard {
+  position: relative;
+  width: 100%;
   background: var(--term-bg);
   border: 1px solid var(--term-border);
   border-radius: 16px;
@@ -227,16 +241,24 @@
   gap: 6px;
 }
 
-.wBtnRed, .wBtnYellow, .wBtnGreen {
+.wBtnRed,
+.wBtnYellow,
+.wBtnGreen {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   display: inline-block;
 }
 
-.wBtnRed { background: #ff5f56; }
-.wBtnYellow { background: #ffbd2e; }
-.wBtnGreen { background: #27c93f; }
+.wBtnRed {
+  background: #ff5f56;
+}
+.wBtnYellow {
+  background: #ffbd2e;
+}
+.wBtnGreen {
+  background: #27c93f;
+}
 
 .winTitle {
   font-family: var(--font-mono);
@@ -342,8 +364,12 @@
 }
 
 @keyframes float {
-  from { transform: translateY(0px); }
-  to { transform: translateY(-10px); }
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-10px);
+  }
 }
 
 @media (max-width: 900px) {
