@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(24px, 4vh, 56px) clamp(20px, 5vw, 80px);
+  padding: clamp(48px, 8vh, 72px) clamp(16px, 5vw, 80px) 24px;
   width: 100%;
   max-width: 1140px;
   margin: 0 auto;
@@ -16,7 +16,7 @@
 .title {
   margin: 0 0 6px;
   font-family: var(--font-display);
-  font-size: clamp(28px, 4.5vw, 44px);
+  font-size: clamp(32px, 5vw, 44px);
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--ink);
@@ -25,7 +25,7 @@
 .subtitle {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: 16px;
   color: var(--ink-muted);
 }
 
@@ -51,8 +51,8 @@
   align-items: center;
   gap: 10px;
   padding: 10px 16px;
-  background: rgba(34, 211, 238, 0.08);
-  border: 1px solid rgba(34, 211, 238, 0.25);
+  background: var(--cyan-pale);
+  border: 1px solid var(--cyan);
   border-radius: 10px;
 }
 
@@ -60,15 +60,15 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #22d3ee;
-  box-shadow: 0 0 10px #22d3ee;
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan-glow);
 }
 
 .statusText {
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
-  color: #38bdf8;
+  color: var(--cyan);
   letter-spacing: 0.02em;
 }
 
@@ -76,18 +76,15 @@
 
 .masterContactCard {
   position: relative;
-  background: rgba(13, 19, 34, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 16px;
   padding: 22px 24px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   backdrop-filter: blur(16px);
-  box-shadow: 
-    0 24px 64px rgba(0, 0, 0, 0.5), 
-    0 1px 0 rgba(255, 255, 255, 0.1) inset,
-    0 0 40px rgba(34, 211, 238, 0.04);
+  box-shadow: var(--shadow-lg);
 }
 
 .ambientGlow {
@@ -96,14 +93,14 @@
   left: -20%;
   width: 140%;
   height: 140%;
-  background: radial-gradient(circle at 30% 30%, rgba(34, 211, 238, 0.08) 0%, transparent 60%);
+  background: radial-gradient(circle at 30% 30%, var(--cyan-pale) 0%, transparent 60%);
   pointer-events: none;
   z-index: 0;
 }
 
 .cardDivider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, var(--hover), transparent);
   width: 100%;
 }
 
@@ -123,9 +120,9 @@
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  background: rgba(34, 211, 238, 0.12);
-  border: 1px solid rgba(34, 211, 238, 0.25);
-  color: #22d3ee;
+  background: var(--cyan-pale);
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,10 +132,10 @@
 .cardLabel {
   display: block;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #64748b;
+  color: var(--ink-faint);
   margin-bottom: 2px;
 }
 
@@ -146,13 +143,13 @@
   font-family: var(--font-mono);
   font-size: 14px;
   font-weight: 600;
-  color: #f8fafc;
+  color: var(--ink);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .cardValue:hover {
-  color: #38bdf8;
+  color: var(--cyan);
 }
 
 .copyBtn {
@@ -160,11 +157,11 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 9px 14px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--surface-border);
   border-radius: 8px;
-  color: #e2e8f0;
+  color: var(--ink);
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
@@ -173,15 +170,15 @@
 }
 
 .copyBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(34, 211, 238, 0.4);
-  color: #22d3ee;
+  background: var(--hover);
+  border-color: var(--cyan);
+  color: var(--cyan);
 }
 
 .copyBtnDone {
-  background: rgba(34, 197, 94, 0.15);
-  border-color: rgba(34, 197, 94, 0.4);
-  color: #4ade80;
+  background: var(--accent-green-pale);
+  border-color: var(--accent-green-glow);
+  color: var(--accent-green-ink);
 }
 
 .metaRow {
@@ -191,35 +188,35 @@
 }
 
 .metaBox {
-  background: #0d1322;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 10px;
   padding: 12px 14px;
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #38bdf8;
+  color: var(--cyan);
 }
 
 .metaTitle {
   display: block;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #64748b;
+  color: var(--ink-faint);
 }
 
 .metaSub {
   font-family: var(--font-body);
   font-size: 12px;
   font-weight: 600;
-  color: #cbd5e1;
+  color: var(--ink-muted);
 }
 
 .socialBox {
-  background: #0d1322;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 10px;
   padding: 14px 16px;
   display: flex;
@@ -229,10 +226,10 @@
 
 .socialTitle {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #64748b;
+  color: var(--ink-faint);
 }
 
 .socialLinks {
@@ -246,11 +243,11 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--surface-border);
   border-radius: 6px;
-  color: #e2e8f0;
+  color: var(--ink);
   font-family: var(--font-mono);
   font-size: 12px;
   text-decoration: none;
@@ -258,9 +255,9 @@
 }
 
 .socialBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: #38bdf8;
-  color: #38bdf8;
+  background: var(--hover);
+  border-color: var(--cyan);
+  color: var(--cyan);
   transform: translateY(-1px);
 }
 
@@ -283,26 +280,26 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 18px;
-  background: #0d1322;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 12px;
-  color: #f8fafc;
+  color: var(--ink);
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-lg);
   text-align: left;
 }
 
 .toggleFormBtn:hover {
-  background: rgba(13, 19, 34, 0.95);
-  border-color: rgba(34, 211, 238, 0.4);
+  background: var(--surface);
+  border-color: var(--cyan);
   transform: translateY(-2px);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-lg);
 }
 
 .toggleFormBtnOpen {
-  background: rgba(34, 211, 238, 0.08);
-  border-color: rgba(34, 211, 238, 0.4);
+  background: var(--cyan-pale);
+  border-color: var(--cyan);
 }
 
 .toggleFormLeft {
@@ -315,13 +312,13 @@
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  background: #22d3ee;
-  color: #090d16;
+  background: var(--cyan);
+  color: var(--on-accent);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 0 16px rgba(34, 211, 238, 0.3);
+  box-shadow: 0 0 16px var(--cyan-glow);
 }
 
 .toggleTitle {
@@ -329,14 +326,14 @@
   font-family: var(--font-display);
   font-size: 16px;
   font-weight: 700;
-  color: #f8fafc;
+  color: var(--ink);
 }
 
 .toggleSubtitle {
   display: block;
   font-family: var(--font-mono);
-  font-size: 11px;
-  color: #94a3b8;
+  font-size: 12px;
+  color: var(--ink-muted);
   margin-top: 2px;
 }
 
@@ -352,11 +349,11 @@
               transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               margin-bottom 0.35s ease;
   margin-bottom: 0;
-  background: #0d1322;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 14px;
   padding: 0 20px;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-lg);
 }
 
 .expandableFormOpen {
@@ -387,25 +384,25 @@
 
 .chipBtn {
   font-family: var(--font-mono);
-  font-size: 11px;
-  padding: 5px 10px;
+  font-size: 12px;
+  padding: 8px 12px;
   border-radius: 99px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #94a3b8;
+  background: var(--surface-2);
+  border: 1px solid var(--surface-border);
+  color: var(--ink-muted);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .chipBtn:hover {
-  color: #e2e8f0;
-  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--ink);
+  border-color: var(--surface-border);
 }
 
 .chipActive {
-  background: rgba(34, 211, 238, 0.15);
-  border-color: rgba(34, 211, 238, 0.4);
-  color: #22d3ee;
+  background: var(--cyan-pale);
+  border-color: var(--cyan);
+  color: var(--cyan);
   font-weight: 600;
 }
 
@@ -423,21 +420,22 @@
 
 .label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: #cbd5e1;
+  color: var(--ink-muted);
 }
 
 .input, .textarea {
   width: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--surface-2);
+  border: 1px solid var(--surface-border);
   border-radius: 8px;
   padding: 10px 14px;
   font-family: var(--font-body);
-  font-size: 13px;
-  color: #f8fafc;
+  /* 16 px : en dessous, iOS zoome sur le champ au toucher. */
+  font-size: 16px;
+  color: var(--ink);
   transition: all 0.2s ease;
 }
 
@@ -448,12 +446,12 @@
 
 .input:focus, .textarea:focus {
   outline: none;
-  border-color: #22d3ee;
-  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.15);
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px var(--cyan-glow);
 }
 
 .input::placeholder, .textarea::placeholder {
-  color: #475569;
+  color: var(--ink-faint);
 }
 
 .submitBtn {
@@ -462,8 +460,8 @@
   justify-content: center;
   gap: 8px;
   padding: 12px 20px;
-  background: #22d3ee;
-  color: #090d16;
+  background: var(--cyan);
+  color: var(--on-accent);
   border: none;
   border-radius: 8px;
   font-family: var(--font-mono);
@@ -472,14 +470,14 @@
   letter-spacing: 0.05em;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(34, 211, 238, 0.25);
+  box-shadow: 0 8px 24px var(--cyan-glow);
   transition: all 0.2s ease;
 }
 
 .submitBtn:hover {
-  background: #38bdf8;
+  background: var(--cyan-bright);
   transform: translateY(-1px);
-  box-shadow: 0 12px 32px rgba(34, 211, 238, 0.35);
+  box-shadow: 0 12px 32px var(--cyan-glow);
 }
 
 /* SUCCESS STATE */
@@ -498,9 +496,9 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(34, 197, 94, 0.15);
-  border: 1px solid rgba(34, 197, 94, 0.4);
-  color: #4ade80;
+  background: var(--accent-green-pale);
+  border: 1px solid var(--accent-green-glow);
+  color: var(--accent-green-ink);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -510,24 +508,24 @@
   margin: 0;
   font-family: var(--font-display);
   font-size: 18px;
-  color: #f8fafc;
+  color: var(--ink);
 }
 
 .successState p {
   margin: 0;
   font-family: var(--font-body);
   font-size: 13px;
-  color: #94a3b8;
+  color: var(--ink-muted);
   max-width: 320px;
 }
 
 .resetBtn {
   margin-top: 8px;
   padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--hover);
+  border: 1px solid var(--surface-border);
   border-radius: 6px;
-  color: #e2e8f0;
+  color: var(--ink);
   font-family: var(--font-mono);
   font-size: 12px;
   cursor: pointer;
@@ -535,7 +533,7 @@
 }
 
 .resetBtn:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--hover);
 }
 
 @media (max-width: 860px) {

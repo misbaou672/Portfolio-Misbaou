@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap, useGSAP } from '@/lib/gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrambleText } from './ScrambleText';
@@ -27,9 +27,9 @@ const STEPS: Step[] = [
       'Automatisation de workflows avec n8n et ZennoPoster : extraction, transformation et traitement de données.',
       'Développement backend en PHP (architecture MVC, requêtes préparées) et optimisation des requêtes.',
       'Analyse de données avec Python (NumPy, Pandas) et création de tableaux de bord Power BI.',
-      'Configuration et administration de services Linux (SSH, DHCP, DNS, FTP) et manipulation d\'équipements réseau.',
+      "Configuration et administration de services Linux (SSH, DHCP, DNS, FTP) et manipulation d'équipements réseau.",
     ],
-    skills: ['Python', 'n8n', 'Linux', 'Power BI', 'MVC']
+    skills: ['Python', 'n8n', 'Linux', 'Power BI', 'MVC'],
   },
   {
     id: 'upec',
@@ -39,9 +39,9 @@ const STEPS: Step[] = [
     location: 'Créteil, Île-de-France',
     lines: [
       'Formation pluridisciplinaire couvrant le développement logiciel, les réseaux, les bases de données, la cybersécurité et la gestion de projet.',
-      'Projets en équipe : applications web full-stack, SAE (Situations d\'Apprentissage et d\'Évaluation), stages en entreprise.',
+      "Projets en équipe : applications web full-stack, SAE (Situations d'Apprentissage et d'Évaluation), stages en entreprise.",
     ],
-    skills: ['React', 'Node.js', 'SQL', 'Réseaux', 'Agile']
+    skills: ['React', 'Node.js', 'SQL', 'Réseaux', 'Agile'],
   },
   {
     id: 'bac',
@@ -53,72 +53,114 @@ const STEPS: Step[] = [
       'Spécialités Mathématiques & Physique-Chimie, avec option Mathématiques Expertes.',
       'Base solide en logique formelle et raisonnement analytique.',
     ],
-    skills: ['Mathématiques', 'Logique', 'Physique']
+    skills: ['Mathématiques', 'Logique', 'Physique'],
   },
 ];
 
+/** Vrai si l'appareil demande moins d'animations. */
+function preferMoinsDAnimations() {
+  return (
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+}
+
+type TerminalTheme = 'default' | 'matrix' | 'dracula' | 'amber';
+const TERMINAL_THEMES: TerminalTheme[] = ['default', 'matrix', 'dracula', 'amber'];
+
 export function Experience() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const timelineRef = useRef<HTMLOListElement>(null);
   const termRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [isDecrypted, setIsDecrypted] = useState(false);
+  // Le parcours se dechiffre tout seul quand il arrive a l'ecran : l'effet
+  // reste, mais un recruteur n'a plus rien a faire pour le lire.
+  const [isDecrypted, setIsDecrypted] = useState(preferMoinsDAnimations);
   const [inputValue, setInputValue] = useState('');
-  const [logs, setLogs] = useState<string[]>([]);
-  const [theme, setTheme] = useState<'default' | 'matrix' | 'dracula' | 'amber'>('default');
+  const [logs, setLogs] = useState<string[]>(["Tape 'help' pour voir les commandes."]);
+  const [theme, setTheme] = useState<TerminalTheme>('default');
 
-  useGSAP(() => {
-    if (!termRef.current) return;
-    gsap.from(termRef.current, {
-      y: 40,
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top 75%',
-      }
-    });
-  }, { scope: sectionRef });
+  useEffect(() => {
+    const el = timelineRef.current;
+    if (!el || isDecrypted) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setIsDecrypted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isDecrypted]);
+
+  useGSAP(
+    () => {
+      if (!termRef.current) return;
+      gsap.from(termRef.current, {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: termRef.current,
+          start: 'top 90%',
+        },
+      });
+    },
+    { scope: sectionRef },
+  );
+
+  /** Rejoue l'effet de dechiffrement. */
+  const rejouer = () => {
+    setIsDecrypted(false);
+    requestAnimationFrame(() => setIsDecrypted(true));
+  };
 
   const handleCommand = (cmd: string) => {
     const trimmed = cmd.trim().toLowerCase();
     if (!trimmed) return;
 
     if (trimmed === './decrypt.sh' || trimmed === 'decrypt') {
-      setIsDecrypted(true);
-      setLogs((prev) => [...prev, `$ ${cmd}`, '[SYSTEM] Decryption key accepted. Access granted.']);
+      rejouer();
+      setLogs((prev) => [...prev, `$ ${cmd}`, '[SYSTEM] Dechiffrement relance.']);
     } else if (trimmed.startsWith('theme')) {
-      const targetTheme = trimmed.split(' ')[1];
-      if (['default', 'matrix', 'dracula', 'amber'].includes(targetTheme)) {
-        setTheme(targetTheme as 'default' | 'matrix' | 'dracula' | 'amber');
-        setLogs((prev) => [...prev, `$ ${cmd}`, `[SYSTEM] Theme apply: ${targetTheme}`]);
+      const targetTheme = trimmed.split(' ')[1] as TerminalTheme;
+      if (TERMINAL_THEMES.includes(targetTheme)) {
+        setTheme(targetTheme);
+        setLogs((prev) => [...prev, `$ ${cmd}`, `[SYSTEM] Theme applique : ${targetTheme}`]);
       } else {
-        setLogs((prev) => [...prev, `$ ${cmd}`, 'Available themes: default, matrix, dracula, amber. Example: theme matrix']);
+        setLogs((prev) => [
+          ...prev,
+          `$ ${cmd}`,
+          'Themes : default, matrix, dracula, amber. Exemple : theme matrix',
+        ]);
       }
     } else if (trimmed === 'help') {
       setLogs((prev) => [
         ...prev,
         `$ ${cmd}`,
-        'Available commands:',
-        '  ./decrypt.sh - Decrypt career data',
-        '  theme <name> - Switch theme (default, matrix, dracula, amber)',
-        '  ls           - List directory files',
-        '  clear        - Clear terminal console',
-        '  whoami       - Display current user'
+        'Commandes disponibles :',
+        '  ./decrypt.sh   rejoue le dechiffrement du parcours',
+        '  theme <nom>    default, matrix, dracula, amber',
+        '  ls             liste les fichiers',
+        '  whoami         utilisateur courant',
+        '  clear          vide la console',
       ]);
     } else if (trimmed === 'ls') {
       setLogs((prev) => [
         ...prev,
         `$ ${cmd}`,
-        'ratp_dsi.enc  upec_but3.enc  bac_general.enc  decrypt.sh*'
+        'ratp_dsi.md  upec_but3.md  bac_general.md  decrypt.sh*',
       ]);
     } else if (trimmed === 'whoami') {
-      setLogs((prev) => [...prev, `$ ${cmd}`, 'misbaou@macbook-pro (Guest User)']);
+      setLogs((prev) => [...prev, `$ ${cmd}`, 'misbaou@portfolio (invite)']);
     } else if (trimmed === 'clear') {
       setLogs([]);
     } else {
-      setLogs((prev) => [...prev, `$ ${cmd}`, `bash: command not found: ${cmd}. Type 'help' for available commands.`]);
+      setLogs((prev) => [...prev, `$ ${cmd}`, `bash: ${cmd}: commande introuvable. Tape 'help'.`]);
     }
 
     setInputValue('');
@@ -136,127 +178,92 @@ export function Experience() {
     <div ref={sectionRef} className={styles.container}>
       <header className={styles.header}>
         <h2 className={styles.title}>Parcours</h2>
-        <p className={styles.subtitle}>
-          Expériences professionnelles et parcours académique.
-        </p>
+        <p className={styles.subtitle}>Expériences professionnelles et parcours académique.</p>
       </header>
 
-      {/* TERMINAL MACOS */}
+      <ol ref={timelineRef} className={styles.timeline}>
+        {STEPS.map((step, index) => (
+          <li key={step.id} className={styles.step}>
+            <span className={styles.marker} aria-hidden="true" />
+            <article className={styles.card}>
+              <div className={styles.metaLine}>
+                <span className={styles.period}>{step.period}</span>
+                <span className={styles.location}>{step.location}</span>
+              </div>
+              <h3 className={styles.role}>
+                <ScrambleText text={step.role} isDecrypted={isDecrypted} delay={index * 250} />
+              </h3>
+              <p className={styles.company}>
+                <ScrambleText
+                  text={step.company}
+                  isDecrypted={isDecrypted}
+                  delay={index * 250 + 100}
+                />
+              </p>
+
+              <ul className={styles.descList}>
+                {step.lines.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+
+              <div className={styles.skillsTags}>
+                {step.skills.map((skill) => (
+                  <span key={skill} className={styles.skillBadge}>
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </article>
+          </li>
+        ))}
+      </ol>
+
+      {/* Petit terminal pour les curieux : la lecture du parcours n'en depend plus. */}
       <div ref={termRef} className={`${styles.terminal} ${themeClass}`}>
         <div className={styles.terminalHeader}>
-          <div className={styles.terminalButtons}>
-            <span className={styles.tBtnRed} title="Fermer"></span>
-            <span className={styles.tBtnYellow} title="Réduire"></span>
-            <span className={styles.tBtnGreen} title="Agrandir"></span>
+          <div className={styles.terminalButtons} aria-hidden="true">
+            <span className={styles.tBtnRed}></span>
+            <span className={styles.tBtnYellow}></span>
+            <span className={styles.tBtnGreen}></span>
           </div>
 
-          {/* THEME PICKER CHIPS */}
-          <div className={styles.themeSelector}>
-            {(['default', 'matrix', 'dracula', 'amber'] as const).map((t) => (
+          <div className={styles.themeSelector} role="group" aria-label="Thème du terminal">
+            {TERMINAL_THEMES.map((t) => (
               <button
                 key={t}
                 type="button"
                 className={`${styles.themePill} ${theme === t ? styles.themeActive : ''}`}
+                aria-pressed={theme === t}
                 onClick={() => setTheme(t)}
               >
                 {t}
               </button>
             ))}
           </div>
-
-          <div className={styles.terminalHeaderAction}>
-            <button
-              className={styles.quickDecryptBtn}
-              onClick={() => {
-                setIsDecrypted(true);
-                setLogs((prev) => [...prev, '$ ./decrypt.sh', '[SYSTEM] Decryption key accepted. Access granted.']);
-              }}
-            >
-              {isDecrypted ? 'Déchiffré' : 'Déchiffrer'}
-            </button>
-          </div>
         </div>
 
         <div className={styles.terminalBody}>
-          {!isDecrypted && (
-            <div className={styles.systemAlert}>
-              <div className={styles.errorLine}>
-                <span className={styles.alertIcon}>[ACCÈS RESTREINT]</span>
-                <span>Les données de parcours sont chiffrées en mémoire.</span>
-              </div>
-              <div className={styles.hintLine}>
-                <span>Exécutez le script de déchiffrement : </span>
-                <button
-                  type="button"
-                  className={styles.hintBtn}
-                  onClick={() => {
-                    setInputValue('./decrypt.sh');
-                    handleCommand('./decrypt.sh');
-                  }}
-                >
-                  ./decrypt.sh
-                </button>
-              </div>
-            </div>
-          )}
-
           {logs.length > 0 && (
-            <div className={styles.logsConsole}>
+            <div className={styles.logsConsole} aria-live="polite">
               {logs.map((log, index) => (
-                <div key={index} className={styles.logLine}>{log}</div>
+                <div key={index} className={styles.logLine}>
+                  {log}
+                </div>
               ))}
             </div>
           )}
 
-          <div className={styles.terminalContent}>
-            {STEPS.map((step, index) => (
-              <article key={step.id} className={styles.card}>
-                <div className={styles.cardHeader}>
-                  <h3 className={styles.role}>
-                    <ScrambleText text={step.role} isDecrypted={isDecrypted} delay={index * 300} />
-                  </h3>
-                  <span className={styles.company}>
-                    <ScrambleText text={`@ ${step.company}`} isDecrypted={isDecrypted} delay={index * 300 + 100} />
-                  </span>
-                </div>
-
-                <div className={styles.metaLine}>
-                  <span className={styles.period}>
-                    <ScrambleText text={step.period} isDecrypted={isDecrypted} delay={index * 300 + 200} />
-                  </span>
-                  <span className={styles.metaDot}>•</span>
-                  <span className={styles.location}>
-                    <ScrambleText text={step.location} isDecrypted={isDecrypted} delay={index * 300 + 250} />
-                  </span>
-                </div>
-
-                <ul className={styles.descList}>
-                  {step.lines.map((line, lIndex) => (
-                    <li key={lIndex}>
-                      <ScrambleText
-                        text={line}
-                        isDecrypted={isDecrypted}
-                        delay={index * 300 + 350 + lIndex * 100}
-                      />
-                    </li>
-                  ))}
-                </ul>
-
-                <div className={styles.skillsTags}>
-                  {step.skills.map((skill) => (
-                    <span key={skill} className={styles.skillBadge}>
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-
           <div className={styles.promptWrapper} onClick={() => inputRef.current?.focus()}>
-            <span className={styles.promptArrow}>➜</span>
-            <span className={styles.promptPath}>~/parcours</span>
-            <span className={styles.promptSign}>$</span>
+            <span className={styles.promptArrow} aria-hidden="true">
+              ➜
+            </span>
+            <span className={styles.promptPath} aria-hidden="true">
+              ~/parcours
+            </span>
+            <span className={styles.promptSign} aria-hidden="true">
+              $
+            </span>
             <input
               ref={inputRef}
               type="text"
@@ -265,8 +272,10 @@ export function Experience() {
               onKeyDown={handleKeyDown}
               className={styles.terminalInput}
               autoComplete="off"
+              autoCapitalize="off"
               spellCheck="false"
-              placeholder={isDecrypted ? "Entrez une commande (ex: help, ls, clear)..." : "Tapez ./decrypt.sh ou cliquez sur le bouton..."}
+              aria-label="Commande du terminal"
+              placeholder="help, ls, theme matrix..."
             />
           </div>
         </div>

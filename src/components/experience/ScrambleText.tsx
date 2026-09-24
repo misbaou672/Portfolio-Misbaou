@@ -8,50 +8,57 @@ type ScrambleTextProps = {
 
 const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*<>';
 
+const reduit = () =>
+  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/** Caractere brouille, deterministe : le rendu reste pur, le tic le fait scintiller. */
+function brouille(char: string, index: number, tic: number) {
+  if (char === ' ') return ' ';
+  return CHARACTERS[(index * 7 + tic * 13 + char.charCodeAt(0)) % CHARACTERS.length];
+}
+
+/**
+ * Texte qui se dechiffre lettre a lettre. Le vrai texte est toujours dans le
+ * DOM pour les lecteurs d'ecran ; seule la version brouillee est decorative.
+ */
 export function ScrambleText({ text, isDecrypted, delay = 0 }: ScrambleTextProps) {
-  const [displayText, setDisplayText] = useState('');
-  const [scrambling, setScrambling] = useState(!isDecrypted);
+  // Nombre de lettres deja revelees ; ne change que dans les minuteries.
+  const [iteration, setIteration] = useState(0);
 
   useEffect(() => {
-    if (!isDecrypted) {
-      const randomText = text
-        .split('')
-        .map((char) => (char === ' ' ? ' ' : CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)]))
-        .join('');
-      setDisplayText(randomText);
-      setScrambling(true);
-      return;
-    }
-
+    if (!isDecrypted || reduit()) return;
+    let interval: ReturnType<typeof setInterval> | undefined;
     const timeoutId = setTimeout(() => {
-      let iteration = 0;
-      const interval = setInterval(() => {
-        setDisplayText(() => {
-          return text
-            .split('')
-            .map((char, index) => {
-              if (index < iteration) {
-                return text[index];
-              }
-              if (char === ' ') return ' ';
-              return CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)];
-            })
-            .join('');
-        });
-
-        if (iteration >= text.length) {
-          clearInterval(interval);
-          setScrambling(false);
-        }
-
-        iteration += 1 / 3;
+      let courant = 0;
+      setIteration(0);
+      interval = setInterval(() => {
+        courant += 1 / 3;
+        setIteration(courant);
+        if (courant >= text.length) clearInterval(interval);
       }, 25);
-
-      return () => clearInterval(interval);
     }, delay);
-
-    return () => clearTimeout(timeoutId);
+    return () => {
+      clearTimeout(timeoutId);
+      clearInterval(interval);
+    };
   }, [isDecrypted, text, delay]);
 
-  return <span className={scrambling ? 'scrambled-text' : ''}>{displayText}</span>;
+  const termine = isDecrypted && (reduit() || iteration >= text.length);
+  const revelees = isDecrypted ? iteration : 0;
+  const tic = Math.floor(iteration * 3);
+  const affiche = termine
+    ? text
+    : text
+        .split('')
+        .map((char, index) => (index < revelees ? char : brouille(char, index, tic)))
+        .join('');
+
+  return (
+    <span>
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true" className={termine ? '' : 'scrambled-text'}>
+        {affiche}
+      </span>
+    </span>
+  );
 }

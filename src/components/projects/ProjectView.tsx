@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
 import { RETOUR_ACCUEIL } from '@/lib/deck';
 import { gsap, useGSAP } from '@/lib/gsap';
 import type { Project } from './projects.data';
+import { THEME_IMAGES, THEME_MOTIFS } from './themes.data';
 import styles from './ProjectView.module.css';
 
 type Props = {
@@ -120,9 +121,13 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
   const [isAtBottom, setIsAtBottom] = useState(false);
   const lastWheelTime = useRef<number>(0);
 
-  useEffect(() => {
+  // Changement de projet : on revient a la premiere image, pendant le rendu
+  // plutot que dans un effet (evite un rendu en cascade).
+  const [projetAffiche, setProjetAffiche] = useState(project.id);
+  if (projetAffiche !== project.id) {
+    setProjetAffiche(project.id);
     setCurrentImageIndex(0);
-  }, [project.id]);
+  }
 
   useEffect(() => {
     const heroEl = heroRef.current;
@@ -185,11 +190,13 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
   }, [isLightboxOpen, project.medias]);
 
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [pageProgress, setPageProgress] = useState(0);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
     const progress = Math.min(1, Math.max(0, scrollTop / 500));
     setScrollProgress(progress);
+    setPageProgress(scrollHeight > clientHeight ? scrollTop / (scrollHeight - clientHeight) : 0);
 
     if (scrollTop + clientHeight >= scrollHeight - 50) {
       setIsAtBottom(true);
@@ -236,8 +243,11 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    // La fiche a sa propre navigation : celle du site se retire (FloatingNav).
+    document.body.classList.add('fiche-ouverte');
     return () => {
       document.body.style.overflow = prevOverflow;
+      document.body.classList.remove('fiche-ouverte');
     };
   }, []);
 
@@ -249,7 +259,8 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
     const root = rootRef.current;
     if (!root) return;
 
-    gsap.fromTo(root, { autoAlpha: 0, scale: 0.95 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power3.out' });
+    // clearProps : un transform residuel ferait defiler le fond fixe avec le contenu.
+    gsap.fromTo(root, { autoAlpha: 0, scale: 0.95 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power3.out', clearProps: 'transform' });
     gsap.fromTo(root.querySelectorAll(`.${styles.reveal}`), 
       { autoAlpha: 0, y: 20 },
       { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' }
@@ -258,77 +269,62 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
 
   const theme = {
     '--p-accent': project.palette.ink,
-    '--p-ink': `color-mix(in srgb, ${project.palette.ink} 16%, #ffffff)`,
-    '--p-muted': `color-mix(in srgb, ${project.palette.ink} 22%, #94a3b8)`,
-    '--p-border': `color-mix(in srgb, ${project.palette.ink} 30%, rgba(255, 255, 255, 0.1))`,
+    '--p-ink': `color-mix(in srgb, ${project.palette.ink} 16%, var(--ink))`,
+    '--p-muted': `color-mix(in srgb, ${project.palette.ink} 22%, var(--ink-muted))`,
+    '--p-border': `color-mix(in srgb, ${project.palette.ink} 30%, var(--line))`,
     '--p-from': project.palette.from,
     '--p-to': project.palette.to,
     '--p-glow': project.palette.glow || 'rgba(56, 189, 248, 0.4)',
   } as CSSProperties;
 
-  const THEMATIC_GALLERIES: Record<string, string[]> = {
-    coderouge: [
-      'https://placehold.co/1600x900/1e1b4b/ffffff?text=Image+Thematique+1',
-      'https://placehold.co/1600x900/1e1b4b/ffffff?text=Image+Thematique+2',
-      'https://placehold.co/1600x900/1e1b4b/ffffff?text=Image+Thematique+3',
-    ],
-    'velib-optim': [
-      'https://placehold.co/1600x900/082f49/ffffff?text=Image+Thematique+1',
-      'https://placehold.co/1600x900/082f49/ffffff?text=Image+Thematique+2',
-      'https://placehold.co/1600x900/082f49/ffffff?text=Image+Thematique+3',
-    ],
-    'sae3-real01': [
-      'https://placehold.co/1600x900/064e3b/ffffff?text=Image+Thematique+1',
-      'https://placehold.co/1600x900/064e3b/ffffff?text=Image+Thematique+2',
-      'https://placehold.co/1600x900/064e3b/ffffff?text=Image+Thematique+3',
-    ],
-    gestistock: [
-      'https://placehold.co/1600x900/4c1d95/ffffff?text=Image+Thematique+1',
-      'https://placehold.co/1600x900/4c1d95/ffffff?text=Image+Thematique+2',
-      'https://placehold.co/1600x900/4c1d95/ffffff?text=Image+Thematique+3',
-    ],
-    'createur-devis': [
-      'https://placehold.co/1600x900/065f46/ffffff?text=Image+Thematique+1',
-      'https://placehold.co/1600x900/065f46/ffffff?text=Image+Thematique+2',
-      'https://placehold.co/1600x900/065f46/ffffff?text=Image+Thematique+3',
-    ],
-  };
-
-  const bgImages = THEMATIC_GALLERIES[project.id] || (project.bgThemeImage ? [project.bgThemeImage] : []);
+  const themeImages = THEME_IMAGES[project.id] ?? [];
+  const bgImages = themeImages.length > 0
+    ? themeImages.map((image) => image.src)
+    : project.bgThemeImage
+      ? [project.bgThemeImage]
+      : [];
+  const motif = THEME_MOTIFS[project.id];
 
   return (
     <div ref={rootRef} className={styles.root} style={theme} onScroll={handleScroll}>
       <div className={styles.bgWrapper} aria-hidden="true">
         {bgImages.map((imgSrc, idx) => {
-          // Calculate vertical position down the document height for each background image
-          const topPercent = (idx / bgImages.length) * 100;
-          
-          // Each image gradually loses blur as scroll reaches its zone and goes down the page
-          const progressiveUnblur = Math.max(0, 24 - (scrollProgress * 24) - (idx * 3));
-          const opacity = Math.max(0.25, 0.45 + (scrollProgress * 0.35));
-
+          // Fondu enchaine : chaque illustration domine a son tiers de la page.
+          const position = pageProgress * Math.max(0, bgImages.length - 1);
+          const weight = Math.max(0, 1 - Math.abs(position - idx));
           return (
             <div
-              key={idx}
-              className={styles.themedBgLayerSection}
-              style={{
-                top: `${topPercent}%`,
-                backgroundImage: `url(${imgSrc})`,
-                filter: `blur(${progressiveUnblur}px) brightness(${0.42 + scrollProgress * 0.3}) saturate(1.35)`,
-                opacity: opacity,
-              }}
+              key={imgSrc}
+              className={styles.bgImage}
+              style={{ backgroundImage: `url(${imgSrc})`, opacity: weight }}
             />
           );
         })}
         <div className={styles.bgVignette} />
+        {motif && (
+          <div className={styles.bgMotifFade}>
+            <div
+              className={`${styles.bgMotif} ${styles[`motif-${motif}`]}`}
+              style={{ transform: `translate3d(0, ${-pageProgress * 120}px, 0)` }}
+            />
+          </div>
+        )}
       </div>
       <header className={styles.topNav}>
         <button ref={closeRef} type="button" className={styles.close} onClick={fermer}>
           &larr; Retour
         </button>
         <div className={styles.projectNav}>
-          {onPrev && <button className={styles.navBtn} onClick={onPrev}>&larr; Projet Précédent</button>}
-          {onNext && <button className={styles.navBtn} onClick={onNext}>Projet Suivant &rarr;</button>}
+          {onPrev && (
+            <button className={styles.navBtn} onClick={onPrev} aria-label="Projet précédent">
+              &larr;<span className={styles.navLabel}> Projet précédent</span>
+            </button>
+          )}
+          {onNext && (
+            <button className={styles.navBtn} onClick={onNext} aria-label="Projet suivant">
+              <span className={styles.navLabel}>Projet suivant </span>&rarr;
+            </button>
+          )}
         </div>
       </header>
 
@@ -548,102 +544,25 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
               </div>
 
               {/* CARTES VISUELLES EN COLONNE DE DROITE (ZONE "ICI") AVEC UNBLUR AU SCROLL */}
-              {(() => {
-                const DETAILED_SIDEBAR_ITEMS: Record<string, { src: string; label: string }[]> = {
-                  'velib-optim': [
-                    {
-                      src: 'https://placehold.co/800x450/082f49/ffffff?text=Image+Thematique+1',
-                      label: 'Station Vélib Métropole',
-                    },
-                    {
-                      src: 'https://placehold.co/800x450/082f49/ffffff?text=Image+Thematique+2',
-                      label: 'Réseau de Neurones & IA',
-                    },
-                    {
-                      src: 'https://placehold.co/800x450/082f49/ffffff?text=Image+Thematique+3',
-                      label: 'Graphe Algorithmique',
-                    },
-                  ],
-                  coderouge: [
-                    {
-                      src: 'https://placehold.co/800x450/1e1b4b/ffffff?text=Image+Thematique+1',
-                      label: 'Style de vie & Entraînement',
-                    },
-                    {
-                      src: 'https://placehold.co/800x450/1e1b4b/ffffff?text=Image+Thematique+2',
-                      label: 'Sac de Frappe',
-                    },
-                    {
-                      src: 'https://placehold.co/800x450/1e1b4b/ffffff?text=Image+Thematique+3',
-                      label: 'Chronomètre & Équipement',
-                    },
-                  ],
-                  'sae3-real01': [
-                    {
-                      src: 'https://placehold.co/800x450/064e3b/ffffff?text=Image+Thematique+1',
-                      label: 'Océan & Environnement Marin',
-                    },
-                    {
-                      src: 'https://placehold.co/800x450/064e3b/ffffff?text=Image+Thematique+2',
-                      label: 'Données Satellites',
-                    },
-                    {
-                      src: 'https://placehold.co/800x450/064e3b/ffffff?text=Image+Thematique+3',
-                      label: 'Analyse & Data Science',
-                    },
-                  ],
-                  gestistock: [
-                    {
-                      src: 'https://placehold.co/800x450/4c1d95/ffffff?text=Image+Thematique+1',
-                      label: 'Entrepôt Logistique',
-                    },
-                    {
-                      src: 'https://placehold.co/800x450/4c1d95/ffffff?text=Image+Thematique+2',
-                      label: 'Gestion des Stocks',
-                    },
-                    {
-                      src: 'https://placehold.co/800x450/4c1d95/ffffff?text=Image+Thematique+3',
-                      label: 'Manutention & Palettes',
-                    },
-                  ],
-                  'createur-devis': [
-                    {
-                      src: 'https://placehold.co/800x450/065f46/ffffff?text=Image+Thematique+1',
-                      label: 'Signature de Contrat',
-                    },
-                    {
-                      src: 'https://placehold.co/800x450/065f46/ffffff?text=Image+Thematique+2',
-                      label: 'Calculs & Devis',
-                    },
-                    {
-                      src: 'https://placehold.co/800x450/065f46/ffffff?text=Image+Thematique+3',
-                      label: 'Tableaux Financiers',
-                    },
-                  ],
-                };
-
-                const items = DETAILED_SIDEBAR_ITEMS[project.id] || [];
-
-                return items.map((item, idx) => {
-                  const blurValue = Math.max(0, 18 - scrollProgress * 22 - idx * 4);
-                  return (
-                    <div key={idx} className={`${styles.sidebarImageCard} ${styles.reveal}`}>
-                      <img
-                        src={item.src}
-                        alt={item.label}
-                        className={styles.sidebarImage}
-                        style={{
-                          filter: `blur(${blurValue}px) brightness(0.9) saturate(1.2)`,
-                          transform: `scale(${1 + scrollProgress * 0.05})`,
-                        }}
-                      />
-                      <div className={styles.sidebarImageTag}>
-                        <span>{item.label}</span>
-                      </div>
+              {themeImages.map((item, idx) => {
+                const blurValue = Math.max(0, 18 - scrollProgress * 22 - idx * 4);
+                return (
+                  <div key={idx} className={`${styles.sidebarImageCard} ${styles.reveal}`}>
+                    <img
+                      src={item.src}
+                      alt={item.label}
+                      className={styles.sidebarImage}
+                      style={{
+                        filter: `blur(${blurValue}px) brightness(0.9) saturate(1.2)`,
+                        transform: `scale(${1 + scrollProgress * 0.05})`,
+                      }}
+                    />
+                    <div className={styles.sidebarImageTag}>
+                      <span>{item.label}</span>
                     </div>
-                  );
-                });
-              })()}
+                  </div>
+                );
+              })}
             </div>
           </aside>
         </div>

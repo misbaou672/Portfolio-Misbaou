@@ -1,16 +1,16 @@
 .nav {
   position: fixed;
-  bottom: 28px;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
-  background: rgba(11, 15, 25, 0.85);
+  background: var(--nav-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--surface-border);
   border-radius: 64px;
   padding: 6px 10px;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 0 30px rgba(56, 189, 248, 0.1);
+  box-shadow: var(--shadow-lg);
   animation: slideUp 0.8s var(--ease-out) forwards;
 }
 
@@ -43,7 +43,7 @@
   border-radius: 50%;
   border: none;
   background: transparent;
-  color: var(--ink-faint);
+  color: var(--ink-muted);
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -55,8 +55,8 @@
 }
 
 .btn:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
+  color: var(--ink);
+  background: var(--hover);
 }
 
 .btn:hover svg {
@@ -65,17 +65,28 @@
 
 .btn.active {
   background: var(--cyan);
-  color: #0f172a;
-  box-shadow: 0 0 20px var(--cyan-glow);
+  color: var(--on-accent);
+  box-shadow: 0 6px 18px var(--cyan-glow);
 }
 
+.separator {
+  width: 1px;
+  height: 24px;
+  background: var(--line);
+}
+
+/* Au telephone : cibles de 44 px, barre centree qui tient dans 360 px. */
 @media (max-width: 768px) {
   .nav {
-    bottom: 24px;
-    padding: 6px;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    padding: 5px;
   }
-  .btn {
-    width: 40px;
-    height: 40px;
+  .list {
+    gap: 2px;
   }
+}
+
+/* Une fiche projet ouverte a sa propre barre : on evite les deux superposees. */
+:global(body.fiche-ouverte) .nav {
+  display: none;
 }
