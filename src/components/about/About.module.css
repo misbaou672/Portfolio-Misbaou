@@ -57,7 +57,7 @@
 
 .highlightsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 24px;
 }
 
@@ -117,6 +117,18 @@
   border-color: var(--cyan);
   color: var(--cyan);
   transform: translateY(-1px);
+}
+
+.softPill {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cyan);
+  background: var(--cyan-pale);
+  border: 1px solid var(--cyan);
+  padding: 8px 16px;
+  border-radius: 99px;
+  transition: all 0.2s ease;
 }
 
 .interestPill {

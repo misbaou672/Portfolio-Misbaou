@@ -60,8 +60,9 @@ export function Hub() {
         </h2>
 
         <p className={styles.bio} data-rise>
-          Étudiant à l'UPEC et ancien stagiaire à la DSI RATP, j'aime développer des applications
-          web et automatiser des tâches pour simplifier les processus.
+          Étudiant à l'UPEC et ancien stagiaire à la DSI RATP, je développe des applications web et
+          j'automatise des tâches pour simplifier les processus. Je me dirige vers le back-end et
+          les pratiques DevOps / DevSecOps.
         </p>
 
         <div className={styles.actions} data-rise>
