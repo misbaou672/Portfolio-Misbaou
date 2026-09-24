@@ -873,20 +873,36 @@
   }
 }
 
+/* Les commandes du visualiseur se posent sur `--nav-bg`, blanc a 92 % en
+   theme clair : en blanc fixe, elles y disparaissaient. Elles portent donc
+   leur propre fond opaque tire des jetons, qui contraste dans les deux
+   themes et reste lisible par-dessus une image claire. */
 .lightboxClose {
   position: absolute;
   top: 24px;
   right: 24px;
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 32px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 50%;
+  color: var(--ink);
+  font-size: 28px;
+  line-height: 1;
   cursor: pointer;
   z-index: 1010;
-  opacity: 0.7;
+  box-shadow: var(--shadow-lg);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
-.lightboxClose:hover {
-  opacity: 1;
+.lightboxClose:hover,
+.lightboxClose:focus-visible {
+  background: var(--surface-2);
+  transform: scale(1.05);
 }
 
 .lightboxContent {
@@ -923,9 +939,10 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: var(--hover);
+  background: var(--surface);
   border: 1px solid var(--surface-border);
-  color: #ffffff;
+  color: var(--ink);
+  box-shadow: var(--shadow-lg);
   font-size: 32px;
   width: 52px;
   height: 52px;
@@ -940,8 +957,9 @@
     transform 0.2s ease;
 }
 
-.lightboxNav:hover {
-  background: rgba(255, 255, 255, 0.2);
+.lightboxNav:hover,
+.lightboxNav:focus-visible {
+  background: var(--surface-2);
   transform: translateY(-50%) scale(1.05);
 }
 
