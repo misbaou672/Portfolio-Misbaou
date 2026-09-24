@@ -40,26 +40,25 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
   const nomLegendeRef = useRef<HTMLSpanElement>(null);
 
   /**
-   * Le nom de la tuile choisie descend en pied de pellicule.
+   * Le nom du projet choisi emerge de la tuile active.
    *
-   * Chaque tuile porte son nom en petit, a son pied. Quand l'une devient
-   * active, le sien s'efface et la legende le reprend en grand, en partant de
-   * l'endroit exact qu'il occupait : une seule etiquette qui se deplace,
-   * plutot qu'une qui disparait et une autre qui apparait ailleurs.
+   * Les tuiles ne portent plus leur nom : la legende seule le dit. Elle part
+   * du bas de la tuile active et descend se poser a sa place, pour que le
+   * nom paraisse sortir de la vignette plutot que d'apparaitre de nulle part.
    *
    * Les deux reperes sont mesures au vol. Celui de la tuile reste fiable
    * pendant sa transition : une tuile ne se deplace qu'en X et ne change que
-   * d'echelle horizontale, son sommet ne bouge pas. Et la tuile active etant
+   * d'echelle horizontale, son bas ne bouge pas. Et la tuile active etant
    * toujours centree, il n'y a pas d'ecart horizontal a rattraper.
    */
   useGSAP(
     () => {
       const legende = legendeRef.current;
       const nomLegende = nomLegendeRef.current;
-      const nomTuile = stripRef.current?.querySelector<HTMLElement>(
-        `[data-tile-id="${PROJECTS[active].id}"] .${styles.name}`,
+      const tuile = stripRef.current?.querySelector<HTMLElement>(
+        `[data-tile-id="${PROJECTS[active].id}"]`,
       );
-      if (!legende || !nomLegende || !nomTuile) return;
+      if (!legende || !nomLegende || !tuile) return;
 
       const mm = gsap.matchMedia();
       mm.add('(prefers-reduced-motion: no-preference)', () => {
@@ -70,14 +69,12 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
         gsap.set(legende, { clearProps: 'transform,opacity' });
 
         const arrivee = nomLegende.getBoundingClientRect();
-        const depart = nomTuile.getBoundingClientRect();
+        const depart = tuile.getBoundingClientRect();
         if (!arrivee.height) return;
-        /* Le rapport se prend sur les corps et non sur les hauteurs de bloc :
-           un nom qui s'empile sur deux lignes au pied de la tuile serait deux
-           fois trop haut, et l'animation partirait deux fois trop grande. */
-        const echelle =
-          parseFloat(getComputedStyle(nomTuile).fontSize) /
-          parseFloat(getComputedStyle(nomLegende).fontSize);
+        /* Une reduction franche mais constante : sans nom sur la tuile, il n'y
+           a plus de corps de depart a mesurer, et un rapport tire de la
+           vignette suivrait son echelle au lieu de la typographie. */
+        const echelle = 0.6;
 
         /**
          * `fromTo` et non `from`. `from` anime depuis les valeurs donnees
@@ -90,10 +87,10 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
         gsap.fromTo(
           legende,
           {
-            y: depart.top - arrivee.top,
+            y: depart.bottom - arrivee.top,
             scaleX: echelle,
             scaleY: echelle,
-            opacity: 0.25,
+            opacity: 0,
           },
           {
             y: 0,
@@ -175,11 +172,11 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
         e.preventDefault();
         return;
       }
-      
+
       const { active: courant, onActivate: choisir } = etat.current;
       const sens = Math.sign(e.deltaY);
       const cible = courant + sens;
-      
+
       if (cible >= 0 && cible <= PROJECTS.length - 1) {
         e.preventDefault();
         lastWheelTime = now;
@@ -237,7 +234,8 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
         {PROJECTS.map((project, i) => {
           const offset = i - active;
           const current = i === active;
-          const previewImage = project.medias && project.medias.length > 0 ? project.medias[0].src : null;
+          const previewImage =
+            project.medias && project.medias.length > 0 ? project.medias[0].src : null;
           return (
             <button
               key={project.id}
@@ -259,10 +257,12 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
               }}
               onClick={() => (current ? onOpen(i) : moveTo(i))}
             >
-              <span className={styles.name}>{project.name}</span>
               <span className={styles.idx}>{project.index}</span>
+              {/* La tuile ne porte plus son nom en clair : la legende l'affiche
+                  juste dessous. Il reste ici pour l'annonce vocale, sans quoi le
+                  bouton ne dirait plus de quel projet il s'agit. */}
               <span className={styles.sr}>
-                {current ? 'Ouvrir la fiche du projet' : 'Selectionner ce projet'}
+                {project.name} — {current ? 'Ouvrir la fiche du projet' : 'Selectionner ce projet'}
               </span>
             </button>
           );
@@ -271,7 +271,7 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
 
       {/* Le nom du projet choisi, puis ce qu'il faut savoir avant d'ouvrir :
           son rang, sa nature et son annee. Masque aux lecteurs d'ecran, la
-          tuile portant deja son nom et son `aria-current`. */}
+          tuile annoncant deja son nom et son `aria-current`. */}
       <p
         ref={legendeRef}
         className={styles.legende}
