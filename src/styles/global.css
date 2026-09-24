@@ -45,8 +45,13 @@ body {
     radial-gradient(circle at 50% 0%, var(--cyan-pale) 0%, transparent 60%),
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  transition: background-color 0.3s ease, color 0.3s ease;
-  background-size: 100% 100%, 40px 40px, 40px 40px;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  background-size:
+    100% 100%,
+    40px 40px,
+    40px 40px;
 }
 
 a {
