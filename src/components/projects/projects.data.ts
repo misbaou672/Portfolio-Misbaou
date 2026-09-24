@@ -66,9 +66,9 @@ export const PROJECTS: Project[] = [
     role: 'Architecture & Développement Full-Stack',
     stack: ['Next.js 16', 'React 19', 'TypeScript', 'Turbopack', 'TailwindCSS'],
     pitch:
-      "Projet personnel conçu pour répondre à mes besoins d'organisation. Il centralise le suivi d'objectifs sportifs, la gestion d'habitudes et une To-Do List avec des statistiques simples, un chronomètre et un assistant vocal.",
+      "Projet personnel conçu pour répondre à mes besoins d'organisation. Il centralise le suivi d'objectifs sportifs, la gestion d'habitudes et une To-Do List avec des statistiques simples, un chronomètre et deux assistants IA.",
     useCase:
-      "Conçu pour offrir une alternative épurée et sans publicité aux applications de suivi sportif existantes. Il réunit au même endroit l'entraînement physique, la gestion d'habitudes et l'assistant vocal IA.",
+      "Conçu pour offrir une alternative épurée et sans publicité aux applications de suivi sportif existantes. Il réunit au même endroit l'entraînement physique, la gestion d'habitudes et l'accompagnement par IA.",
     challenges: [
       {
         challenge:
@@ -78,8 +78,7 @@ export const PROJECTS: Project[] = [
       },
       {
         challenge: 'Intégrer un coach IA réactif sans ralentir le rendu du composant React.',
-        solution:
-          'Mise en place de Server Actions Next.js streaming les réponses textuelles et audio à la volée.',
+        solution: 'Mise en place de Server Actions Next.js streaming les réponses à la volée.',
       },
     ],
     learnings: [
@@ -90,7 +89,7 @@ export const PROJECTS: Project[] = [
     features: [
       {
         title: 'Coach IA Intégré',
-        detail: 'Accompagnement vocal personnalisé et suivi dynamique du profil.',
+        detail: 'Accompagnement personnalisé et suivi dynamique du profil.',
       },
       {
         title: 'Architecture Moderne',
@@ -103,8 +102,9 @@ export const PROJECTS: Project[] = [
     ],
     featuresDone: [
       "Système complet de suivi d'objectifs sportifs et cycles d'entraînement hebdomadaires",
-      'Timer interactif avec rondes personnalisables et signaux vocaux pour la boxe',
-      'Coach IA vocal (Deonte Walter) avec synthèse vocale et réponses adaptatives',
+      'Timer interactif avec rondes personnalisables et signaux sonores pour la boxe',
+      'Coach IA (Deonte Walter) avec réponses adaptatives au profil',
+      "Assistant IA cuisine pour l'accompagnement nutritionnel",
       "Calculateur de dépenses caloriques et graphiques interactifs d'évolution du poids",
       "Journal d'entraînement quotidien avec catégorisation des séances",
       'Mode PWA (Progressive Web App) avec stockage local des préférences',

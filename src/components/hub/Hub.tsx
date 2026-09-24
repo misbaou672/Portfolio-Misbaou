@@ -77,7 +77,7 @@ export function Hub() {
         <div className={styles.statsRow} data-rise>
           <div className={styles.statItem}>
             <strong>11</strong>
-            <span>Projets réalisés</span>
+            <span>Projets réalisés, 5 présentés</span>
           </div>
           <div className={styles.divider}></div>
           <div className={styles.statItem}>
