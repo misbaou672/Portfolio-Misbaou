@@ -13,12 +13,24 @@ body {
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   overflow-x: hidden;
+  /* clip plutot que hidden : hidden laisse le navigateur faire defiler la
+     page de cote quand un element hors cadre prend le focus (une tuile de
+     projet au telephone), ce qui decalait toute la page. */
+  overflow-x: clip;
 }
 
 html {
   box-sizing: border-box;
   text-size-adjust: 100%;
-  color-scheme: dark;
+}
+
+/* Au telephone, l'aimantation obligatoire fait sauter les sections plus
+   hautes que l'ecran (le parcours, l'a propos) : on defile librement. */
+@media (max-width: 767px) {
+  html,
+  body {
+    scroll-snap-type: none;
+  }
 }
 
 body {
@@ -29,10 +41,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg);
-  background-image: 
-    radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.07) 0%, transparent 60%),
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-image:
+    radial-gradient(circle at 50% 0%, var(--cyan-pale) 0%, transparent 60%),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  transition: background-color 0.3s ease, color 0.3s ease;
   background-size: 100% 100%, 40px 40px, 40px 40px;
 }
 
@@ -78,4 +91,16 @@ button {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Texte reserve aux lecteurs d'ecran. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }

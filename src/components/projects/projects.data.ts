@@ -16,7 +16,6 @@ import echoceanMedia from './media/echocean.jpg';
 import echoceanMapMedia from './media/echocean-map.jpg';
 import echoceanGraphsMedia from './media/echocean-graphs.jpg';
 import echoceanDatabaseMedia from './media/echocean-database.jpg';
-import echoceanAdminMedia from './media/echocean-admin.jpg';
 import echoceanAboutMedia from './media/echocean-about.jpg';
 import gs1Media from './media/gestistock-1.jpg';
 import gs2Media from './media/gestistock-2.jpg';
@@ -243,7 +242,6 @@ export const PROJECTS: Project[] = [
       { src: echoceanMapMedia, alt: 'Cartographie interactive des flux marins' },
       { src: echoceanGraphsMedia, alt: "Analyse statistique et courbes d'évolution" },
       { src: echoceanDatabaseMedia, alt: 'Exploration de la base de données' },
-      { src: echoceanAdminMedia, alt: "Console d'administration" },
       { src: echoceanAboutMedia, alt: 'Présentation & Méthodologie du projet' },
     ],
   },

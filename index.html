@@ -44,8 +44,23 @@
     />
     <meta name="twitter:image" content="%SITE_URL%/og.jpg" />
 
-    <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content="#f7f4fd" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f5f7fb" />
+
+    <!--
+      Theme avant le premier rendu : sans ce script, un visiteur qui a choisi
+      le sombre verrait un flash clair a chaque chargement. Clair par defaut.
+    -->
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.dataset.theme = 'dark';
+            document.querySelector('meta[name="theme-color"]').content = '#0f1623';
+          }
+        } catch (e) {}
+      })();
+    </script>
 
     <!--
       Le site est une SPA : sans ce bloc, un agregateur qui n'execute pas le JS
