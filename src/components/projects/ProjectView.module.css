@@ -546,22 +546,6 @@
     transform 0.35s ease;
 }
 
-.sidebarImageTag {
-  position: absolute;
-  bottom: 10px;
-  left: 12px;
-  background: rgba(11, 17, 32, 0.8);
-  backdrop-filter: blur(12px);
-  padding: 4px 10px;
-  border-radius: 99px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--p-ink);
-}
-
 .sidebarSection {
   display: flex;
   flex-direction: column;

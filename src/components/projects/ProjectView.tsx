@@ -715,9 +715,6 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
                         transform: `scale(${1 + scrollProgress * 0.05})`,
                       }}
                     />
-                    <div className={styles.sidebarImageTag}>
-                      <span>{item.label}</span>
-                    </div>
                   </div>
                 );
               })}
