@@ -11,7 +11,11 @@ import type { Plugin } from 'vite';
  * A regler dans les variables d'environnement de l'hebergeur :
  *   VITE_SITE_URL=https://mon-domaine.fr
  */
-const FALLBACK_SITE_URL = 'https://rayan-oughlis.vercel.app';
+/* Repere neutre, volontairement faux : le site n'a pas encore d'adresse
+   publique. Tant que `VITE_SITE_URL` n'est pas defini chez l'hebergeur, le
+   build previent en console plutot que d'emettre une URL credible mais
+   erronee dans le canonical, l'og:url, le sitemap et le JSON-LD. */
+const FALLBACK_SITE_URL = 'https://example.com';
 
 /** Sans slash final : on concatene toujours des chemins commencant par `/`. */
 function normalise(url: string): string {
