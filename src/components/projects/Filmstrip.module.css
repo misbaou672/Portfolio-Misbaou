@@ -58,7 +58,9 @@
   cursor: pointer;
   opacity: calc(1 - var(--dim, 0) * 0.15);
   transform: translate(calc(-50% + var(--pos, 0) * 1px), -50%) scale(var(--ech, 0.8));
-  transition: transform 0.5s cubic-bezier(0.2, 0, 0, 1), opacity 0.5s ease;
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0, 0, 1),
+    opacity 0.5s ease;
   will-change: transform;
   background: var(--surface);
   backdrop-filter: blur(10px);
@@ -75,29 +77,9 @@
   opacity: 1;
   z-index: 10;
   border-color: var(--ink, rgba(56, 189, 248, 0.5));
-  box-shadow: 0 0 44px var(--glow, rgba(56, 189, 248, 0.35)), var(--shadow-lg);
-}
-
-.name {
-  position: absolute;
-  left: 50%;
-  bottom: 24px;
-  width: 100%;
-  padding: 0 24px;
-  text-align: center;
-  transform: translateX(-50%) scaleX(calc(1 / var(--ech, 0.8)));
-  transition: transform 0.5s cubic-bezier(0.2, 0, 0, 1), opacity 0.3s ease;
-  font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.2;
-  color: #fff;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
-}
-
-.tile.current .name {
-  opacity: 1;
-  color: #fff;
+  box-shadow:
+    0 0 44px var(--glow, rgba(56, 189, 248, 0.35)),
+    var(--shadow-lg);
 }
 
 .legende {
@@ -175,7 +157,10 @@
   box-shadow: var(--shadow-sm);
   font-family: var(--font-body);
   font-weight: 600;
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
 }
 
 .navBtn {
@@ -225,10 +210,16 @@
 }
 
 @media (max-height: 760px) {
-  .legende { margin-top: 16px; }
-  .hint { display: none; }
+  .legende {
+    margin-top: 16px;
+  }
+  .hint {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tile, .name { transition: none; }
+  .tile {
+    transition: none;
+  }
 }
