@@ -12,6 +12,25 @@
   padding: 6px 10px;
   box-shadow: var(--shadow-lg);
   animation: slideUp 0.8s var(--ease-out) forwards;
+  /* `translate` et non `transform` : l'animation d'entree occupe deja
+     `transform` et `opacity` en `forwards`, et les y ecrire serait sans effet.
+     La propriete individuelle `translate` se compose avec elle au lieu de la
+     remplacer, et reste donc pilotable apres l'entree. */
+  transition: translate 0.3s var(--ease-out);
+}
+
+/* Effacee vers le bas quand on descend la page : voir le commentaire de
+   `FloatingNav.tsx`. `pointer-events` coupe tout appui sur une barre
+   invisible. */
+.navMasquee {
+  translate: 0 calc(100% + 32px);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav {
+    transition: none;
+  }
 }
 
 @keyframes slideUp {

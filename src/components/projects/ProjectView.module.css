@@ -257,6 +257,9 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
+  /* De quoi laisser passer la barre collee du bas sans qu'elle recouvre les
+     dernieres lignes. */
+  padding-bottom: 96px;
 }
 
 .mediaCol {
@@ -380,7 +383,12 @@
 .heroDot {
   width: 8px;
   height: 8px;
+  /* La pastille reste petite, sa zone d'appui non : au doigt, viser 8 px etait
+     intenable. La boite reste de 8 px pour ne pas disloquer la rangee, et le
+     contour deborde pour offrir de quoi appuyer. */
   padding: 0;
+  outline: 8px solid transparent;
+  outline-offset: 0;
   border: none;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.4);
@@ -757,6 +765,8 @@
   margin-top: 3px;
 }
 
+/* La barre reste collee en bas pendant la lecture ; sans marge sous la
+   colonne, elle recouvrait les dernieres lignes du texte. */
 .bottomBar {
   position: sticky;
   bottom: 16px;
@@ -1003,7 +1013,6 @@
     width: 100%;
     bottom: calc(10px + env(safe-area-inset-bottom, 0px));
     padding: 10px 12px;
-    opacity: 1;
   }
   .bottomBarText {
     display: none;
@@ -1016,4 +1025,64 @@
     flex: 1;
     min-height: 44px;
   }
+}
+
+/**
+ * Au telephone, la barre ne s'affiche qu'une fois le bas atteint.
+ *
+ * Au bureau elle reste visible a 60 % d'opacite, discrete et disponible. Sur
+ * un ecran de 844 px c'est deux lignes de texte recouvertes en permanence,
+ * pour des actions dont on n'a besoin qu'en fin de lecture. « Retour », en
+ * haut, suffit a ressortir entre-temps.
+ *
+ * En fin de feuille a dessein : une media query plus haut remettait
+ * `opacity: 1` sur mobile, et a specificite egale c'est l'ordre qui tranche.
+ */
+@media (max-width: 900px) {
+  .bottomBar {
+    opacity: 0;
+    translate: 0 calc(100% + 24px);
+    pointer-events: none;
+    transition:
+      opacity 0.3s ease,
+      translate 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  .bottomBarActive {
+    opacity: 1;
+    translate: 0 0;
+    pointer-events: auto;
+  }
+}
+
+/**
+ * Au telephone, les liens et les technologies passent avant la prose.
+ *
+ * La fiche empile la colonne principale puis la colonne laterale : sur un
+ * ecran de 844 px, « Site live » tombait a 3811 px, soit quatre ecrans et demi
+ * de lecture avant d'atteindre le lien vers le projet. C'est pourtant ce
+ * qu'un visiteur vient chercher en premier.
+ *
+ * `display: contents` dissout la colonne laterale pour que ses blocs
+ * deviennent des elements de la grille, ordonnables un par un : le bloc
+ * liens/technologies/competences remonte juste sous l'apercu, les
+ * illustrations restent apres le texte.
+ */
+@media (max-width: 1024px) {
+  .sidebarCol {
+    display: contents;
+  }
+
+  .stickySidebar {
+    order: -1;
+    /* L'epinglage n'a de sens qu'a cote d'une colonne qui defile. Devenue
+       element de grille en pleine largeur, la barre restait collee et le reste
+       de la fiche passait dessous, l'apercu recouvrant les specificites. */
+    position: static;
+  }
+
+  /* Les illustrations vivent dans `.stickySidebar` et remontent donc avec lui.
+     Les redescendre sous la prose demanderait de les sortir du bloc en JSX,
+     ce qui defferait l'epinglage au bureau : elles restent ici. */
 }

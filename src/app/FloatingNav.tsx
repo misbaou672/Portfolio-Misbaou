@@ -28,7 +28,55 @@ const SECTIONS = [
 
 export function FloatingNav() {
   const [active, setActive] = useState('section-hub');
+  const [masquee, setMasquee] = useState(false);
   const { theme, basculer } = useTheme();
+
+  /**
+   * Au telephone, la barre s'efface quand on descend et revient des qu'on
+   * remonte.
+   *
+   * Les sections y sont bien plus hautes que l'ecran — 2267 px pour « A
+   * propos » sur un ecran de 844 — donc elles defilent, et une barre fixe
+   * posee par-dessus recouvre en permanence une bande de contenu. La reserve
+   * de `--chrome-bottom` ne protege que la fin de chaque section, pas ce qui
+   * passe au milieu.
+   *
+   * Sur grand ecran la place ne manque pas : la regle ne s'applique qu'en
+   * dessous de 900 px, la largeur ou la colonne de droite disparait deja.
+   */
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 900px)');
+    let dernierY = window.scrollY;
+    let detacher: (() => void) | null = null;
+
+    const surDefilement = () => {
+      const y = window.scrollY;
+      /* Un seuil evite que la barre clignote sur les micro-sauts du haut de
+         page, et le sens prime sur la position : remonter la ramene toujours. */
+      if (y > dernierY && y > 160) setMasquee(true);
+      else if (y < dernierY) setMasquee(false);
+      dernierY = y;
+    };
+
+    const appliquer = () => {
+      detacher?.();
+      detacher = null;
+      if (!mq.matches) {
+        setMasquee(false);
+        return;
+      }
+      dernierY = window.scrollY;
+      window.addEventListener('scroll', surDefilement, { passive: true });
+      detacher = () => window.removeEventListener('scroll', surDefilement);
+    };
+
+    appliquer();
+    mq.addEventListener('change', appliquer);
+    return () => {
+      detacher?.();
+      mq.removeEventListener('change', appliquer);
+    };
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -60,7 +108,10 @@ export function FloatingNav() {
   };
 
   return (
-    <nav className={styles.nav} aria-label="Navigation principale">
+    <nav
+      className={`${styles.nav} ${masquee ? styles.navMasquee : ''}`}
+      aria-label="Navigation principale"
+    >
       <ul className={styles.list}>
         {SECTIONS.map(({ id, label, icon }) => (
           <li key={id}>

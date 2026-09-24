@@ -249,6 +249,28 @@ const Icons = {
   ),
 };
 
+/**
+ * Vrai sur un appareil sans survol, donc pilote au doigt.
+ *
+ * Les indications parlaient de molette et de clic, deux choses qui n'existent
+ * pas sur un telephone. `(hover: none)` decrit l'appareil plutot que la
+ * largeur : une fenetre etroite sur un ordinateur garde sa souris.
+ */
+function useTactile() {
+  const [tactile, setTactile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(hover: none)');
+    const appliquer = () => setTactile(mq.matches);
+    appliquer();
+    mq.addEventListener('change', appliquer);
+    return () => mq.removeEventListener('change', appliquer);
+  }, []);
+  return tactile;
+}
+
+/** Distance de doigt avant de changer d'image. */
+const SEUIL_BALAYAGE = 40;
+
 export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -261,6 +283,7 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
 
   // Changement de projet : on revient a la premiere image, pendant le rendu
   // plutot que dans un effet (evite un rendu en cascade).
+  const tactile = useTactile();
   const [projetAffiche, setProjetAffiche] = useState(project.id);
   if (projetAffiche !== project.id) {
     setProjetAffiche(project.id);
@@ -291,9 +314,49 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
       }
     };
 
+    /**
+     * Le balayage horizontal fait ce que la molette fait au bureau.
+     *
+     * Sans lui, un telephone n'avait aucun moyen raisonnable de parcourir les
+     * dix captures d'un projet : il n'y a pas de molette, et les pastilles
+     * mesuraient 8 px de cote. Le geste devient le moyen principal, les
+     * pastilles redeviennent un simple indicateur de position.
+     *
+     * On ne retient que les gestes franchement horizontaux : un balayage
+     * vertical doit continuer de faire defiler la page. Et comme les
+     * ecouteurs sont passifs, ce defilement n'est jamais bloque.
+     */
+    let depart: { x: number; y: number } | null = null;
+
+    const onTouchStart = (e: TouchEvent) => {
+      const t = e.touches[0];
+      depart = t ? { x: t.clientX, y: t.clientY } : null;
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      const debut = depart;
+      depart = null;
+      const fin = e.changedTouches[0];
+      if (!debut || !fin) return;
+
+      const medias = project.medias;
+      if (!medias || medias.length <= 1) return;
+
+      const dx = debut.x - fin.clientX;
+      const dy = debut.y - fin.clientY;
+      if (Math.abs(dx) < SEUIL_BALAYAGE || Math.abs(dx) <= Math.abs(dy)) return;
+
+      const total = medias.length;
+      setCurrentImageIndex((prev) => (prev + (dx > 0 ? 1 : total - 1)) % total);
+    };
+
     heroEl.addEventListener('wheel', handleWheel, { passive: false });
+    heroEl.addEventListener('touchstart', onTouchStart, { passive: true });
+    heroEl.addEventListener('touchend', onTouchEnd, { passive: true });
     return () => {
       heroEl.removeEventListener('wheel', handleWheel);
+      heroEl.removeEventListener('touchstart', onTouchStart);
+      heroEl.removeEventListener('touchend', onTouchEnd);
     };
   }, [project.medias]);
 
@@ -506,8 +569,8 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
                       <span className={styles.heroOverlayBtn}>
                         <Icons.Maximize />
                         {project.medias.length > 1
-                          ? `Molette : image ${currentImageIndex + 1}/${project.medias.length} • Clic pour agrandir`
-                          : "Clic pour agrandir l'image"}
+                          ? `${tactile ? 'Balayez' : 'Molette'} : image ${currentImageIndex + 1}/${project.medias.length} • ${tactile ? 'Touchez' : 'Clic'} pour agrandir`
+                          : `${tactile ? 'Touchez' : 'Clic'} pour agrandir l'image`}
                       </span>
                     </div>
                     {project.medias.length > 1 && (
@@ -772,7 +835,7 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
               />
               <div className={styles.lightboxHint}>
                 {project.medias.length > 1
-                  ? `Image ${currentImageIndex + 1} / ${project.medias.length} • Molette ou clic pour faire défiler`
+                  ? `Image ${currentImageIndex + 1} / ${project.medias.length} • ${tactile ? 'Balayez' : 'Molette ou clic'} pour faire défiler`
                   : project.medias[currentImageIndex].alt}
               </div>
             </div>
