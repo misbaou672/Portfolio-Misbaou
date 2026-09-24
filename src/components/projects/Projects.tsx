@@ -28,10 +28,24 @@ export function Projects() {
     () => {
       const mm = gsap.matchMedia();
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        // Animation d'entrée
+        /**
+         * L'entree ne joue que sur l'opacite : cette section ne doit jamais
+         * porter de `transform`.
+         *
+         * Elle contient la fiche projet et sa vue agrandie, toutes deux en
+         * `position: fixed`. Or un `transform`, meme une identite laissee par
+         * GSAP en fin d'animation, fait de l'element un bloc de reference :
+         * les descendants fixes se calent alors sur la section au lieu de la
+         * fenetre. La fiche cessait de couvrir l'ecran et se retrouvait dans
+         * le flux de la page, sous le contenu de l'accueil.
+         *
+         * `clearProps` n'y suffisait pas : au telephone, la barre d'URL qui se
+         * masque au defilement rafraichit ScrollTrigger, qui rejoue l'entree
+         * et repose le transform. D'ou une fiche qui se deglinguait au fil du
+         * defilement.
+         */
         gsap.from(sectionRef.current, {
           opacity: 0,
-          y: 40,
           duration: 0.6,
           ease: 'power3.out',
           scrollTrigger: {
