@@ -418,7 +418,7 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
     }
 
     gsap.to(root, {
-      autoAlpha: 0,
+      opacity: 0,
       scale: 0.98,
       duration: 0.3,
       ease: 'power3.inOut',
@@ -462,15 +462,19 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
       if (!root) return;
 
       // clearProps : un transform residuel ferait defiler le fond fixe avec le contenu.
+      /* `opacity` et non `autoAlpha` : ce dernier pilote aussi `visibility`,
+         et une reprise du contexte GSAP rendait alors la fiche entierement
+         invisible. L'opacite, elle, retombe sur 1 en l'absence de style en
+         ligne : au pire l'animation manque, jamais le contenu. */
       gsap.fromTo(
         root,
-        { autoAlpha: 0, scale: 0.95 },
-        { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power3.out', clearProps: 'transform' },
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: 'power3.out', clearProps: 'transform' },
       );
       gsap.fromTo(
         root.querySelectorAll(`.${styles.reveal}`),
-        { autoAlpha: 0, y: 20 },
-        { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' },
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' },
       );
     },
     { scope: rootRef, dependencies: [project.id] },
