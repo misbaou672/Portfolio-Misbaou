@@ -77,20 +77,26 @@
         border-radius: 50%;
         background: var(--violet);
       }
+      /* Meme reglage que `.title` du hub : le gabarit avait derive vers un
+         poids 400 et un interlettrage positif, la ou le site affiche le nom en
+         800 resserre. Une carte de partage doit ressembler a la page. */
       .nom {
         margin: 0;
         font-family: var(--font-display);
-        font-weight: 400;
+        font-weight: 800;
         font-size: 128px;
-        line-height: 0.82;
-        letter-spacing: 0.005em;
+        line-height: 0.88;
+        letter-spacing: -0.03em;
         text-transform: uppercase;
       }
       .nom span {
         display: block;
       }
+      /* `--violet` a disparu des jetons quand la palette est passee au cyan :
+         l'accent etait sans effet, les deux lignes du nom sortaient de la
+         meme couleur. */
       .nom .accent {
-        color: var(--violet);
+        color: var(--cyan);
       }
       .accroche {
         margin: 40px 0 0;
@@ -124,8 +130,8 @@
           <span class="accent">Diallo</span>
         </h1>
         <p class="accroche">
-          Développeur full stack, automatisation &amp; IA. Je conçois des applications web, des
-          pipelines de données et des agents IA.
+          Développeur back-end &amp; automatisation. Je développe des applications web et
+          j'automatise des tâches, cap sur le DevOps et le DevSecOps.
         </p>
       </div>
       <p class="signature">BUT3 &middot; UPEC</p>
