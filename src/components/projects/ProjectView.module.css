@@ -21,7 +21,13 @@
     40px 40px;
   color: var(--ink);
   padding: 0 clamp(16px, 4vw, 48px) clamp(24px, 4vw, 48px) clamp(16px, 4vw, 48px);
-  visibility: hidden;
+  /* Volontairement pas `visibility: hidden` en attendant l'animation
+     d'entree. Toute la fiche etait invisible tant que GSAP n'avait pas pose
+     ses styles en ligne : la moindre reprise du contexte la faisait retomber
+     sur cette valeur et disparaitre. Au telephone, la barre d'URL qui se
+     masque au defilement declenche des `resize` en rafale, et la fiche
+     clignotait ou s'effacait. L'animation ne joue donc plus que sur
+     l'opacite : si elle echoue, la page reste lisible. */
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -1064,25 +1070,20 @@
  * de lecture avant d'atteindre le lien vers le projet. C'est pourtant ce
  * qu'un visiteur vient chercher en premier.
  *
- * `display: contents` dissout la colonne laterale pour que ses blocs
- * deviennent des elements de la grille, ordonnables un par un : le bloc
- * liens/technologies/competences remonte juste sous l'apercu, les
- * illustrations restent apres le texte.
+ * La colonne entiere remonte, ce qui suffit : elle n'a qu'un seul enfant. Une
+ * premiere version la dissolvait avec `display: contents` pour ordonner ses
+ * blocs un par un — inutile ici, et cette propriete reste capricieuse au
+ * rendu sur mobile.
  */
 @media (max-width: 1024px) {
   .sidebarCol {
-    display: contents;
+    order: -1;
   }
 
+  /* L'epinglage n'a de sens qu'a cote d'une colonne qui defile. En pleine
+     largeur, la barre restait collee et le reste de la fiche passait dessous,
+     l'apercu recouvrant les specificites. */
   .stickySidebar {
-    order: -1;
-    /* L'epinglage n'a de sens qu'a cote d'une colonne qui defile. Devenue
-       element de grille en pleine largeur, la barre restait collee et le reste
-       de la fiche passait dessous, l'apercu recouvrant les specificites. */
     position: static;
   }
-
-  /* Les illustrations vivent dans `.stickySidebar` et remontent donc avec lui.
-     Les redescendre sous la prose demanderait de les sortir du bloc en JSX,
-     ce qui defferait l'epinglage au bureau : elles restent ici. */
 }
