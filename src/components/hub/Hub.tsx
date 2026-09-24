@@ -60,9 +60,9 @@ export function Hub() {
         </h2>
 
         <p className={styles.bio} data-rise>
-          Étudiant à l'UPEC et ancien stagiaire à la DSI RATP, je développe des applications web et
-          j'automatise des tâches pour simplifier les processus. Je me dirige vers le back-end et
-          les pratiques DevOps / DevSecOps.
+          Étudiant à l'UPEC et ancien stagiaire à la RATP (DSP 49), je développe des applications
+          web et j'automatise des tâches pour simplifier les processus. Je me dirige vers le
+          back-end et les pratiques DevOps / DevSecOps.
         </p>
 
         <div className={styles.actions} data-rise>
@@ -82,7 +82,7 @@ export function Hub() {
           <div className={styles.divider}></div>
           <div className={styles.statItem}>
             <strong>Ex-stagiaire</strong>
-            <span>DSI RATP</span>
+            <span>RATP — DSP 49</span>
           </div>
           <div className={styles.divider}></div>
           <div className={styles.statItem}>
@@ -128,7 +128,7 @@ export function Hub() {
                 <div className={styles.devMetaRow}>
                   <span className={styles.promptSign}>&gt;</span>
                   <span className={styles.metaLabel}>Stage:</span>
-                  <span className={styles.metaVal}>DSI RATP</span>
+                  <span className={styles.metaVal}>RATP — DSP 49</span>
                 </div>
                 <div className={styles.devMetaRow}>
                   <span className={styles.promptSign}>&gt;</span>
