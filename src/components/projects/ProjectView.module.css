@@ -14,7 +14,11 @@
     linear-gradient(180deg, var(--p-from, rgba(13, 19, 34, 0.8)) 0%, var(--bg) 100%),
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+  background-size:
+    100% 100%,
+    100% 100%,
+    40px 40px,
+    40px 40px;
   color: var(--ink);
   padding: 0 clamp(16px, 4vw, 48px) clamp(24px, 4vw, 48px) clamp(16px, 4vw, 48px);
   visibility: hidden;
@@ -59,8 +63,18 @@
   position: absolute;
   inset: 0;
   z-index: 3;
-  -webkit-mask-image: radial-gradient(130% 95% at 50% 0%, #000 0%, rgba(0, 0, 0, 0.45) 55%, transparent 100%);
-  mask-image: radial-gradient(130% 95% at 50% 0%, #000 0%, rgba(0, 0, 0, 0.45) 55%, transparent 100%);
+  -webkit-mask-image: radial-gradient(
+    130% 95% at 50% 0%,
+    #000 0%,
+    rgba(0, 0, 0, 0.45) 55%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    130% 95% at 50% 0%,
+    #000 0%,
+    rgba(0, 0, 0, 0.45) 55%,
+    transparent 100%
+  );
 }
 
 .bgMotif {
@@ -138,7 +152,8 @@
   border-bottom: 1px solid var(--surface-border);
 }
 
-.close, .navBtn {
+.close,
+.navBtn {
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.1em;
@@ -152,7 +167,8 @@
   border-radius: 8px;
 }
 
-.close:hover, .navBtn:hover {
+.close:hover,
+.navBtn:hover {
   color: var(--p-accent-text);
   background: var(--surface);
 }
@@ -291,7 +307,9 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: filter 0.35s ease, transform 0.35s ease;
+  transition:
+    filter 0.35s ease,
+    transform 0.35s ease;
 }
 
 .bodyImageCaption {
@@ -423,7 +441,9 @@
   font-size: 14px;
   line-height: 1.5;
   color: var(--ink);
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .doneCard:hover {
@@ -506,7 +526,9 @@
   border: 1px solid var(--surface-border);
   box-shadow: var(--shadow-lg);
   background-color: var(--surface);
-  transition: border-color 0.3s ease, transform 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .sidebarImageCard:hover {
@@ -519,7 +541,9 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: filter 0.35s ease, transform 0.35s ease;
+  transition:
+    filter 0.35s ease,
+    transform 0.35s ease;
 }
 
 .sidebarImageTag {
@@ -565,7 +589,10 @@
   text-decoration: none;
   border-radius: 10px;
   box-shadow: 0 8px 24px color-mix(in srgb, var(--p-accent) 35%, transparent);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .actionBtn:hover {
@@ -687,13 +714,15 @@
   }
 }
 
-.challengePart, .solutionPart {
+.challengePart,
+.solutionPart {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.challengePart p, .solutionPart p {
+.challengePart p,
+.solutionPart p {
   margin: 0;
   font-family: var(--font-body);
   font-size: 13px;
@@ -763,7 +792,9 @@
   z-index: 90;
   box-shadow: var(--shadow-lg);
   opacity: 0.6;
-  transition: opacity 0.3s ease, border-color 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .bottomBarActive {
@@ -797,7 +828,9 @@
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .bottomNavBtn:hover {
@@ -847,7 +880,14 @@
   animation: fadeIn 0.3s ease;
   backdrop-filter: blur(8px);
 }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 .lightboxClose {
   position: absolute;
@@ -861,7 +901,9 @@
   z-index: 1010;
   opacity: 0.7;
 }
-.lightboxClose:hover { opacity: 1; }
+.lightboxClose:hover {
+  opacity: 1;
+}
 
 .lightboxContent {
   flex: 1;
@@ -876,7 +918,7 @@
   max-height: 78vh;
   object-fit: contain;
   border-radius: 8px;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
   cursor: pointer;
 }
 
@@ -909,7 +951,9 @@
   justify-content: center;
   cursor: pointer;
   z-index: 1010;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .lightboxNav:hover {

@@ -17,44 +17,113 @@ type Props = {
 
 const Icons = {
   Maximize: () => (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}
+    >
       <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
     </svg>
   ),
   Info: () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}
+    >
       <circle cx="12" cy="12" r="10" />
       <line x1="12" y1="16" x2="12" y2="12" />
       <line x1="12" y1="8" x2="12.01" y2="8" />
     </svg>
   ),
   Terminal: () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}
+    >
       <polyline points="4 17 10 11 4 5" />
       <line x1="12" y1="19" x2="20" y2="19" />
     </svg>
   ),
   CheckCircle: () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}
+    >
       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
       <polyline points="22 4 12 14.01 9 11.01" />
     </svg>
   ),
   Compass: () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}
+    >
       <circle cx="12" cy="12" r="10" />
       <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
     </svg>
   ),
   ExternalLink: () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
       <polyline points="15 3 21 3 21 9" />
       <line x1="10" y1="14" x2="21" y2="3" />
     </svg>
   ),
   Cpu: () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}
+    >
       <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
       <rect x="9" y="9" width="6" height="6" />
       <line x1="9" y1="1" x2="9" y2="4" />
@@ -68,47 +137,116 @@ const Icons = {
     </svg>
   ),
   Layers: () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}
+    >
       <polygon points="12 2 2 7 12 12 22 7 12 2" />
       <polyline points="2 17 12 22 22 17" />
       <polyline points="2 12 12 17 22 12" />
     </svg>
   ),
   CheckItem: () => (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <polyline points="20 6 9 17 4 12" />
     </svg>
   ),
   Clock: () => (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '4px', verticalAlign: '-1px' }}>
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ marginRight: '4px', verticalAlign: '-1px' }}
+    >
       <circle cx="12" cy="12" r="10" />
       <polyline points="12 6 12 12 16 14" />
     </svg>
   ),
   Target: () => (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '4px', verticalAlign: '-1px' }}>
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ marginRight: '4px', verticalAlign: '-1px' }}
+    >
       <circle cx="12" cy="12" r="10" />
       <circle cx="12" cy="12" r="6" />
       <circle cx="12" cy="12" r="2" />
     </svg>
   ),
   CodeTag: () => (
-    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '5px', opacity: 0.85 }}>
+    <svg
+      width="11"
+      height="11"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ marginRight: '5px', opacity: 0.85 }}
+    >
       <polyline points="16 18 22 12 16 6" />
       <polyline points="8 6 2 12 8 18" />
     </svg>
   ),
   Sparkle: () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px', opacity: 0.9 }}>
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ marginRight: '6px', opacity: 0.9 }}
+    >
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
     </svg>
   ),
   Award: () => (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px', opacity: 0.9 }}>
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ marginRight: '6px', opacity: 0.9 }}
+    >
       <circle cx="12" cy="8" r="7" />
       <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
     </svg>
-  )
+  ),
 };
 
 export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
@@ -221,7 +359,7 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
       scale: 0.98,
       duration: 0.3,
       ease: 'power3.inOut',
-      onComplete: onClose
+      onComplete: onClose,
     });
   }, [onClose]);
 
@@ -255,17 +393,25 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
     closeRef.current?.focus();
   }, [project.id]); // Re-focus quand le projet change
 
-  useGSAP(() => {
-    const root = rootRef.current;
-    if (!root) return;
+  useGSAP(
+    () => {
+      const root = rootRef.current;
+      if (!root) return;
 
-    // clearProps : un transform residuel ferait defiler le fond fixe avec le contenu.
-    gsap.fromTo(root, { autoAlpha: 0, scale: 0.95 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power3.out', clearProps: 'transform' });
-    gsap.fromTo(root.querySelectorAll(`.${styles.reveal}`), 
-      { autoAlpha: 0, y: 20 },
-      { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' }
-    );
-  }, { scope: rootRef, dependencies: [project.id] });
+      // clearProps : un transform residuel ferait defiler le fond fixe avec le contenu.
+      gsap.fromTo(
+        root,
+        { autoAlpha: 0, scale: 0.95 },
+        { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power3.out', clearProps: 'transform' },
+      );
+      gsap.fromTo(
+        root.querySelectorAll(`.${styles.reveal}`),
+        { autoAlpha: 0, y: 20 },
+        { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' },
+      );
+    },
+    { scope: rootRef, dependencies: [project.id] },
+  );
 
   const theme = {
     '--p-accent': project.palette.ink,
@@ -278,11 +424,12 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
   } as CSSProperties;
 
   const themeImages = THEME_IMAGES[project.id] ?? [];
-  const bgImages = themeImages.length > 0
-    ? themeImages.map((image) => image.src)
-    : project.bgThemeImage
-      ? [project.bgThemeImage]
-      : [];
+  const bgImages =
+    themeImages.length > 0
+      ? themeImages.map((image) => image.src)
+      : project.bgThemeImage
+        ? [project.bgThemeImage]
+        : [];
   const motif = THEME_MOTIFS[project.id];
 
   return (
@@ -360,13 +507,13 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
                         <Icons.Maximize />
                         {project.medias.length > 1
                           ? `Molette : image ${currentImageIndex + 1}/${project.medias.length} • Clic pour agrandir`
-                          : 'Clic pour agrandir l\'image'}
+                          : "Clic pour agrandir l'image"}
                       </span>
                     </div>
                     {project.medias.length > 1 && (
                       <div className={styles.heroPagination} onClick={(e) => e.stopPropagation()}>
                         {project.medias.map((_, idx) => (
-                          <button 
+                          <button
                             key={idx}
                             type="button"
                             aria-label={`Image ${idx + 1}`}
@@ -374,7 +521,7 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
                               e.stopPropagation();
                               setCurrentImageIndex(idx);
                             }}
-                            className={`${styles.heroDot} ${idx === currentImageIndex ? styles.heroDotActive : ''}`} 
+                            className={`${styles.heroDot} ${idx === currentImageIndex ? styles.heroDotActive : ''}`}
                           />
                         ))}
                       </div>
@@ -436,7 +583,9 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
                 <div className={styles.doneGrid}>
                   {project.featuresDone.map((item, idx) => (
                     <div key={idx} className={styles.doneCard}>
-                      <span className={styles.checkIcon}><Icons.CheckItem /></span>
+                      <span className={styles.checkIcon}>
+                        <Icons.CheckItem />
+                      </span>
                       <span>{item}</span>
                     </div>
                   ))}
@@ -454,7 +603,9 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
                 <div className={styles.roadmapList}>
                   {project.roadmap.map((item, idx) => (
                     <div key={idx} className={styles.roadmapCard}>
-                      <span className={`${styles.badge} ${item.status === 'in_progress' ? styles.badgeProgress : styles.badgePlanned}`}>
+                      <span
+                        className={`${styles.badge} ${item.status === 'in_progress' ? styles.badgeProgress : styles.badgePlanned}`}
+                      >
                         {item.status === 'in_progress' ? (
                           <>
                             <Icons.Clock />
@@ -462,8 +613,7 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
                           </>
                         ) : (
                           <>
-                            <Icons.Target />
-                            À venir
+                            <Icons.Target />À venir
                           </>
                         )}
                       </span>
@@ -484,7 +634,13 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
                   <span className={styles.label}>Liens utiles</span>
                   <nav className={styles.actionButtons} aria-label="Liens du projet">
                     {project.links.map((link) => (
-                      <a key={link.href} href={link.href} target="_blank" rel="noreferrer" className={styles.actionBtn}>
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={styles.actionBtn}
+                      >
                         <span>{link.label}</span>
                         <Icons.ExternalLink />
                       </a>
@@ -519,7 +675,9 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
                   <ul className={styles.learningsList}>
                     {project.learnings.map((item, idx) => (
                       <li key={idx}>
-                        <span className={styles.learningBullet}><Icons.Award /></span>
+                        <span className={styles.learningBullet}>
+                          <Icons.Award />
+                        </span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -572,75 +730,101 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
       <div className={`${styles.bottomBar} ${isAtBottom ? styles.bottomBarActive : ''}`}>
         <span className={styles.bottomBarText}>Découvrir la suite</span>
         <div className={styles.bottomNavButtons}>
-          {onNext && <button onClick={onNext} className={styles.bottomNavBtn}>Projet Suivant &rarr;</button>}
-          <button onClick={fermer} className={styles.bottomCloseBtn}>Fermer</button>
+          {onNext && (
+            <button onClick={onNext} className={styles.bottomNavBtn}>
+              Projet Suivant &rarr;
+            </button>
+          )}
+          <button onClick={fermer} className={styles.bottomCloseBtn}>
+            Fermer
+          </button>
         </div>
       </div>
 
       {/* LIGHTBOX MODE */}
-      {isLightboxOpen && project.medias && typeof document !== 'undefined' && createPortal(
-        <div ref={lightboxRef} className={styles.lightbox} onClick={() => setIsLightboxOpen(false)}>
-          <button className={styles.lightboxClose} onClick={() => setIsLightboxOpen(false)} aria-label="Fermer la vue agrandie">&times;</button>
-          
-          <div className={styles.lightboxContent} onClick={(e) => {
-            if (project.medias && project.medias.length > 1) {
-              e.stopPropagation();
-              setCurrentImageIndex((i) => (i + 1) % project.medias!.length);
-            }
-          }}>
-            <img 
-              src={project.medias[currentImageIndex].src} 
-              alt={project.medias[currentImageIndex].alt} 
-              className={styles.lightboxImg} 
-            />
-            <div className={styles.lightboxHint}>
-              {project.medias.length > 1
-                ? `Image ${currentImageIndex + 1} / ${project.medias.length} • Molette ou clic pour faire défiler`
-                : project.medias[currentImageIndex].alt}
-            </div>
-          </div>
+      {isLightboxOpen &&
+        project.medias &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <div
+            ref={lightboxRef}
+            className={styles.lightbox}
+            onClick={() => setIsLightboxOpen(false)}
+          >
+            <button
+              className={styles.lightboxClose}
+              onClick={() => setIsLightboxOpen(false)}
+              aria-label="Fermer la vue agrandie"
+            >
+              &times;
+            </button>
 
-          {project.medias.length > 1 && (
-            <>
-              <button 
-                className={`${styles.lightboxNav} ${styles.lightboxPrev}`} 
-                onClick={(e) => { 
-                  e.stopPropagation(); 
-                  setCurrentImageIndex((i) => (i === 0 ? project.medias!.length - 1 : i - 1)); 
-                }}
-                aria-label="Image précédente"
-              >
-                &#8249;
-              </button>
-              <button 
-                className={`${styles.lightboxNav} ${styles.lightboxNext}`} 
-                onClick={(e) => { 
-                  e.stopPropagation(); 
-                  setCurrentImageIndex((i) => (i === project.medias!.length - 1 ? 0 : i + 1)); 
-                }}
-                aria-label="Image suivante"
-              >
-                &#8250;
-              </button>
-              <div className={styles.heroPagination} style={{ bottom: '28px' }} onClick={(e) => e.stopPropagation()}>
-                {project.medias.map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    aria-label={`Image ${idx + 1}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCurrentImageIndex(idx);
-                    }}
-                    className={`${styles.heroDot} ${idx === currentImageIndex ? styles.heroDotActive : ''}`}
-                  />
-                ))}
+            <div
+              className={styles.lightboxContent}
+              onClick={(e) => {
+                if (project.medias && project.medias.length > 1) {
+                  e.stopPropagation();
+                  setCurrentImageIndex((i) => (i + 1) % project.medias!.length);
+                }
+              }}
+            >
+              <img
+                src={project.medias[currentImageIndex].src}
+                alt={project.medias[currentImageIndex].alt}
+                className={styles.lightboxImg}
+              />
+              <div className={styles.lightboxHint}>
+                {project.medias.length > 1
+                  ? `Image ${currentImageIndex + 1} / ${project.medias.length} • Molette ou clic pour faire défiler`
+                  : project.medias[currentImageIndex].alt}
               </div>
-            </>
-          )}
-        </div>,
-        document.body
-      )}
+            </div>
+
+            {project.medias.length > 1 && (
+              <>
+                <button
+                  className={`${styles.lightboxNav} ${styles.lightboxPrev}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentImageIndex((i) => (i === 0 ? project.medias!.length - 1 : i - 1));
+                  }}
+                  aria-label="Image précédente"
+                >
+                  &#8249;
+                </button>
+                <button
+                  className={`${styles.lightboxNav} ${styles.lightboxNext}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentImageIndex((i) => (i === project.medias!.length - 1 ? 0 : i + 1));
+                  }}
+                  aria-label="Image suivante"
+                >
+                  &#8250;
+                </button>
+                <div
+                  className={styles.heroPagination}
+                  style={{ bottom: '28px' }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {project.medias.map((_, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      aria-label={`Image ${idx + 1}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentImageIndex(idx);
+                      }}
+                      className={`${styles.heroDot} ${idx === currentImageIndex ? styles.heroDotActive : ''}`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }
