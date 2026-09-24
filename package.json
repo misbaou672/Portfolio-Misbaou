@@ -1,11 +1,22 @@
 {
-  "name": "portfolio-rayan-oughlis",
+  "name": "portfolio-misbaou",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Portfolio de Rayan Oughlis, developpeur full-stack. Experience scroll + mode exploration 3D.",
-  "author": "Rayan Oughlis",
+  "description": "Portfolio de Misbaou Diallo, etudiant en BUT Informatique (parcours Developpement logiciel) : developpement full-stack, back-end et automatisation.",
+  "author": "Misbaou Diallo",
   "license": "MIT",
+  "keywords": [
+    "portfolio",
+    "react",
+    "typescript",
+    "vite",
+    "gsap"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/misbaou672/Portfolio-Misbaou.git"
+  },
   "engines": {
     "node": ">=22"
   },
