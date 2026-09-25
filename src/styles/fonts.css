@@ -13,5 +13,8 @@
 /* JetBrains Mono, data et étiquettes techniques. Fonte variable. */
 @import '@fontsource-variable/jetbrains-mono/index.css';
 
-/* Space Grotesk, futuriste & tech display */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+/* Space Grotesk, display. Fonte variable, plage 300 a 700.
+   Servie par le paquet local et non par Google Fonts : l'import distant
+   contredisait l'en-tete de ce fichier, ajoutait un tiers au chemin critique
+   et exposait l'IP du visiteur. Le paquet etait deja installe. */
+@import '@fontsource-variable/space-grotesk/index.css';
