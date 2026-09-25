@@ -1,5 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="20" fill="#ffffff" />
-  <rect width="100" height="100" rx="20" fill="#4f46e5" opacity="0.1" />
-  <text x="50" y="65" font-family="'Inter', sans-serif" font-size="50" font-weight="900" fill="#4f46e5" text-anchor="middle">MD</text>
+  <!--
+    Monogramme MD, en trace vectoriel et non en texte : une favicon ne charge
+    pas les polices du site, un `<text font-family="Inter">` y tombait donc sur
+    la police systeme et changeait de rendu d'un appareil a l'autre.
+
+    Le cyan #0369a1 est le jeton `--cyan` du site. La version precedente etait
+    en indigo #4f46e5, reste de la palette du modele d'origine.
+  -->
+  <rect width="100" height="100" rx="22" fill="#0369a1" />
+  <path d="M20 72V30h9l11 20 11-20h9v42h-9V47l-8 15h-6l-8-15v25z" fill="#fff" />
+  <path
+    d="M66 72V30h11c12 0 19 8 19 21s-7 21-19 21zm9-8h2c7 0 10-5 10-13s-3-13-10-13h-2z"
+    fill="#fff"
+    opacity=".92"
+  />
 </svg>
