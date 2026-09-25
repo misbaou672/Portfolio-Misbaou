@@ -6,12 +6,18 @@
 
     Le cyan #0369a1 est le jeton `--cyan` du site. La version precedente etait
     en indigo #4f46e5, reste de la palette du modele d'origine.
+
+    Le monogramme s'etend de x=20 a x=96 : cale a gauche, il laissait le D
+    toucher le bord droit. La translation le recentre dans le carre plutot que
+    de retoucher deux traces a la main.
   -->
   <rect width="100" height="100" rx="22" fill="#0369a1" />
-  <path d="M20 72V30h9l11 20 11-20h9v42h-9V47l-8 15h-6l-8-15v25z" fill="#fff" />
-  <path
-    d="M66 72V30h11c12 0 19 8 19 21s-7 21-19 21zm9-8h2c7 0 10-5 10-13s-3-13-10-13h-2z"
-    fill="#fff"
-    opacity=".92"
-  />
+  <g transform="translate(-8 -1)">
+    <path d="M20 72V30h9l11 20 11-20h9v42h-9V47l-8 15h-6l-8-15v25z" fill="#fff" />
+    <path
+      d="M66 72V30h11c12 0 19 8 19 21s-7 21-19 21zm9-8h2c7 0 10-5 10-13s-3-13-10-13h-2z"
+      fill="#fff"
+      opacity=".92"
+    />
+  </g>
 </svg>

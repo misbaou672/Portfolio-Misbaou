@@ -3,7 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Trois formats, parce qu'aucun n'est lu partout : le SVG pour les
+      navigateurs recents, l'ICO pour Safari et les anciennes versions qui
+      l'ignorent, le PNG pour l'ecran d'accueil iOS, qui applique son propre
+      masque arrondi et ne veut donc pas de coins transparents. Sans l'ICO,
+      /favicon.ico repondait 404 et l'onglet restait vide. -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href="%SITE_URL%/" />
 
     <title>Misbaou DIALLO — Développeur Back-End, DevOps &amp; DevSecOps</title>

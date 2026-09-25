@@ -14,7 +14,14 @@
       recoit la meme consigne par en-tete HTTP dans `vercel.json`, un fichier
       binaire ne pouvant pas porter de balise. -->
     <meta name="robots" content="noindex" />
+    <!-- Trois formats, parce qu'aucun n'est lu partout : le SVG pour les
+      navigateurs recents, l'ICO pour Safari et les anciennes versions qui
+      l'ignorent, le PNG pour l'ecran d'accueil iOS, qui applique son propre
+      masque arrondi et ne veut donc pas de coins transparents. Sans l'ICO,
+      /favicon.ico repondait 404 et l'onglet restait vide. -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <style>
       /*
         CV autonome, hors du bundle React : il doit rester imprimable et
