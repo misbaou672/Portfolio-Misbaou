@@ -77,7 +77,7 @@ Une seule variable à renseigner : **`VITE_SITE_URL`**, l'adresse publique du si
 ## Me joindre
 
 - **Email** — [misbaou.diallo@etu.u-pec.fr](mailto:misbaou.diallo@etu.u-pec.fr)
-- **LinkedIn** — [misbaou-diallo14082005](https://www.linkedin.com/in/misbaou-diallo14082005/)
+- **LinkedIn** — [misbaou-diallo-dev](https://www.linkedin.com/in/misbaou-diallo-dev/)
 - **GitHub** — [misbaou672](https://github.com/misbaou672)
 - **Root-Me** — [wvbsim](https://www.root-me.org/wvbsim)
 - **TryHackMe** — [misbaou.diallo](https://tryhackme.com/p/misbaou.diallo)
