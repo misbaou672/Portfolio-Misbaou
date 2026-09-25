@@ -8,6 +8,12 @@
       name="description"
       content="CV de Misbaou DIALLO, développeur back-end et automatisation, en recherche d'une alternance d'un an, disponible dès maintenant."
     />
+    <!-- Le CV reste accessible a qui a le lien, mais hors des resultats de
+      recherche : il porte un numero de telephone, une adresse et un age, qui
+      n'ont pas a remonter sur une requete au nom de leur proprietaire. Le PDF
+      recoit la meme consigne par en-tete HTTP dans `vercel.json`, un fichier
+      binaire ne pouvant pas porter de balise. -->
+    <meta name="robots" content="noindex" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <style>
       /*
