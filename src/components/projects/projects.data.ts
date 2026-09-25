@@ -227,7 +227,13 @@ export const PROJECTS: Project[] = [
         status: 'planned',
       },
     ],
-    links: [{ label: 'Repo GitHub', href: 'https://github.com/misbaou672/Velib-Optim' }],
+    links: [
+      {
+        label: 'Voir la carte',
+        href: 'https://misbaou672.github.io/Velib-Optim/carte_velib_optimisee.html',
+      },
+      { label: 'Repo GitHub', href: 'https://github.com/misbaou672/Velib-Optim' },
+    ],
     palette: {
       from: 'rgba(3, 105, 161, 0.25)',
       to: 'rgba(12, 74, 110, 0.4)',
