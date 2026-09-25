@@ -41,17 +41,41 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg);
-  background-image:
-    radial-gradient(circle at 50% 0%, var(--cyan-pale) 0%, transparent 60%),
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-image: radial-gradient(circle at 50% 0%, var(--cyan-pale) 0%, transparent 60%);
+  background-size: 100% 100%;
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
-  background-size:
-    100% 100%,
-    40px 40px,
-    40px 40px;
+}
+
+/**
+ * Le fond n'est plus un quadrillage mais un relief, en courbes de niveau.
+ *
+ * `public/relief.svg` est un trace calcule par marching squares sur un champ
+ * de sinusoides a frequences entieres : le champ est donc periodique, et la
+ * tuile de 800 px se raccorde sans couture. Les polylignes ont ete simplifiees
+ * (Douglas-Peucker), d'ou 10 Ko sur le disque et 5 Ko une fois compresses.
+ *
+ * Pose en masque et non en image de fond : la couleur vient alors de
+ * `background-color`, donc du jeton `--grid-line`, et suit le theme sombre
+ * sans qu'on ait a produire une seconde version du fichier.
+ *
+ * `fixed` plutot que dans le flux : le relief ne defile pas avec le contenu,
+ * ce qui evite de reveler la repetition de la tuile sur les longues pages.
+ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: var(--grid-line);
+  -webkit-mask-image: url('/relief.svg');
+  mask-image: url('/relief.svg');
+  -webkit-mask-size: 760px 760px;
+  mask-size: 760px 760px;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
 }
 
 a {

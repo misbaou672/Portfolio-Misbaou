@@ -65,27 +65,19 @@
   animation-delay: -5s;
 }
 
-.orbPurple {
+.orbSky {
   top: 45%;
   left: -10%;
   width: 40vw;
   height: 40vw;
   max-width: 500px;
   max-height: 500px;
-  background: radial-gradient(circle, #a855f7 0%, rgba(168, 85, 247, 0.25) 60%, transparent 100%);
+  /* Second bleu plutot que le violet du modele d'origine : celui-ci
+     n'apparaissait nulle part ailleurs sur le site, dont les accents sont le
+     cyan des titres et le vert du badge d'alternance. */
+  background: radial-gradient(circle, #0ea5e9 0%, rgba(14, 165, 233, 0.25) 60%, transparent 100%);
   animation-duration: 26s;
   animation-delay: -10s;
-}
-
-.gridOverlay {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 50px 50px;
-  mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 90%);
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 90%);
 }
 
 .scanline {

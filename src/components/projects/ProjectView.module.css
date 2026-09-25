@@ -11,14 +11,10 @@
   background-color: var(--bg);
   background-image:
     radial-gradient(circle at 50% 0%, var(--p-glow, rgba(56, 189, 248, 0.25)) 0%, transparent 60%),
-    linear-gradient(180deg, var(--p-from, rgba(13, 19, 34, 0.8)) 0%, var(--bg) 100%),
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    linear-gradient(180deg, var(--p-from, rgba(13, 19, 34, 0.8)) 0%, var(--bg) 100%);
   background-size:
     100% 100%,
-    100% 100%,
-    40px 40px,
-    40px 40px;
+    100% 100%;
   color: var(--ink);
   padding: 0 clamp(16px, 4vw, 48px) clamp(24px, 4vw, 48px) clamp(16px, 4vw, 48px);
   /* Volontairement pas `visibility: hidden` en attendant l'animation
@@ -271,6 +267,24 @@
 .mediaCol {
   position: relative;
   width: 100%;
+}
+
+/* La fiche est en superposition et masque donc le relief du fond global :
+   elle porte le sien, sur le meme trace et le meme jeton de couleur. Pose en
+   pseudo-element parce que `background-image` sert deja aux degrades. */
+.root::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: var(--grid-line);
+  -webkit-mask-image: url('/relief.svg');
+  mask-image: url('/relief.svg');
+  -webkit-mask-size: 760px 760px;
+  mask-size: 760px 760px;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
 }
 
 .hero {
