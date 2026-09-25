@@ -278,7 +278,7 @@ export function Contact() {
               <span className={styles.socialTitle}>Réseaux professionnels :</span>
               <div className={styles.socialLinks}>
                 <a
-                  href="https://www.linkedin.com/in/misbaou-diallo14082005/"
+                  href="https://www.linkedin.com/in/misbaou-diallo-dev/"
                   target="_blank"
                   rel="noreferrer"
                   className={styles.socialBtn}
