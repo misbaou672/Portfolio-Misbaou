@@ -21,7 +21,11 @@
   /* Encre */
   --ink: #0f172a;
   --ink-muted: #475569;
-  --ink-faint: #64748b;
+  /* 5,46:1 sur --bg. L'ancienne valeur #64748b plafonnait a 4,44:1, sous le
+     seuil AA de 4,5 pour du texte courant — or ce jeton habille des libelles
+     de 11 a 14 px. Le theme sombre n'etait pas concerne, son equivalent
+     atteignant deja 6,20:1. */
+  --ink-faint: #586678;
   --line: rgba(15, 23, 42, 0.1);
 
   /* Accent principal, fonce pour tenir le contraste sur fond clair */
