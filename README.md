@@ -1,85 +1,83 @@
 # Portfolio — Misbaou DIALLO
 
-Portfolio personnel de **Misbaou Diallo**, Développeur Full-Stack & Automatisation. Un **diaporama interactif** de cinq écrans : Hub, Projets, Expérience (Terminal Hacker), À Propos, Contact.
+**[portfolio-misbaou.vercel.app](https://portfolio-misbaou.vercel.app)**
 
-L'interface arbore un thème **Clean & Light Professional**, combinant élégance corporative et éléments geek/tech interactifs (GSAP, ScrambleText, Terminal).
+Portfolio personnel de **Misbaou Diallo**, développeur back-end et automatisation, en route vers le DevOps et le DevSecOps. Étudiant en BUT Informatique (parcours Développement logiciel) à l'UPEC, en recherche d'une alternance d'un an à partir de septembre 2026.
 
-## 🚀 Stack & Technologies
+Cinq écrans : **Hub**, **Projets**, **Parcours**, **À propos**, **Contact**. Thème clair par défaut, thème sombre au choix, fond en courbes de niveau généré.
 
-| Domaine     | Choix                                                          |
-| ----------- | -------------------------------------------------------------- |
-| **Build**   | Vite + React 19 + TypeScript (SPA)                             |
-| **Anim**    | GSAP (`@gsap/react`), Lenis (Smooth Scroll)                    |
-| **Style**   | CSS Modules + Jetons CSS (`src/styles/tokens.css`)             |
-| **Navig.**  | Diaporama plein écran avec GSAP Observer                       |
-| **Polices** | `Anton`, `Space Grotesk`, `JetBrains Mono`, `Instrument Serif` |
+## Stack
 
-## 📦 Structure du projet
+| Domaine     | Choix                                                  |
+| ----------- | ------------------------------------------------------ |
+| **Build**   | Vite + React 19 + TypeScript (SPA, une seule route)    |
+| **Anim**    | GSAP (`@gsap/react`, ScrollTrigger)                    |
+| **Style**   | CSS Modules + jetons CSS (`src/styles/tokens.css`)     |
+| **Polices** | Outfit, Inter, JetBrains Mono, Space Grotesk           |
+| **SEO**     | `sitemap.xml`, `robots.txt`, JSON-LD, carte de partage |
+
+## Structure
 
 ```
+public/
+  relief.svg      Fond en courbes de niveau, tuile de 800 px sans couture
+  og.jpg          Carte de partage (source : tools/og/index.html)
 src/
-  app/            Points d'entrée : Providers, App, Layout
+  app/            Providers, Layout, navigation flottante, fond ambiant
   components/
-    ui/           Curseur personnalisé, barre de navigation, liens
-    hub/          Hero section, Bento-box des compétences
-    projects/     Pellicule GSAP, affichage détaillé des projets (ProjectView)
-    experience/   Terminal Hacker interactif (Expériences RATP, UPEC)
-    about/        Récit personnel, présentation
-    contact/      Coordonnées, liens GitHub, LinkedIn, TryHackMe
-  data/           Données des projets, compétences, etc.
-  lib/            Configurations GSAP, Hooks
-  styles/         Fichiers globaux (tokens.css, reset.css, global.css)
+    ui/           Curseur, en-tête, index des sections
+    hub/          Accueil : identité, stack, accès rapides
+    projects/     Pellicule GSAP et fiche projet détaillée
+    experience/   Parcours : stage et formation, effet de déchiffrement
+    about/        Savoir-faire, savoir-être, langues, centres d'intérêt
+    contact/      Email à objet prérempli, réseaux
+  lib/            GSAP, thème, constantes du diaporama
+  styles/         tokens.css, global.css, fonts.css
+vite/seo.ts       Génère sitemap.xml et robots.txt au build
+tools/og/         Gabarit de la carte de partage
 ```
 
-## 🛠️ Démarrage Rapide
+## Démarrage
 
-Assurez-vous d'avoir Node.js installé (version 20+ recommandée).
+Node.js **22 ou plus** (voir `engines` dans `package.json`).
 
 ```bash
-# 1. Installation des dépendances
 npm install
-
-# 2. Lancement du serveur de développement
-npm run dev
-
-# 3. Build pour la production
-npm run build
+npm run dev        # serveur de développement
+npm run build      # typecheck + build de production
+npm run preview    # sert le build localement
 ```
 
-## ✨ Scripts disponibles
+## Scripts
 
-| Script            | Action                                      |
-| ----------------- | ------------------------------------------- |
-| `npm run dev`     | Lance le serveur de développement Vite      |
-| `npm run build`   | Typecheck (`tsc`) + Build optimisé (`vite`) |
-| `npm run preview` | Lance un serveur local pour tester le build |
-| `npm run lint`    | Vérification ESLint                         |
+| Script                 | Action                                   |
+| ---------------------- | ---------------------------------------- |
+| `npm run dev`          | Serveur de développement Vite            |
+| `npm run build`        | `tsc -b` puis build Vite                 |
+| `npm run preview`      | Sert le build de production              |
+| `npm run typecheck`    | Vérification des types seule             |
+| `npm run lint`         | ESLint, zéro avertissement toléré        |
+| `npm run format`       | Prettier en écriture                     |
+| `npm run format:check` | Prettier en vérification (utilisé en CI) |
 
-## 📂 Mes Autres Projets Publics
+## Déploiement
 
-Voici quelques-uns de mes principaux projets publics et leurs dépôts GitHub :
+Déployé sur Vercel à chaque poussée sur `main`.
 
-- **Devis Pro** : [github.com/misbaou672/Devis-Pro](https://github.com/misbaou672/Devis-Pro) — _Créateur de devis métier et génération PDF._
-- **CodeRouge** : [github.com/misbaou672/CodeRouge](https://github.com/misbaou672/CodeRouge) — _Application d'accompagnement vocal et sportif._
-- **Velib-Optim** : [github.com/misbaou672/Velib-Optim](https://github.com/misbaou672/Velib-Optim) — _Optimisation algorithmique des stations Vélib._
-- **GestiStock** : [github.com/misbaou672/GestiStock](https://github.com/misbaou672/GestiStock) — _Mini logiciel de gestion des stocks logistiques._
-- **SAE3_Real01 (EchOcean)** : [github.com/misbaou672/SAE3_Real01](https://github.com/misbaou672/SAE3_Real01) — _Modèle orienté objet strict (MVC) et cartographie interactive._
+Une seule variable à renseigner : **`VITE_SITE_URL`**, l'adresse publique du site. Elle alimente l'URL canonique, l'`og:url`, l'image de partage, le `sitemap.xml`, le `robots.txt` et le JSON-LD. Sans elle, le build retombe sur l'adresse Vercel de production et le signale en console.
 
-**Et aussi :**
+## Mes autres projets
 
-- **Auriance** : [github.com/misbaou672/Auriance](https://github.com/misbaou672/Auriance)
-- **HAM_projet_jeu** : [github.com/misbaou672/HAM_projet_jeu](https://github.com/misbaou672/HAM_projet_jeu) — _Programmation d'un jeu vidéo._
-- **Diplomaat** : [github.com/misbaou672/Diplomaat](https://github.com/misbaou672/Diplomaat)
-- **dashboard_alternance** : [github.com/misbaou672/dashboard_alternance](https://github.com/misbaou672/dashboard_alternance)
-- **jeu** : [github.com/misbaou672/jeu](https://github.com/misbaou672/jeu)
+- **Devis Pro** — [dépôt](https://github.com/misbaou672/Devis-Pro) · création et édition de devis métier, génération PDF
+- **CodeRouge** — [dépôt](https://github.com/misbaou672/CodeRouge) · suivi d'objectifs sportifs, habitudes et assistants IA
+- **Vélib Optim** — [dépôt](https://github.com/misbaou672/Velib-Optim) · optimisation algorithmique du réseau Vélib
+- **GestiStock** — [dépôt](https://github.com/misbaou672/GestiStock) · gestion d'inventaire et de stock
+- **Eaurore** — [dépôt](https://github.com/misbaou672/SAE3_Real01) · plateforme océanographique, PHP 8.4 en MVC
 
-## 🔗 Liens Sociaux
+## Me joindre
 
-- **LinkedIn** : [misbaou-diallo14082005](https://www.linkedin.com/in/misbaou-diallo14082005/)
-- **GitHub** : [misbaou672](https://github.com/misbaou672)
-- **Root-Me** : [wvbsim](https://www.root-me.org/wvbsim)
-- **TryHackMe** : [misbaou.diallo](https://tryhackme.com/p/misbaou.diallo)
-
----
-
-_Développé avec ☕ et beaucoup de ❤️ par Misbaou DIALLO._
+- **Email** — [misbaou.diallo@etu.u-pec.fr](mailto:misbaou.diallo@etu.u-pec.fr)
+- **LinkedIn** — [misbaou-diallo14082005](https://www.linkedin.com/in/misbaou-diallo14082005/)
+- **GitHub** — [misbaou672](https://github.com/misbaou672)
+- **Root-Me** — [wvbsim](https://www.root-me.org/wvbsim)
+- **TryHackMe** — [misbaou.diallo](https://tryhackme.com/p/misbaou.diallo)
