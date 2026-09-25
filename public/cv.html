@@ -98,21 +98,12 @@
         margin-bottom: 11px;
       }
       .photo {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         flex: 0 0 26mm;
         width: 26mm;
         height: 26mm;
         border-radius: 50%;
         object-fit: cover;
-        background: rgba(15, 23, 42, 0.05);
         border: 2px solid var(--cyan-pale);
-        color: rgba(15, 23, 42, 0.22);
-      }
-      .photo svg {
-        width: 13mm;
-        height: 13mm;
       }
       h1 {
         margin: 0;
@@ -375,15 +366,7 @@
   <body>
     <div class="feuille">
       <header>
-        <!-- Emplacement de la photo. Pour remettre un portrait, remplacer tout ce
-        bloc par : <img class="photo" src="/photo.jpg" alt="Portrait de Misbaou Diallo" /> -->
-        <div class="photo" role="img" aria-label="Emplacement reserve pour la photo">
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 1.8c-3.6 0-7.2 1.8-7.2 4.05V21h14.4v-3.15c0-2.25-3.6-4.05-7.2-4.05Z"
-            />
-          </svg>
-        </div>
+        <img class="photo" src="/photo.jpg" alt="Portrait de Misbaou Diallo" />
         <div>
           <h1>Misbaou DIALLO</h1>
           <p class="metier">Alternant développeur back-end, DevOps &amp; DevSecOps</p>
