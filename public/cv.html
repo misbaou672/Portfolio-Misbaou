@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV — Misbaou DIALLO, développeur back-end</title>
+    <meta
+      name="description"
+      content="CV de Misbaou DIALLO, développeur back-end et automatisation, en recherche d'une alternance d'un an dès septembre 2026."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      /*
+        CV autonome, hors du bundle React : il doit rester imprimable et
+        consultable meme si l'application ne se charge pas. Les jetons sont
+        recopies de `src/styles/tokens.css` plutot qu'importes, un fichier de
+        `public/` n'etant pas traite par Vite.
+      */
+      @font-face {
+        font-family: 'Space Grotesk';
+        src: url('/fonts/space-grotesk.woff2') format('woff2');
+        font-weight: 300 700;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Inter';
+        src: url('/fonts/inter.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'JetBrains Mono';
+        src: url('/fonts/jetbrains-mono.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: swap;
+      }
+
+      :root {
+        --bg: #f5f7fb;
+        --surface: #ffffff;
+        --ink: #0f172a;
+        --ink-muted: #475569;
+        --ink-faint: #586678;
+        --line: rgba(15, 23, 42, 0.1);
+        --cyan: #0369a1;
+        --cyan-pale: rgba(3, 105, 161, 0.08);
+        --display: 'Space Grotesk', system-ui, sans-serif;
+        --body: 'Inter', system-ui, sans-serif;
+        --mono: 'JetBrains Mono', ui-monospace, monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 28px 16px;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--body);
+        font-size: 12px;
+        line-height: 1.48;
+      }
+
+      /* Format A4 : 210 x 297 mm. La feuille est dimensionnee a l'ecran comme
+         a l'impression, pour qu'on voie exactement ce qui sortira. */
+      .feuille {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 12mm 12mm;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        box-shadow: 0 18px 50px rgba(15, 23, 42, 0.09);
+      }
+
+      header {
+        border-bottom: 2px solid var(--cyan);
+        padding-bottom: 9px;
+        margin-bottom: 12px;
+      }
+      h1 {
+        margin: 0;
+        font-family: var(--display);
+        font-size: 29px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+      }
+      .metier {
+        margin: 5px 0 0;
+        font-family: var(--mono);
+        font-size: 12.5px;
+        color: var(--cyan);
+        font-weight: 600;
+      }
+      .coord {
+        margin-top: 9px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 14px;
+        font-size: 11.5px;
+        color: var(--ink-muted);
+      }
+      .coord a {
+        color: var(--ink-muted);
+        text-decoration: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .grille {
+        display: grid;
+        grid-template-columns: 1fr 62mm;
+        gap: 0 13mm;
+        align-items: start;
+      }
+
+      h2 {
+        margin: 0 0 8px;
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--cyan);
+      }
+      section {
+        margin-bottom: 9px;
+        break-inside: avoid;
+      }
+
+      .poste {
+        margin-bottom: 9px;
+        break-inside: avoid;
+      }
+      .poste h3 {
+        margin: 0;
+        font-family: var(--display);
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .lieu {
+        margin: 1px 0 5px;
+        font-family: var(--mono);
+        font-size: 10.5px;
+        color: var(--ink-faint);
+      }
+      .poste ul {
+        margin: 0;
+        padding-left: 15px;
+      }
+      .poste li {
+        margin-bottom: 1px;
+        color: var(--ink-muted);
+      }
+
+      .profil {
+        margin: 0;
+        color: var(--ink-muted);
+      }
+
+      .puces {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 6px;
+      }
+      .puce {
+        font-family: var(--mono);
+        font-size: 9.5px;
+        padding: 2px 7px;
+        border: 1px solid var(--line);
+        border-radius: 99px;
+        color: var(--ink-muted);
+        background: var(--surface);
+      }
+      .puce.fort {
+        border-color: var(--cyan);
+        color: var(--cyan);
+        background: var(--cyan-pale);
+      }
+
+      .liste {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .liste li {
+        padding: 3px 0;
+        border-bottom: 1px solid var(--line);
+        color: var(--ink-muted);
+        font-size: 12px;
+      }
+      .liste li:last-child {
+        border-bottom: 0;
+      }
+
+      .projet {
+        margin-bottom: 6px;
+      }
+      .projet strong {
+        font-family: var(--display);
+        font-size: 12.5px;
+      }
+      .projet span {
+        display: block;
+        font-family: var(--mono);
+        font-size: 9.5px;
+        color: var(--ink-faint);
+      }
+
+      /* Impression : on retire l'habillage d'ecran pour que la feuille
+         occupe la page, et on laisse les liens lisibles en noir. */
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+        body {
+          padding: 0;
+          background: #fff;
+        }
+        .feuille {
+          width: auto;
+          min-height: auto;
+          border: 0;
+          border-radius: 0;
+          box-shadow: none;
+          padding: 12mm 12mm;
+        }
+        .coord a {
+          border-bottom: 0;
+        }
+      }
+
+      /* `screen and` est indispensable : une page A4 fait 794 px de large a
+         96 ppp, donc sans cette restriction la regle se declenchait a
+         l'impression et repliait la mise en page sur une seule colonne. */
+      @media screen and (max-width: 800px) {
+        .feuille {
+          width: 100%;
+          padding: 20px 16px;
+        }
+        .grille {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="feuille">
+      <header>
+        <h1>Misbaou DIALLO</h1>
+        <p class="metier">Développeur back-end, DevOps &amp; DevSecOps</p>
+        <div class="coord">
+          <span>Paris / Île-de-France</span>
+          <a href="mailto:misbaou.diallo@etu.u-pec.fr">misbaou.diallo@etu.u-pec.fr</a>
+          <a href="tel:+33766612483">07 66 61 24 83</a>
+          <a href="https://portfolio-misbaou.vercel.app">portfolio-misbaou.vercel.app</a>
+          <a href="https://github.com/misbaou672">github.com/misbaou672</a>
+          <a href="https://www.linkedin.com/in/misbaou-diallo14082005/">LinkedIn</a>
+        </div>
+      </header>
+
+      <div class="grille">
+        <main>
+          <section>
+            <h2>Profil</h2>
+            <p class="profil">
+              Étudiant en BUT Informatique (3<sup>e</sup> année, parcours Développement logiciel) à
+              l'UPEC. Je développe des applications web et j'automatise des tâches pour simplifier
+              les processus, avec un cap sur le back-end et les pratiques DevOps et DevSecOps.
+              <strong>En recherche d'une alternance d'un an à partir de septembre 2026.</strong>
+            </p>
+          </section>
+
+          <section>
+            <h2>Expérience</h2>
+            <div class="poste">
+              <h3>Stagiaire chargé des réseaux et services informatiques</h3>
+              <p class="lieu">
+                RATP — DSP 49 · Lagny / Lilas / Belliard, Île-de-France · Avril – Juin 2026
+              </p>
+              <ul>
+                <li>
+                  Automatisation de workflows avec ZennoPoster : extraction, transformation et
+                  traitement de données.
+                </li>
+                <li>
+                  Analyse et modélisation de données avec Power Query et DAX, puis restitution en
+                  tableaux de bord Power BI.
+                </li>
+                <li>
+                  Gestion du parc et des postes : mises à jour Windows et correctifs de sécurité,
+                  installation logicielle, tablettes et téléphones, diagnostic matériel.
+                </li>
+                <li>Montée en compétences sur les fondamentaux de la cyberdéfense.</li>
+              </ul>
+              <div class="puces">
+                <span class="puce fort">ZennoPoster</span><span class="puce fort">Power Query</span
+                ><span class="puce fort">DAX</span><span class="puce fort">Power BI</span
+                ><span class="puce fort">Windows</span><span class="puce fort">Cyberdéfense</span>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2>Formation</h2>
+            <div class="poste">
+              <h3>BUT Informatique — parcours Développement logiciel</h3>
+              <p class="lieu">IUT de Créteil-Vitry, UPEC · Depuis septembre 2024</p>
+              <ul>
+                <li>Conception, développement et validation d'applications.</li>
+                <li>
+                  Formation pluridisciplinaire : développement logiciel, réseaux, bases de données
+                  et gestion de projet.
+                </li>
+                <li>
+                  Projets en équipe sur plusieurs semaines en conditions proches de celles du métier
+                  : cahier des charges, livrable et soutenance.
+                </li>
+              </ul>
+            </div>
+            <div class="poste">
+              <h3>Baccalauréat Général</h3>
+              <p class="lieu">Lycée Darius Milhaud, Le Kremlin-Bicêtre · 2024</p>
+              <ul>
+                <li>
+                  Spécialités Mathématiques et Physique-Chimie, option Mathématiques Expertes.
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section>
+            <h2>Projets</h2>
+            <div class="projet">
+              <strong>CodeRouge</strong> — suivi d'objectifs sportifs, habitudes et assistants IA.
+              <span>Next.js 16 · React 19 · TypeScript · TailwindCSS</span>
+            </div>
+            <div class="projet">
+              <strong>Vélib Optim</strong> — optimisation du réseau Vélib, 1519 stations. Delaunay,
+              Kruskal et Prim.
+              <span>Python 3 · Théorie des graphes · Folium · API OpenData</span>
+            </div>
+            <div class="projet">
+              <strong>Eaurore</strong> — plateforme d'analyse de données océanographiques.
+              <span>PHP 8.4 · Architecture MVC · API Copernicus · MySQL</span>
+            </div>
+            <div class="projet">
+              <strong>Devis Pro</strong> — création et édition de devis métier, génération PDF.
+              <span>PHP 8 orienté objet · JavaScript ES6+ · MySQL</span>
+            </div>
+            <div class="projet">
+              <strong>GestiStock</strong> — gestion d'inventaire, alertes de rupture.
+              <span>Python 3 · Tkinter/TTK · OpenPyXL</span>
+            </div>
+          </section>
+        </main>
+
+        <aside>
+          <section>
+            <h2>Back-end &amp; données</h2>
+            <div class="puces">
+              <span class="puce">Java</span><span class="puce">Python</span
+              ><span class="puce">PHP 8</span><span class="puce">Node.js</span
+              ><span class="puce">API REST</span><span class="puce">Architecture MVC</span
+              ><span class="puce">Design patterns</span><span class="puce">SQL</span
+              ><span class="puce">MySQL</span><span class="puce">PostgreSQL</span
+              ><span class="puce">MongoDB</span>
+            </div>
+          </section>
+
+          <section>
+            <h2>Systèmes &amp; sécurité</h2>
+            <div class="puces">
+              <span class="puce">Linux</span><span class="puce">SSH · DNS · DHCP · FTP</span
+              ><span class="puce">VirtualBox</span><span class="puce">Docker</span
+              ><span class="puce">Git &amp; GitHub</span><span class="puce">CI/CD</span
+              ><span class="puce">Cybersécurité</span><span class="puce">Cisco Packet Tracer</span>
+            </div>
+          </section>
+
+          <section>
+            <h2>Automatisation &amp; data</h2>
+            <div class="puces">
+              <span class="puce">n8n</span><span class="puce">ZennoPoster</span
+              ><span class="puce">Power BI</span><span class="puce">Power Query</span
+              ><span class="puce">DAX</span>
+            </div>
+          </section>
+
+          <section>
+            <h2>Web</h2>
+            <div class="puces">
+              <span class="puce">React</span><span class="puce">TypeScript</span
+              ><span class="puce">Next.js</span><span class="puce">HTML / CSS</span
+              ><span class="puce">SEO technique</span>
+            </div>
+          </section>
+
+          <section>
+            <h2>Méthode</h2>
+            <div class="puces">
+              <span class="puce">Agile / Scrum</span><span class="puce">UML</span
+              ><span class="puce">Gestion de projet</span>
+            </div>
+          </section>
+
+          <section>
+            <h2>Savoir-être</h2>
+            <ul class="liste">
+              <li>Travail en équipe</li>
+              <li>Autonomie</li>
+              <li>Résolution de problèmes</li>
+              <li>Rigueur &amp; discipline</li>
+              <li>Communication technique</li>
+              <li>Adaptabilité</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Langues</h2>
+            <ul class="liste">
+              <li>Français — langue maternelle</li>
+              <li>Peul — bilingue</li>
+              <li>Anglais — B1/B2</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Centres d'intérêt</h2>
+            <ul class="liste">
+              <li>Boxe anglaise · Musculation</li>
+              <li>Défis algorithmiques (Root-Me)</li>
+              <li>Veille technologique</li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </body>
+</html>

@@ -371,3 +371,36 @@
     gap: 24px;
   }
 }
+
+.cvBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px;
+  background: var(--cyan);
+  border: 1px solid var(--cyan);
+  border-radius: 8px;
+  color: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.cvBtn:hover,
+.cvBtn:focus-visible {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cvBtn {
+    transition: none;
+  }
+  .cvBtn:hover {
+    transform: none;
+  }
+}
