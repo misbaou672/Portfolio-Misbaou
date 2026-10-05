@@ -353,25 +353,63 @@ export function Contact() {
 
             <div className={styles.cardDivider}></div>
 
-            {/* `download` nomme le fichier chez le visiteur : sans lui, le
-                navigateur enregistre « cv.pdf », introuvable dans un dossier
-                de telechargements. Le PDF est genere depuis `/cv.html`. */}
-            <a
-              href="/cv.pdf"
-              download="CV-Misbaou-DIALLO-Developpeur-Back-End.pdf"
-              className={styles.cvBtn}
-            >
-              <Icons.Download />
-              Télécharger mon CV (PDF)
-            </a>
+            {/* Deux CV mono-cible plutot qu'un document qui annonce les deux
+                recherches : leurs disponibilites se contredisent, et un CV qui
+                propose deux formats se lit comme une candidature au hasard.
+                L'alternance mene, c'est la recherche en cours.
 
-            {/* Le bouton ci-dessus enregistre le fichier sans rien montrer :
-                ce lien laisse lire le CV avant de decider. Nouvel onglet,
-                pour ne pas faire perdre sa place dans le portfolio. */}
-            <a href="/cv.html" target="_blank" rel="noreferrer" className={styles.cvPreviewLink}>
-              <Icons.ExternalLink />
-              Voir le CV en ligne
-            </a>
+                `download` nomme le fichier chez le visiteur : sans lui le
+                navigateur enregistre « cv.pdf », introuvable dans un dossier de
+                telechargements, et les deux CV y arriveraient sous des noms que
+                rien ne distingue.
+
+                Les liens d'apercu ouvrent la page dont le PDF est genere : le
+                bouton enregistre sans rien montrer, et personne ne telecharge a
+                l'aveugle. Nouvel onglet, pour ne pas faire perdre sa place dans
+                le portfolio. */}
+            <div className={styles.cvGrid}>
+              <div className={styles.cvChoix}>
+                <a
+                  href="/cv.pdf"
+                  download="CV-Misbaou-DIALLO-Alternance.pdf"
+                  className={styles.cvBtn}
+                >
+                  <Icons.Download />
+                  CV alternance
+                </a>
+                <a
+                  href="/cv.html"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Voir le CV alternance en ligne"
+                  className={styles.cvPreviewLink}
+                >
+                  <Icons.ExternalLink />
+                  Voir en ligne
+                </a>
+              </div>
+
+              <div className={styles.cvChoix}>
+                <a
+                  href="/cv-stage.pdf"
+                  download="CV-Misbaou-DIALLO-Stage.pdf"
+                  className={`${styles.cvBtn} ${styles.cvBtnSecondaire}`}
+                >
+                  <Icons.Download />
+                  CV stage
+                </a>
+                <a
+                  href="/cv-stage.html"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Voir le CV stage en ligne"
+                  className={styles.cvPreviewLink}
+                >
+                  <Icons.ExternalLink />
+                  Voir en ligne
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

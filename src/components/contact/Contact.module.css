@@ -372,6 +372,26 @@
   }
 }
 
+/* Les deux CV sur une rangee plutot qu'empiles : la carte demande deja de
+   defiler sur petit ecran, et deux boutons cote a cote ne lui ajoutent aucune
+   hauteur. Sous 420 px la rangee se replie, les libelles n'y tenant plus. */
+.cvGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.cvChoix {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 420px) {
+  .cvGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .cvBtn {
   display: flex;
   align-items: center;
@@ -394,6 +414,20 @@
   filter: brightness(1.08);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
+}
+
+/* Le CV stage reste disponible sans concurrencer l'alternance, qui est la
+   recherche en cours : meme forme, poids visuel moindre. */
+.cvBtnSecondaire {
+  background: transparent;
+  color: var(--cyan);
+}
+
+.cvBtnSecondaire:hover,
+.cvBtnSecondaire:focus-visible {
+  background: var(--cyan);
+  color: var(--surface);
+  filter: none;
 }
 
 .cvPreviewLink {
