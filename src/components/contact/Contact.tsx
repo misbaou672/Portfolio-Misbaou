@@ -160,6 +160,7 @@ const Icons = {
 
 const MAIL_SUBJECTS = [
   { label: "Proposition d'alternance", subject: "Proposition d'alternance" },
+  { label: 'Proposition de stage', subject: 'Proposition de stage' },
   { label: 'Projet web / Automatisation', subject: 'Projet web / Automatisation' },
   { label: 'Échange technique', subject: 'Échange technique' },
   { label: 'Autre demande', subject: 'Autre demande' },
@@ -215,7 +216,10 @@ export function Contact() {
             {/* AVAILABILITY BADGE */}
             <div className={styles.statusCard}>
               <span className={styles.statusDot}></span>
-              <span className={styles.statusText}>En recherche d'alternance — Île-de-France</span>
+              <span className={styles.statusText}>
+                En recherche d'alternance ou de stage —{' '}
+                <span className={styles.insecable}>Île-de-France</span>
+              </span>
             </div>
 
             {/* EMAIL QUICK COPY CARD */}

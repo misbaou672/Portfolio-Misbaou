@@ -402,3 +402,9 @@
     display: none;
   }
 }
+
+/* « Ile-de-France » se coupait sur ses traits d'union des que le badge
+   mentionnait les deux recherches : on le garde d'un seul tenant. */
+.insecable {
+  white-space: nowrap;
+}

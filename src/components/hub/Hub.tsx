@@ -46,7 +46,13 @@ export function Hub() {
     <div ref={rootRef} className={styles.heroContainer}>
       <div className={styles.contentLeft}>
         <div className={styles.badge} data-rise>
-          <span className={styles.dot}></span>À la recherche d'une alternance — Île-de-France
+          <span className={styles.dot}></span>
+          {/* Le badge est en inline-flex : tout le libelle tient dans un seul
+              element, sinon « Ile-de-France » se detacherait en second item. */}
+          <span>
+            À la recherche d'une alternance ou d'un stage —{' '}
+            <span className={styles.insecable}>Île-de-France</span>
+          </span>
         </div>
 
         <h1 className={styles.title} data-rise>
