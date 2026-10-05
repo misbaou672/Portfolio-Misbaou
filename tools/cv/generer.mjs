@@ -14,14 +14,30 @@ import { createServer } from 'node:http';
 import { spawn } from 'node:child_process';
 import { readFile, readdir } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
-import { join, extname, resolve } from 'node:path';
+import { join, extname, resolve, basename } from 'node:path';
 
 const racine = resolve(import.meta.dirname, '../../public');
 
-const CV = [
+const TOUS = [
   { source: 'cv.html', sortie: 'cv.pdf' },
   { source: 'cv-stage.html', sortie: 'cv-stage.pdf' },
 ];
+
+/*
+  Sans argument on regenere tout. Avec des noms de sources, on s'y limite :
+  le hook pre-commit ne reconstruit que le CV dont la page a change, sinon
+  l'autre PDF entrerait au commit pour le seul horodatage que Chromium pose
+  a chaque impression.
+*/
+const demandes = process.argv.slice(2).map((a) => basename(a));
+const inconnus = demandes.filter((d) => !TOUS.some((cv) => cv.source === d));
+if (inconnus.length > 0) {
+  console.error(
+    `Source inconnue : ${inconnus.join(', ')}. Attendu : ${TOUS.map((cv) => cv.source).join(', ')}.`,
+  );
+  process.exit(1);
+}
+const CV = demandes.length > 0 ? TOUS.filter((cv) => demandes.includes(cv.source)) : TOUS;
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',

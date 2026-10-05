@@ -1,1 +1,16 @@
 npx lint-staged
+
+# Les PDF des CV sont des fichiers statiques : le bouton de telechargement les
+# sert tels quels, ils ne suivent pas leur source HTML. Sans ce garde-fou la
+# version telechargee derive de la page sans que rien ne le signale, ce qui est
+# deja arrive. On ne reconstruit que le CV dont la page a change, pour ne pas
+# faire entrer l'autre PDF au commit sur son seul horodatage.
+pages=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '^public/cv[^/]*\.html$' || true)
+if [ -n "$pages" ]; then
+  sources=$(echo "$pages" | sed 's|^public/||' | tr '\n' ' ')
+  echo "Source d'un CV modifiee, regeneration : $sources"
+  npm run --silent cv:pdf -- $sources || exit 1
+  for page in $pages; do
+    git add "${page%.html}.pdf"
+  done
+fi
