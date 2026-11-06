@@ -1058,32 +1058,26 @@
 }
 
 /**
- * Au telephone, la barre ne s'affiche qu'une fois le bas atteint.
+ * La barre du bas n'apparaît qu'une fois la fin de la fiche atteinte, sur tous
+ * les écrans. Au bureau, visible en permanence à 60 %, elle recouvrait la
+ * capture principale ; « Retour », en haut, suffit à ressortir entre-temps.
  *
- * Au bureau elle reste visible a 60 % d'opacite, discrete et disponible. Sur
- * un ecran de 844 px c'est deux lignes de texte recouvertes en permanence,
- * pour des actions dont on n'a besoin qu'en fin de lecture. « Retour », en
- * haut, suffit a ressortir entre-temps.
- *
- * En fin de feuille a dessein : une media query plus haut remettait
- * `opacity: 1` sur mobile, et a specificite egale c'est l'ordre qui tranche.
+ * En fin de feuille a dessein : à spécificité égale, c'est l'ordre qui tranche.
  */
-@media (max-width: 900px) {
-  .bottomBar {
-    opacity: 0;
-    translate: 0 calc(100% + 24px);
-    pointer-events: none;
-    transition:
-      opacity 0.3s ease,
-      translate 0.3s ease,
-      border-color 0.3s ease;
-  }
+.bottomBar {
+  opacity: 0;
+  translate: 0 calc(100% + 24px);
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    translate 0.3s ease,
+    border-color 0.3s ease;
+}
 
-  .bottomBarActive {
-    opacity: 1;
-    translate: 0 0;
-    pointer-events: auto;
-  }
+.bottomBarActive {
+  opacity: 1;
+  translate: 0 0;
+  pointer-events: auto;
 }
 
 /**
