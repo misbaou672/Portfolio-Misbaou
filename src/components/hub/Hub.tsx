@@ -48,10 +48,11 @@ export function Hub() {
         <div className={styles.badge} data-rise>
           <span className={styles.dot}></span>
           {/* Le badge est en inline-flex : tout le libelle tient dans un seul
-              element, sinon « Ile-de-France » se detacherait en second item. */}
+              element, sinon les lieux se detacheraient en items separes. */}
           <span>
-            Stage mars à juin 2027 · alternance dès septembre 2027 —{' '}
-            <span className={styles.insecable}>Île-de-France</span>
+            Stage de mars à juin 2027, <span className={styles.insecable}>Île-de-France</span>
+            <br />
+            Alternance en sept. 2027, <span className={styles.insecable}>toute la France</span>
           </span>
         </div>
 
