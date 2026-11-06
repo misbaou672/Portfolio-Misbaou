@@ -50,9 +50,11 @@ export function Hub() {
           {/* Le badge est en inline-flex : tout le libelle tient dans un seul
               element, sinon les lieux se detacheraient en items separes. */}
           <span>
-            Stage de mars à juin 2027, <span className={styles.insecable}>Île-de-France</span>
+            Stage de mars à juin 2027
             <br />
-            Alternance en sept. 2027, <span className={styles.insecable}>toute la France</span>
+            Alternance dès septembre 2027
+            <br />
+            Basé en <span className={styles.insecable}>Île-de-France</span>, mobile en France
           </span>
         </div>
 

@@ -236,9 +236,11 @@ export function Contact() {
             <div className={styles.statusCard}>
               <span className={styles.statusDot}></span>
               <span className={styles.statusText}>
-                Stage de mars à juin 2027, <span className={styles.insecable}>Île-de-France</span>
+                Stage de mars à juin 2027
                 <br />
-                Alternance en sept. 2027, <span className={styles.insecable}>toute la France</span>
+                Alternance dès septembre 2027
+                <br />
+                Basé en <span className={styles.insecable}>Île-de-France</span>, mobile en France
               </span>
             </div>
 
