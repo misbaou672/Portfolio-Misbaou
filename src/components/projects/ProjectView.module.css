@@ -165,7 +165,9 @@
   border: 0;
   padding: 8px 12px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition-property: background-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
   border-radius: 8px;
 }
 
@@ -292,7 +294,8 @@
   width: 100%;
   aspect-ratio: 16 / 10;
   background-color: #ffffff;
-  border-radius: 12px;
+  /* Rayon extérieur = rayon de l'image (6 px) + marge intérieure (12 px). */
+  border-radius: 18px;
   padding: 12px;
   overflow: hidden;
   cursor: pointer;
@@ -305,6 +308,9 @@
   height: 100%;
   object-fit: cover;
   border-radius: 6px;
+  /* Liseré neutre : le bord d'une capture claire ne se fond pas dans le cadre. */
+  outline: 1px solid rgba(0, 0, 0, 0.1);
+  outline-offset: -1px;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -412,7 +418,9 @@
   border: none;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.4);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-property: width, background-color, box-shadow;
+  transition-duration: 0.25s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 
@@ -634,7 +642,9 @@
   border: 1px solid var(--p-border);
   padding: 6px 14px;
   border-radius: 99px;
-  transition: all 0.2s ease;
+  transition-property: border-color, color, transform;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
 }
 
 .techTag:hover {

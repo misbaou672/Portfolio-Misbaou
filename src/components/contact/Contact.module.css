@@ -173,7 +173,9 @@
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
 }
 
 .copyBtn:hover {
@@ -258,7 +260,9 @@
   font-family: var(--font-mono);
   font-size: 12px;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition-property: background-color, border-color, color, transform;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
 }
 
 .socialBtn:hover {
@@ -334,7 +338,9 @@
   font-size: 13px;
   font-weight: 600;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition-property: background-color, border-color, color, transform;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
 }
 
 .subjectLink:hover,
@@ -406,7 +412,9 @@
   font-size: 13px;
   font-weight: 700;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition-property: background-color, box-shadow, color, filter, transform;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
 }
 
 .cvBtn:hover,
@@ -444,7 +452,9 @@
   font-family: var(--font-mono);
   font-size: 12px;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition-property: border-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
 }
 
 .cvPreviewLink:hover,
@@ -467,4 +477,18 @@
    mentionnait les deux recherches : on le garde d'un seul tenant. */
 .insecable {
   white-space: nowrap;
+}
+
+/* Enfoncement léger au clic, coupé si l'on réduit les animations. */
+.cvBtn:not(:disabled):active,
+.copyBtn:not(:disabled):active,
+.socialBtn:not(:disabled):active {
+  transform: scale(0.97);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cvBtn:not(:disabled):active,
+  .copyBtn:not(:disabled):active,
+  .socialBtn:not(:disabled):active {
+    transform: none;
+  }
 }

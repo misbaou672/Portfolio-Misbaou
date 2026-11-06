@@ -95,7 +95,9 @@
   font-size: 13px;
   font-weight: 700;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition-property: background-color, border-color, color, transform;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
   letter-spacing: 0.02em;
   cursor: pointer;
 }
@@ -174,7 +176,9 @@
   color: var(--ink-muted);
   border: 1px solid var(--surface-border);
   box-shadow: var(--shadow-sm);
-  transition: all 0.2s ease;
+  transition-property: border-color, color, transform;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
 }
 
 .socials a:hover {
@@ -407,4 +411,16 @@
    mentionnait les deux recherches : on le garde d'un seul tenant. */
 .insecable {
   white-space: nowrap;
+}
+
+/* Enfoncement léger au clic, coupé si l'on réduit les animations. */
+.btnPrimary:not(:disabled):active,
+.btnSecondary:not(:disabled):active {
+  transform: scale(0.97);
+}
+@media (prefers-reduced-motion: reduce) {
+  .btnPrimary:not(:disabled):active,
+  .btnSecondary:not(:disabled):active {
+    transform: none;
+  }
 }

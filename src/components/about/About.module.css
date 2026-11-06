@@ -110,7 +110,9 @@
   border: 1px solid var(--line);
   padding: 8px 16px;
   border-radius: 99px;
-  transition: all 0.2s ease;
+  transition-property: border-color, color, transform;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
 }
 
 .skillPill:hover {
@@ -128,7 +130,9 @@
   border: 1px solid var(--cyan);
   padding: 8px 16px;
   border-radius: 99px;
-  transition: all 0.2s ease;
+  transition-property: border-color, color, background-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
 }
 
 .interestPill {
@@ -140,7 +144,9 @@
   border: 1px solid var(--line);
   padding: 7px 14px;
   border-radius: 99px;
-  transition: all 0.2s ease;
+  transition-property: border-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
 }
 
 .interestPill:hover {

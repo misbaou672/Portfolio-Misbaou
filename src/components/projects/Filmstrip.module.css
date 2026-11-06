@@ -235,3 +235,21 @@
   text-transform: uppercase;
   color: rgba(8, 50, 46, 0.78);
 }
+
+/* Compteur « 03 / 07 » et numéro de tuile : chiffres de largeur fixe. */
+.legendeMeta,
+.idx {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Enfoncement léger au clic, coupé si l'on réduit les animations. */
+.openBtn:not(:disabled):active,
+.navBtn:not(:disabled):active {
+  transform: scale(0.97);
+}
+@media (prefers-reduced-motion: reduce) {
+  .openBtn:not(:disabled):active,
+  .navBtn:not(:disabled):active {
+    transform: none;
+  }
+}

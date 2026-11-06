@@ -133,3 +133,17 @@ button {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+/* Titres équilibrés, paragraphes sans mot orphelin en fin de ligne. */
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
+p,
+li,
+figcaption,
+blockquote {
+  text-wrap: pretty;
+}

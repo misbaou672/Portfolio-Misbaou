@@ -64,7 +64,9 @@
   background: transparent;
   color: var(--ink-muted);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: background-color, box-shadow, color, transform;
+  transition-duration: 0.3s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn svg {
@@ -108,4 +110,14 @@
 /* Une fiche projet ouverte a sa propre barre : on evite les deux superposees. */
 :global(body.fiche-ouverte) .nav {
   display: none;
+}
+
+/* Enfoncement léger au clic, coupé si l'on réduit les animations. */
+.btn:not(:disabled):active {
+  transform: scale(0.97);
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn:not(:disabled):active {
+    transform: none;
+  }
 }
