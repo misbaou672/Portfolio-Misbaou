@@ -4,10 +4,6 @@ import cr3Media from './media/cr-3.png';
 import cr4Media from './media/cr-4.png';
 import cr5Media from './media/cr-5.png';
 import cr6Media from './media/cr-6.png';
-import cr7Media from './media/cr-7.png';
-import cr8Media from './media/cr-8.png';
-import cr9Media from './media/cr-9.png';
-import cr10Media from './media/cr-10.png';
 import velib1Media from './media/velib-1.jpg';
 import velib2Media from './media/velib-2.jpg';
 import velib3Media from './media/velib-3.jpg';
@@ -60,69 +56,77 @@ export const PROJECTS: Project[] = [
   {
     id: 'coderouge',
     index: '01',
-    name: 'CodeRouge',
+    name: 'COIN ROUGE',
     year: '2026',
-    kind: 'Application Web Full-Stack',
-    role: 'Architecture & Développement Full-Stack',
-    stack: ['Next.js 16', 'React 19', 'TypeScript', 'Turbopack', 'TailwindCSS'],
+    kind: 'Application web mobile (PWA)',
+    role: 'Conception, développement et tests',
+    stack: ['Next.js 16', 'JavaScript', 'Three.js', 'API Gemini', 'Upstash Redis', 'Playwright'],
     pitch:
-      "Projet personnel conçu pour répondre à mes besoins d'organisation. Il centralise le suivi d'objectifs sportifs, la gestion d'habitudes et une To-Do List avec des statistiques simples, un chronomètre et deux assistants IA.",
+      "Application personnelle de préparation à la boxe, pensée pour le téléphone. Elle réunit le programme de la semaine, un timer de rounds, le suivi des séances et de la récupération, la nutrition et deux coachs IA : Deonte pour l'entraînement, Sékou pour la cuisine. Un mannequin 3D sert à choisir les muscles à travailler, et l'app en tire la séance.",
     useCase:
-      "Conçu pour offrir une alternative épurée et sans publicité aux applications de suivi sportif existantes. Il réunit au même endroit l'entraînement physique, la gestion d'habitudes et l'accompagnement par IA.",
+      "Née de mon propre entraînement : une seule app pour savoir quoi faire aujourd'hui, le faire, puis voir ce qui en reste, au lieu de jongler entre un timer, un carnet et des notes de nutrition.",
     challenges: [
       {
-        challenge:
-          'Maintenir des performances instantanées lors des changements de rounds en arrière-plan.',
+        challenge: 'Les coachs IA mettaient 15 à 30 secondes à répondre.',
         solution:
-          "Utilisation d'API Web Audio synchronisées avec des Web Workers pour éviter toute désynchronisation du chrono.",
+          'Mesures de latence en conditions réelles, réponse affichée mot à mot et modèle plus rapide sans phase de réflexion : le premier mot arrive en environ une seconde.',
       },
       {
-        challenge: 'Intégrer un coach IA réactif sans ralentir le rendu du composant React.',
-        solution: 'Mise en place de Server Actions Next.js streaming les réponses à la volée.',
+        challenge:
+          'Une voix naturelle sur iPhone, avec un quota gratuit de 10 requêtes par jour et par modèle.',
+        solution:
+          "Une seule requête de voix par réponse, des modèles de secours, un repli sur la voix du téléphone et le déblocage du son au premier geste, comme l'exige iOS.",
+      },
+      {
+        challenge: 'Choisir des muscles en touchant un modèle 3D.',
+        solution:
+          "Carte des zones musculaires sommet par sommet, détection du muscle touché par lancer de rayon, puis séance construite par règles : gros muscles d'abord, un seul exercice pour un muscle peu récupéré.",
+      },
+      {
+        challenge: 'Connecter le téléphone sans créer de compte.',
+        solution:
+          "Les clés passent par un QR code chiffré en AES-GCM, avec une clé dérivée par PBKDF2 d'un code à saisir sur le téléphone.",
       },
     ],
     learnings: [
-      'Maîtrise de Next.js 16 (App Router) et React 19',
-      "Gestion d'états complexes et Web Audio API",
-      "Intégration d'APIs IA en streaming de données",
+      "Streaming d'un modèle de langage et mesure de la latence réelle",
+      'Three.js : rendu, couleurs par sommet et lancer de rayon au toucher',
+      "Reconnaissance et synthèse vocales, contraintes audio d'iOS",
+      'Tests de bout en bout avec Playwright et audit d’accessibilité avec axe',
     ],
     features: [
       {
-        title: 'Coach IA Intégré',
-        detail: 'Accompagnement personnalisé et suivi dynamique du profil.',
+        title: 'Mannequin 3D',
+        detail: 'On touche les muscles à travailler, la séance se prépare et se lance en un geste.',
       },
       {
-        title: 'Architecture Moderne',
-        detail: 'Développé avec la dernière stack React 19 et Next.js 16 (App Router).',
+        title: 'Coachs IA à la voix',
+        detail:
+          'Deonte et Sékou répondent à l’écrit ou à l’oral ; Sékou transforme une recette en fiche illustrée.',
       },
       {
-        title: 'Chrono Interactif',
-        detail: 'Gestionnaire de rondes de boxe configurables avec signaux sonores.',
+        title: 'Séance guidée',
+        detail: 'Séries, charges, repos et timer de rounds, puis récupération muscle par muscle.',
       },
     ],
     featuresDone: [
-      "Système complet de suivi d'objectifs sportifs et cycles d'entraînement hebdomadaires",
-      'Timer interactif avec rondes personnalisables et signaux sonores pour la boxe',
-      'Coach IA (Deonte Walter) avec réponses adaptatives au profil',
-      "Assistant IA cuisine pour l'accompagnement nutritionnel",
-      "Calculateur de dépenses caloriques et graphiques interactifs d'évolution du poids",
-      "Journal d'entraînement quotidien avec catégorisation des séances",
-      'Mode PWA (Progressive Web App) avec stockage local des préférences',
+      'Programme sur un cycle de 6 semaines, ajustable par Deonte ou composé à la main',
+      'Mannequin 3D : sélection des muscles, séance préparée en 4, 6 ou 8 exercices, récupération en couleur',
+      '48 exercices avec photo du mouvement, et exercices personnels modifiables',
+      'Timer de rounds avec annonces vocales et séance guidée série par série',
+      'Coach Deonte en conversation vocale, coach Sékou et fiches recettes avec photo trouvée automatiquement',
+      'Suivi : journal, statistiques, récupération, nutrition, carrière et objectif',
+      'Guide de boxe illustré de vraies photos créditées',
+      'Thème sombre, application installable, ouverture sans réseau',
+      'Connexion du téléphone par QR code chiffré',
     ],
     roadmap: [
       {
-        label: 'Synchronisation multi-appareils en temps réel via Supabase & PostgreSQL',
-        status: 'in_progress',
-      },
-      {
-        label: "Système de notifications Push PWA pour les rappels d'entraînement",
-        status: 'in_progress',
-      },
-      {
-        label: "Intégration d'objets connectés (capteurs de fréquence cardiaque Bluetooth)",
+        label:
+          'Conversation vocale en temps réel, avec la possibilité de couper la parole au coach',
         status: 'planned',
       },
-      { label: 'Génération de bilans mensuels de performance au format PDF', status: 'planned' },
+      { label: 'Mise en ligne de la nouvelle version', status: 'planned' },
     ],
     links: [
       { label: 'Site Live', href: 'https://coderouge2mika.vercel.app' },
@@ -137,16 +141,12 @@ export const PROJECTS: Project[] = [
     bgThemeImage:
       'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=1600&auto=format&fit=crop',
     medias: [
-      { src: cr1Media, alt: 'Tableau de bord : Accueil & Objectif du jour' },
-      { src: cr2Media, alt: "Planning d'entraînement & Cycles hebdomadaires" },
-      { src: cr3Media, alt: 'Timer interactif de rounds' },
-      { src: cr4Media, alt: 'Journal de suivi des séances' },
-      { src: cr5Media, alt: 'Guide technique & Glossaire du boxeur' },
-      { src: cr6Media, alt: 'Coach IA : Deonte Walter' },
-      { src: cr7Media, alt: 'Carrière & Palmarès' },
-      { src: cr8Media, alt: 'Réglages du profil & Notifications' },
-      { src: cr9Media, alt: 'Suivi de progression' },
-      { src: cr10Media, alt: 'Statistiques & Graphiques de poids' },
+      { src: cr1Media, alt: 'Accueil et mannequin 3D avec les muscles choisis' },
+      { src: cr2Media, alt: 'Séance préparée en grille de photos, puis séance guidée' },
+      { src: cr3Media, alt: 'Coach Deonte et coach Sékou avec une fiche recette' },
+      { src: cr4Media, alt: 'Guide : technique à la une et fiche détaillée' },
+      { src: cr5Media, alt: 'Récupération en 3D et statistiques' },
+      { src: cr6Media, alt: 'Nutrition et programme de la semaine' },
     ],
   },
   {

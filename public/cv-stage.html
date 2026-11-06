@@ -303,7 +303,10 @@
 
       /* ---------- projets ---------- */
       .projet {
-        margin-bottom: 8px;
+        margin-bottom: 6px;
+      }
+      .projet:last-child {
+        margin-bottom: 0;
       }
       .projet strong {
         font-family: var(--display);
@@ -595,7 +598,7 @@
                 >
                   <circle cx="12" cy="12" r="10" />
                   <path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z" /></svg
-                ><a href="https://portfolio-misbaou.vercel.app">Portfolio en ligne</a>
+                ><a href="https://portfolio-misbaou.vercel.app">portfolio-misbaou.vercel.app</a>
               </li>
               <li>
                 <svg
@@ -786,6 +789,14 @@
               >Projets universitaires &amp; personnels
             </h2>
             <div class="projet">
+              <strong>Dealink</strong> — SaaS pour agences d'influence : suivi et contrats scellés.
+              <span>Next.js · TypeScript · Prisma · Stripe · Playwright · CI GitHub Actions</span>
+            </div>
+            <div class="projet">
+              <strong>Dashboard alternance</strong> — collecte d'offres et candidatures assistées.
+              <span>Python · Flask · Playwright · CI GitHub Actions</span>
+            </div>
+            <div class="projet">
               <strong>Infrastructure multi-services</strong> — déploiement de VM et de topologies
               réseau.
               <span>VirtualBox · Linux · SMTP, SSH, DHCP, FTP, DNS · Cisco Packet Tracer</span>
@@ -801,13 +812,8 @@
               <span>PHP 8.4 orienté objet · MySQL · PDO · API Copernicus · Leaflet.js</span>
             </div>
             <div class="projet">
-              <strong>Devis Pro</strong> — création et édition de devis, abonnements, génération
-              PDF.
-              <span>PHP 8 orienté objet · JavaScript ES6+ · MySQL</span>
-            </div>
-            <div class="projet">
-              <strong>CodeRouge</strong> — suivi d'objectifs sportifs, habitudes et assistants IA.
-              <span>Next.js 16 · React 19 · TypeScript · TailwindCSS</span>
+              <strong>COIN ROUGE</strong> — suivi d'entraînement de boxe, nutrition et coachs IA.
+              <span>Next.js 16 · React 19 · Redis · API Anthropic et Gemini · Playwright</span>
             </div>
           </section>
         </main>
