@@ -20,6 +20,8 @@ import gs4Media from './media/gestistock-4.jpg';
 import devisMedia from './media/devis.png';
 import devis2Media from './media/devis-2.png';
 import devisPdfMedia from './media/devis-pdf.png';
+import jmoins1Media from './media/jmoins-1.png';
+import jmoins2Media from './media/jmoins-2.png';
 
 export type Project = {
   id: string;
@@ -501,6 +503,73 @@ export const PROJECTS: Project[] = [
       { src: devisMedia, alt: 'Interface de création de devis (Formulaire & Calculs)' },
       { src: devis2Media, alt: 'Synthèse du devis & Modalités de règlement' },
       { src: devisPdfMedia, alt: 'Document PDF officiel généré' },
+    ],
+  },
+  {
+    id: 'jmoins',
+    index: '06',
+    name: 'jmoins',
+    year: '2026',
+    kind: 'Projet en conception (maquettes)',
+    role: 'Conception produit et maquettes',
+    stack: ['Conception produit', 'Maquettes', 'Sondage étudiant', 'IA avec clé personnelle'],
+    pitch:
+      "Outil gratuit de révision des partiels pour étudiants. On ajoute ses cours, TD et annales ; jmoins repère ce qui revient le plus, mesure ce que l'on sait déjà, puis propose chaque jour des fiches jusqu'à l'examen. Chaque réponse cite la page du cours d'où elle vient.",
+    useCase:
+      "Réviser ce qui tombe vraiment, plutôt que tout relire. Le projet en est au stade des maquettes et d'un sondage auprès des étudiants, avant d'écrire le code.",
+    challenges: [
+      {
+        challenge: 'Savoir comment les étudiants révisent avant de construire quoi que ce soit.',
+        solution:
+          'Une page de présentation et un sondage anonyme partagés sur le Discord de la promo, pour décider de ce qui sera construit en premier.',
+      },
+      {
+        challenge: "Utiliser l'IA sans faire payer ni récupérer les clés des étudiants.",
+        solution:
+          'Chacun branche sa propre clé (Claude, Gemini ou ChatGPT), qui reste sur son appareil.',
+      },
+    ],
+    learnings: [
+      'Partir des besoins des utilisateurs avant le code',
+      'Concevoir un parcours mobile : import, diagnostic, révision',
+      'Rédiger une page de présentation claire et honnête',
+    ],
+    features: [
+      {
+        title: 'Ce qui tombe',
+        detail: 'Les notions qui reviennent dans les TD et les annales passent en premier.',
+      },
+      {
+        title: 'Diagnostic',
+        detail: 'Dix questions sans note pour ne pas réviser ce que l’on sait déjà.',
+      },
+      {
+        title: 'Fiches sourcées',
+        detail: 'Des fiches qui reviennent au bon moment, avec la page du cours citée.',
+      },
+    ],
+    featuresDone: [
+      'Maquettes mobiles du parcours complet : import, diagnostic, session de révision',
+      'Page de présentation avec vidéo de 30 secondes',
+      'Sondage anonyme auprès des étudiants',
+    ],
+    roadmap: [
+      { label: 'Première version : import, diagnostic, fiches et planning', status: 'planned' },
+      { label: 'Test pendant les partiels, puis code publié en open source', status: 'planned' },
+    ],
+    links: [],
+    palette: {
+      from: 'rgba(37, 70, 200, 0.22)',
+      to: 'rgba(26, 51, 153, 0.38)',
+      ink: '#5B7BFF',
+      glow: 'rgba(91, 123, 255, 0.45)',
+    },
+    medias: [
+      {
+        src: jmoins1Media,
+        alt: 'Maquettes : ajout des documents, diagnostic et session de révision',
+      },
+      { src: jmoins2Media, alt: 'Écran de présentation de jmoins' },
     ],
   },
 ];

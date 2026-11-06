@@ -70,6 +70,7 @@ Une seule variable à renseigner : **`VITE_SITE_URL`**, l'adresse publique du si
 
 - **Devis Pro** — [dépôt](https://github.com/misbaou672/Devis-Pro) · création et édition de devis métier, génération PDF
 - **COIN ROUGE** — [dépôt](https://github.com/misbaou672/CodeRouge) · préparation à la boxe : mannequin 3D, séance guidée et coachs IA à la voix
+- **jmoins** · outil de révision des partiels, au stade des maquettes (pas encore de dépôt)
 - **Vélib Optim** — [dépôt](https://github.com/misbaou672/Velib-Optim) · optimisation algorithmique du réseau Vélib
 - **GestiStock** — [dépôt](https://github.com/misbaou672/GestiStock) · gestion d'inventaire et de stock
 - **Eaurore** — [dépôt](https://github.com/misbaou672/SAE3_Real01) · plateforme océanographique, PHP 8.4 en MVC
