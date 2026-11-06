@@ -572,4 +572,62 @@ export const PROJECTS: Project[] = [
       { src: jmoins2Media, alt: 'Écran de présentation de jmoins' },
     ],
   },
+  {
+    id: 'auriance',
+    index: '07',
+    name: 'AURIANCE',
+    year: '2026',
+    kind: 'Projet universitaire en équipe (SAÉ, BUT 3)',
+    role: 'Module de dictée vocale et gestion de projet',
+    stack: ['FastAPI', 'Whisper', 'Flutter', 'PostgreSQL', 'Neo4j', 'Qdrant', 'Redis', 'Docker'],
+    pitch:
+      'Moteur vocal pour les professionnels de santé : le médecin dicte sa consultation, AURIANCE transcrit, remplit le formulaire et prépare un compte-rendu exportable, sans ressaisie. Le projet réunit un backend FastAPI, une interface web et une application mobile Flutter.',
+    useCase:
+      'Gagner du temps de saisie en cabinet médical. Code et captures non publiés : le dépôt est privé.',
+    challenges: [
+      {
+        challenge: 'Reprendre un projet existant dont plusieurs services ne démarraient plus.',
+        solution:
+          'Audit de la passation, puis backlog priorisé : docker-compose réparé, secrets retirés du fichier, configuration Redis remise en cohérence.',
+      },
+      {
+        challenge: 'Travailler à plusieurs sans rôle figé.',
+        solution:
+          'Chacun pilote son sous-projet et relit les tickets qui le concernent, suivis dans un GitHub Project avec des rituels toutes les deux semaines.',
+      },
+    ],
+    learnings: [
+      'Rédiger des user stories avec critères d’acceptation',
+      'Prioriser un backlog hérité (P0 à P3)',
+      'Chaîner transcription, structuration et export',
+    ],
+    features: [
+      { title: 'Dictée', detail: 'La voix est transcrite par Whisper pendant la consultation.' },
+      {
+        title: 'Formulaire auto-rempli',
+        detail: 'Le texte transcrit remplit les champs du dossier.',
+      },
+      {
+        title: 'Requêtes à la voix',
+        detail: 'Une question dictée devient une requête SQL ou Cypher.',
+      },
+    ],
+    featuresDone: [
+      'Pipeline dictée, transcription, formulaire et export PDF',
+      'User stories et backlog du module de dictée',
+      'Organisation de l’équipe dans un GitHub Project',
+    ],
+    roadmap: [
+      { label: 'Streaming vocal en temps réel', status: 'planned' },
+      { label: 'Tests automatisés en intégration continue', status: 'planned' },
+    ],
+    links: [],
+    mediaNote: "Projet d'équipe sous dépôt privé : ni captures ni code publiés.",
+    palette: {
+      from: 'rgba(15, 122, 110, 0.22)',
+      to: 'rgba(10, 85, 77, 0.38)',
+      ink: '#2BB3A3',
+      glow: 'rgba(43, 179, 163, 0.45)',
+    },
+  },
 ];

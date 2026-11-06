@@ -258,6 +258,11 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
               onClick={() => (current ? onOpen(i) : moveTo(i))}
             >
               <span className={styles.idx}>{project.index}</span>
+              {!previewImage && (
+                <span className={styles.sansApercu} aria-hidden="true">
+                  {project.mediaNote ? 'Dépôt privé' : 'Sans aperçu'}
+                </span>
+              )}
               {/* La tuile ne porte plus son nom en clair : la legende l'affiche
                   juste dessous. Il reste ici pour l'annonce vocale, sans quoi le
                   bouton ne dirait plus de quel projet il s'agit. */}

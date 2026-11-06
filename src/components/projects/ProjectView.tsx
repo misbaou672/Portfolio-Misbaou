@@ -595,7 +595,9 @@ export function ProjectView({ project, onClose, onNext, onPrev }: Props) {
                     )}
                   </>
                 ) : (
-                  <span className={styles.heroLabel}>Aperçu non disponible</span>
+                  <span className={styles.heroLabel}>
+                    {project.mediaNote ? 'Dépôt privé' : 'Aperçu non disponible'}
+                  </span>
                 )}
               </div>
               {project.mediaNote && <p className={styles.mediaNote}>{project.mediaNote}</p>}

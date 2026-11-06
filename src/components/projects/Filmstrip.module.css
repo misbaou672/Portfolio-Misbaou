@@ -223,3 +223,15 @@
     transition: none;
   }
 }
+
+/* Tuile sans capture (projet privé) : une mention discrète plutôt qu'un aplat vide. */
+.sansApercu {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(8, 50, 46, 0.78);
+}
