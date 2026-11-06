@@ -2,7 +2,7 @@
 
 **[portfolio-misbaou.vercel.app](https://portfolio-misbaou.vercel.app)**
 
-Portfolio personnel de **Misbaou Diallo**, développeur back-end et automatisation, en route vers le DevOps et le DevSecOps. Étudiant en BUT Informatique (parcours Développement logiciel) à l'UPEC, en recherche d'une alternance d'un an, disponible dès maintenant.
+Portfolio personnel de **Misbaou Diallo**, développeur back-end et automatisation, en route vers le DevOps et le DevSecOps. Étudiant en BUT Informatique (parcours Développement logiciel) à l'UPEC, en recherche d'un stage de 14 semaines (mars à juin 2027), puis d'une alternance dès septembre 2027 en école d'ingénieur ou en master.
 
 Cinq écrans : **Hub**, **Projets**, **Parcours**, **À propos**, **Contact**. Thème clair par défaut, thème sombre au choix, fond en courbes de niveau généré.
 

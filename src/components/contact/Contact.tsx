@@ -175,8 +175,11 @@ const Icons = {
 };
 
 const MAIL_SUBJECTS = [
-  { label: "Proposition d'alternance", subject: "Proposition d'alternance" },
   { label: 'Proposition de stage', subject: 'Proposition de stage' },
+  {
+    label: "Proposition d'alternance (septembre 2027)",
+    subject: "Proposition d'alternance pour septembre 2027",
+  },
   { label: 'Projet web / Automatisation', subject: 'Projet web / Automatisation' },
   { label: 'Échange technique', subject: 'Échange technique' },
   { label: 'Autre demande', subject: 'Autre demande' },
@@ -233,7 +236,7 @@ export function Contact() {
             <div className={styles.statusCard}>
               <span className={styles.statusDot}></span>
               <span className={styles.statusText}>
-                En recherche d'alternance ou de stage —{' '}
+                Stage mars à juin 2027 · alternance dès septembre 2027 —{' '}
                 <span className={styles.insecable}>Île-de-France</span>
               </span>
             </div>
@@ -356,7 +359,8 @@ export function Contact() {
             {/* Deux CV mono-cible plutot qu'un document qui annonce les deux
                 recherches : leurs disponibilites se contredisent, et un CV qui
                 propose deux formats se lit comme une candidature au hasard.
-                L'alternance mene, c'est la recherche en cours.
+                Le stage mene : c'est la recherche en cours (mars a juin 2027),
+                l'alternance vient ensuite, pour septembre 2027.
 
                 `download` nomme le fichier chez le visiteur : sans lui le
                 navigateur enregistre « cv.pdf », introuvable dans un dossier de
@@ -370,30 +374,9 @@ export function Contact() {
             <div className={styles.cvGrid}>
               <div className={styles.cvChoix}>
                 <a
-                  href="/cv.pdf"
-                  download="CV-Misbaou-DIALLO-Alternance.pdf"
-                  className={styles.cvBtn}
-                >
-                  <Icons.Download />
-                  CV alternance
-                </a>
-                <a
-                  href="/cv.html"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Voir le CV alternance en ligne"
-                  className={styles.cvPreviewLink}
-                >
-                  <Icons.ExternalLink />
-                  Voir en ligne
-                </a>
-              </div>
-
-              <div className={styles.cvChoix}>
-                <a
                   href="/cv-stage.pdf"
                   download="CV-Misbaou-DIALLO-Stage.pdf"
-                  className={`${styles.cvBtn} ${styles.cvBtnSecondaire}`}
+                  className={styles.cvBtn}
                 >
                   <Icons.Download />
                   CV stage
@@ -403,6 +386,27 @@ export function Contact() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Voir le CV stage en ligne"
+                  className={styles.cvPreviewLink}
+                >
+                  <Icons.ExternalLink />
+                  Voir en ligne
+                </a>
+              </div>
+
+              <div className={styles.cvChoix}>
+                <a
+                  href="/cv.pdf"
+                  download="CV-Misbaou-DIALLO-Alternance.pdf"
+                  className={`${styles.cvBtn} ${styles.cvBtnSecondaire}`}
+                >
+                  <Icons.Download />
+                  CV alternance
+                </a>
+                <a
+                  href="/cv.html"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Voir le CV alternance en ligne"
                   className={styles.cvPreviewLink}
                 >
                   <Icons.ExternalLink />

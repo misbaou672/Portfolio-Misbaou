@@ -50,7 +50,7 @@ export function Hub() {
           {/* Le badge est en inline-flex : tout le libelle tient dans un seul
               element, sinon « Ile-de-France » se detacherait en second item. */}
           <span>
-            À la recherche d'une alternance ou d'un stage —{' '}
+            Stage mars à juin 2027 · alternance dès septembre 2027 —{' '}
             <span className={styles.insecable}>Île-de-France</span>
           </span>
         </div>

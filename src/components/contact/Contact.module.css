@@ -424,8 +424,8 @@
   box-shadow: var(--shadow-lg);
 }
 
-/* Le CV stage reste disponible sans concurrencer l'alternance, qui est la
-   recherche en cours : meme forme, poids visuel moindre. */
+/* Le CV alternance (septembre 2027) reste disponible sans concurrencer le
+   stage, qui est la recherche en cours : meme forme, poids visuel moindre. */
 .cvBtnSecondaire {
   background: transparent;
   color: var(--cyan);
